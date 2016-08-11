@@ -41,7 +41,6 @@ public class Admin_workArea extends javax.swing.JFrame {
 
     }
 
-    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -54,14 +53,14 @@ public class Admin_workArea extends javax.swing.JFrame {
         pl_systemExit = new javax.swing.JPanel();
         jl_systemExit = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
-        lb_wk_home = new javax.swing.JLabel();
-        lb_wk_customer = new javax.swing.JLabel();
-        lb_wk_fund = new javax.swing.JLabel();
-        lb_wk_installment = new javax.swing.JLabel();
-        lb_wk_cashaccount = new javax.swing.JLabel();
-        lb_wk_cus_pendding = new javax.swing.JLabel();
-        lb_wk_myaccount = new javax.swing.JLabel();
-        lb_wk_cus_closecustomer = new javax.swing.JLabel();
+        lb_wk_option1 = new javax.swing.JLabel();
+        lb_wk_option2 = new javax.swing.JLabel();
+        lb_wk_option3 = new javax.swing.JLabel();
+        lb_wk_option4 = new javax.swing.JLabel();
+        lb_wk_option5 = new javax.swing.JLabel();
+        lb_wk_option6 = new javax.swing.JLabel();
+        lb_wk_option8 = new javax.swing.JLabel();
+        lb_wk_option7 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
         jp_adminMainPanel = new javax.swing.JPanel();
@@ -125,97 +124,97 @@ public class Admin_workArea extends javax.swing.JFrame {
         });
         getContentPane().add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(1054, 680, 200, -1));
 
-        lb_wk_home.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        lb_wk_home.setForeground(new java.awt.Color(255, 255, 255));
-        lb_wk_home.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lb_wk_home.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/softidea/www/public_access/images/SuneraInvestment_selctButton.png"))); // NOI18N
-        lb_wk_home.setText("Home");
-        lb_wk_home.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        lb_wk_home.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        lb_wk_home.addMouseListener(new java.awt.event.MouseAdapter() {
+        lb_wk_option1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        lb_wk_option1.setForeground(new java.awt.Color(255, 255, 255));
+        lb_wk_option1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lb_wk_option1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/softidea/www/public_access/images/SuneraInvestment_selctButton.png"))); // NOI18N
+        lb_wk_option1.setText("Home");
+        lb_wk_option1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        lb_wk_option1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        lb_wk_option1.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                lb_wk_homeMouseClicked(evt);
+                lb_wk_option1MouseClicked(evt);
             }
         });
-        getContentPane().add(lb_wk_home, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 30, 145, 35));
+        getContentPane().add(lb_wk_option1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 30, 145, 35));
 
-        lb_wk_customer.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        lb_wk_customer.setForeground(new java.awt.Color(255, 255, 255));
-        lb_wk_customer.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lb_wk_customer.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/softidea/www/public_access/images/SuneraInvestment_selctButton.png"))); // NOI18N
-        lb_wk_customer.setText("Customer");
-        lb_wk_customer.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        lb_wk_customer.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        lb_wk_customer.addMouseListener(new java.awt.event.MouseAdapter() {
+        lb_wk_option2.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        lb_wk_option2.setForeground(new java.awt.Color(255, 255, 255));
+        lb_wk_option2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lb_wk_option2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/softidea/www/public_access/images/SuneraInvestment_selctButton.png"))); // NOI18N
+        lb_wk_option2.setText("Customer");
+        lb_wk_option2.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        lb_wk_option2.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        lb_wk_option2.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                lb_wk_customerMouseClicked(evt);
+                lb_wk_option2MouseClicked(evt);
             }
         });
-        getContentPane().add(lb_wk_customer, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 30, 145, 35));
+        getContentPane().add(lb_wk_option2, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 30, 145, 35));
 
-        lb_wk_fund.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        lb_wk_fund.setForeground(new java.awt.Color(255, 255, 255));
-        lb_wk_fund.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lb_wk_fund.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/softidea/www/public_access/images/SuneraInvestment_selctButton.png"))); // NOI18N
-        lb_wk_fund.setText("Fund");
-        lb_wk_fund.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        lb_wk_fund.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        lb_wk_fund.addMouseListener(new java.awt.event.MouseAdapter() {
+        lb_wk_option3.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        lb_wk_option3.setForeground(new java.awt.Color(255, 255, 255));
+        lb_wk_option3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lb_wk_option3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/softidea/www/public_access/images/SuneraInvestment_selctButton.png"))); // NOI18N
+        lb_wk_option3.setText("Fund");
+        lb_wk_option3.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        lb_wk_option3.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        lb_wk_option3.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                lb_wk_fundMouseClicked(evt);
+                lb_wk_option3MouseClicked(evt);
             }
         });
-        getContentPane().add(lb_wk_fund, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 30, 145, 35));
+        getContentPane().add(lb_wk_option3, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 30, 145, 35));
 
-        lb_wk_installment.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        lb_wk_installment.setForeground(new java.awt.Color(255, 255, 255));
-        lb_wk_installment.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lb_wk_installment.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/softidea/www/public_access/images/SuneraInvestment_selctButton.png"))); // NOI18N
-        lb_wk_installment.setText("Installment");
-        lb_wk_installment.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        lb_wk_installment.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        getContentPane().add(lb_wk_installment, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 30, 145, 35));
+        lb_wk_option4.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        lb_wk_option4.setForeground(new java.awt.Color(255, 255, 255));
+        lb_wk_option4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lb_wk_option4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/softidea/www/public_access/images/SuneraInvestment_selctButton.png"))); // NOI18N
+        lb_wk_option4.setText("Installment");
+        lb_wk_option4.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        lb_wk_option4.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        getContentPane().add(lb_wk_option4, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 30, 145, 35));
 
-        lb_wk_cashaccount.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        lb_wk_cashaccount.setForeground(new java.awt.Color(255, 255, 255));
-        lb_wk_cashaccount.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lb_wk_cashaccount.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/softidea/www/public_access/images/SuneraInvestment_selctButton.png"))); // NOI18N
-        lb_wk_cashaccount.setText("Cash Account");
-        lb_wk_cashaccount.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        lb_wk_cashaccount.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        getContentPane().add(lb_wk_cashaccount, new org.netbeans.lib.awtextra.AbsoluteConstraints(650, 30, 145, 35));
+        lb_wk_option5.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        lb_wk_option5.setForeground(new java.awt.Color(255, 255, 255));
+        lb_wk_option5.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lb_wk_option5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/softidea/www/public_access/images/SuneraInvestment_selctButton.png"))); // NOI18N
+        lb_wk_option5.setText("Cash Account");
+        lb_wk_option5.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        lb_wk_option5.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        getContentPane().add(lb_wk_option5, new org.netbeans.lib.awtextra.AbsoluteConstraints(650, 30, 145, 35));
 
-        lb_wk_cus_pendding.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        lb_wk_cus_pendding.setForeground(new java.awt.Color(255, 255, 255));
-        lb_wk_cus_pendding.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lb_wk_cus_pendding.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/softidea/www/public_access/images/SuneraInvestment_selctButton.png"))); // NOI18N
-        lb_wk_cus_pendding.setText("Pendding Customer");
-        lb_wk_cus_pendding.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        lb_wk_cus_pendding.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        getContentPane().add(lb_wk_cus_pendding, new org.netbeans.lib.awtextra.AbsoluteConstraints(810, 30, 145, 35));
+        lb_wk_option6.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        lb_wk_option6.setForeground(new java.awt.Color(255, 255, 255));
+        lb_wk_option6.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lb_wk_option6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/softidea/www/public_access/images/SuneraInvestment_selctButton.png"))); // NOI18N
+        lb_wk_option6.setText("Pendding Customer");
+        lb_wk_option6.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        lb_wk_option6.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        getContentPane().add(lb_wk_option6, new org.netbeans.lib.awtextra.AbsoluteConstraints(810, 30, 145, 35));
 
-        lb_wk_myaccount.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        lb_wk_myaccount.setForeground(new java.awt.Color(255, 255, 255));
-        lb_wk_myaccount.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lb_wk_myaccount.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/softidea/www/public_access/images/SuneraInvestment_selctButton.png"))); // NOI18N
-        lb_wk_myaccount.setText("My Account");
-        lb_wk_myaccount.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        lb_wk_myaccount.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        lb_wk_myaccount.addMouseListener(new java.awt.event.MouseAdapter() {
+        lb_wk_option8.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        lb_wk_option8.setForeground(new java.awt.Color(255, 255, 255));
+        lb_wk_option8.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lb_wk_option8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/softidea/www/public_access/images/SuneraInvestment_selctButton.png"))); // NOI18N
+        lb_wk_option8.setText("My Account");
+        lb_wk_option8.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        lb_wk_option8.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        lb_wk_option8.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                lb_wk_myaccountMouseClicked(evt);
+                lb_wk_option8MouseClicked(evt);
             }
         });
-        getContentPane().add(lb_wk_myaccount, new org.netbeans.lib.awtextra.AbsoluteConstraints(1130, 30, 145, 35));
+        getContentPane().add(lb_wk_option8, new org.netbeans.lib.awtextra.AbsoluteConstraints(1130, 30, 145, 35));
 
-        lb_wk_cus_closecustomer.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        lb_wk_cus_closecustomer.setForeground(new java.awt.Color(255, 255, 255));
-        lb_wk_cus_closecustomer.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lb_wk_cus_closecustomer.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/softidea/www/public_access/images/SuneraInvestment_selctButton.png"))); // NOI18N
-        lb_wk_cus_closecustomer.setText("Close Customer");
-        lb_wk_cus_closecustomer.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        lb_wk_cus_closecustomer.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        getContentPane().add(lb_wk_cus_closecustomer, new org.netbeans.lib.awtextra.AbsoluteConstraints(970, 30, 145, 35));
+        lb_wk_option7.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        lb_wk_option7.setForeground(new java.awt.Color(255, 255, 255));
+        lb_wk_option7.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lb_wk_option7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/softidea/www/public_access/images/SuneraInvestment_selctButton.png"))); // NOI18N
+        lb_wk_option7.setText("Close Customer");
+        lb_wk_option7.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        lb_wk_option7.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        getContentPane().add(lb_wk_option7, new org.netbeans.lib.awtextra.AbsoluteConstraints(970, 30, 145, 35));
 
         jLabel3.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(255, 255, 255));
@@ -504,12 +503,12 @@ public class Admin_workArea extends javax.swing.JFrame {
 
     }//GEN-LAST:event_jl_systemExitMouseClicked
 
-    private void lb_wk_customerMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lb_wk_customerMouseClicked
+    private void lb_wk_option2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lb_wk_option2MouseClicked
 
 
-    }//GEN-LAST:event_lb_wk_customerMouseClicked
+    }//GEN-LAST:event_lb_wk_option2MouseClicked
 
-    private void lb_wk_myaccountMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lb_wk_myaccountMouseClicked
+    private void lb_wk_option8MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lb_wk_option8MouseClicked
 
         try {
             jp_adminMainPanel.removeAll();
@@ -523,12 +522,12 @@ public class Admin_workArea extends javax.swing.JFrame {
             e.printStackTrace();
         }
 
-    }//GEN-LAST:event_lb_wk_myaccountMouseClicked
+    }//GEN-LAST:event_lb_wk_option8MouseClicked
 
-    private void lb_wk_fundMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lb_wk_fundMouseClicked
+    private void lb_wk_option3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lb_wk_option3MouseClicked
 
 
-    }//GEN-LAST:event_lb_wk_fundMouseClicked
+    }//GEN-LAST:event_lb_wk_option3MouseClicked
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
 
@@ -547,18 +546,18 @@ public class Admin_workArea extends javax.swing.JFrame {
 
     }//GEN-LAST:event_jLabel4MouseClicked
 
-    private void lb_wk_homeMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lb_wk_homeMouseClicked
+    private void lb_wk_option1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lb_wk_option1MouseClicked
 
         this.dispose();
         Admin_workArea admin = new Admin_workArea();
         admin.setVisible(true);
 
 
-    }//GEN-LAST:event_lb_wk_homeMouseClicked
+    }//GEN-LAST:event_lb_wk_option1MouseClicked
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
 
-        load_customerPanel();
+        load_customer_managment();
 
     }//GEN-LAST:event_jButton2ActionPerformed
 
@@ -575,11 +574,15 @@ public class Admin_workArea extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
-        // TODO add your handling code here:
+
+        load_cashManagment();
+
     }//GEN-LAST:event_jButton6ActionPerformed
 
     private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
-        // TODO add your handling code here:
+
+        load_loanManagment();
+
     }//GEN-LAST:event_jButton7ActionPerformed
 
     private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton8ActionPerformed
@@ -589,7 +592,9 @@ public class Admin_workArea extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton8ActionPerformed
 
     private void jButton9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton9ActionPerformed
-        // TODO add your handling code here:
+
+        load_reportManagment();
+
     }//GEN-LAST:event_jButton9ActionPerformed
 
     /**
@@ -652,38 +657,23 @@ public class Admin_workArea extends javax.swing.JFrame {
     private javax.swing.JLabel lb_customerCount1;
     private javax.swing.JLabel lb_funderCount;
     private javax.swing.JLabel lb_funderCount1;
-    private javax.swing.JLabel lb_wk_cashaccount;
-    private javax.swing.JLabel lb_wk_cus_closecustomer;
-    private javax.swing.JLabel lb_wk_cus_pendding;
-    private javax.swing.JLabel lb_wk_customer;
-    private javax.swing.JLabel lb_wk_fund;
-    private javax.swing.JLabel lb_wk_home;
-    private javax.swing.JLabel lb_wk_installment;
-    private javax.swing.JLabel lb_wk_myaccount;
+    public static javax.swing.JLabel lb_wk_option1;
+    public static javax.swing.JLabel lb_wk_option2;
+    public static javax.swing.JLabel lb_wk_option3;
+    public static javax.swing.JLabel lb_wk_option4;
+    public static javax.swing.JLabel lb_wk_option5;
+    public static javax.swing.JLabel lb_wk_option6;
+    public static javax.swing.JLabel lb_wk_option7;
+    public static javax.swing.JLabel lb_wk_option8;
     private javax.swing.JPanel pl_systemExit;
     // End of variables declaration//GEN-END:variables
-
-    private void load_customerPanel() {
-        try {
-            jp_adminMainPanel.removeAll();
-            jp_adminMainPanel.setLayout(new FlowLayout());
-            jp_customer_add cus_add = new jp_customer_add();
-            cus_add.setVisible(true);
-            jp_adminMainPanel.add(cus_add);
-            jp_adminMainPanel.updateUI();
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-    }
 
     private void load_user_managment() {
 
         try {
             jp_adminMainPanel.removeAll();
             jp_adminMainPanel.setLayout(new FlowLayout());
-            Admin_userManagment user = new Admin_userManagment("user");
+            Admin_userManagment user = new Admin_userManagment();
             user.setVisible(true);
             jp_adminMainPanel.add(user);
             jp_adminMainPanel.updateUI();
@@ -699,7 +689,7 @@ public class Admin_workArea extends javax.swing.JFrame {
         try {
             jp_adminMainPanel.removeAll();
             jp_adminMainPanel.setLayout(new FlowLayout());
-            Admin_funderInformation ai = new Admin_funderInformation();
+            Admin_fundManagment ai = new Admin_fundManagment();
             ai.setVisible(true);
             jp_adminMainPanel.add(ai);
             jp_adminMainPanel.updateUI();
@@ -752,7 +742,7 @@ public class Admin_workArea extends javax.swing.JFrame {
         try {
             jp_adminMainPanel.removeAll();
             jp_adminMainPanel.setLayout(new FlowLayout());
-            Admin_userManagment aiq = new Admin_userManagment("admin");
+            Admin_adminManagment aiq = new Admin_adminManagment();
             aiq.setVisible(true);
             jp_adminMainPanel.add(aiq);
             jp_adminMainPanel.updateUI();
@@ -763,16 +753,80 @@ public class Admin_workArea extends javax.swing.JFrame {
 
     }
 
+    private void load_customer_managment() {
+
+        try {
+            jp_adminMainPanel.removeAll();
+            jp_adminMainPanel.setLayout(new FlowLayout());
+            Admin_customerManagment cus_add = new Admin_customerManagment();
+            cus_add.setVisible(true);
+            jp_adminMainPanel.add(cus_add);
+            jp_adminMainPanel.updateUI();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+    }
+
     private void md_HomeMenuVisibleLabel(boolean visible) {
 
-        lb_wk_home.setVisible(visible);
-        lb_wk_customer.setVisible(visible);
-        lb_wk_fund.setVisible(visible);
-        lb_wk_installment.setVisible(visible);
-        lb_wk_cashaccount.setVisible(visible);
-        lb_wk_cus_pendding.setVisible(visible);
-        lb_wk_cus_closecustomer.setVisible(visible);
-        lb_wk_myaccount.setVisible(visible);
+        lb_wk_option1.setVisible(visible);
+        lb_wk_option2.setVisible(visible);
+        lb_wk_option3.setVisible(visible);
+        lb_wk_option4.setVisible(visible);
+        lb_wk_option5.setVisible(visible);
+        lb_wk_option6.setVisible(visible);
+        lb_wk_option7.setVisible(visible);
+        lb_wk_option8.setVisible(visible);
+
+    }
+
+    private void load_cashManagment() {
+
+        try {
+            jp_adminMainPanel.removeAll();
+            jp_adminMainPanel.setLayout(new FlowLayout());
+            Admin_cashManagment am = new Admin_cashManagment();
+            am.setVisible(true);
+            jp_adminMainPanel.add(am);
+            jp_adminMainPanel.updateUI();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    private void load_loanManagment() {
+
+        try {
+            jp_adminMainPanel.removeAll();
+            jp_adminMainPanel.setLayout(new FlowLayout());
+            Admin_loanManagment am = new Admin_loanManagment();
+            am.setVisible(true);
+            jp_adminMainPanel.add(am);
+            jp_adminMainPanel.updateUI();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    private void load_reportManagment() {
+
+        try {
+            jp_adminMainPanel.removeAll();
+            jp_adminMainPanel.setLayout(new FlowLayout());
+            Admin_reportManagment am = new Admin_reportManagment();
+            am.setVisible(true);
+            jp_adminMainPanel.add(am);
+            jp_adminMainPanel.updateUI();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
     }
 }

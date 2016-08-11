@@ -22,12 +22,12 @@ import javax.swing.JOptionPane;
  *
  * @author deepalsuranga
  */
-public class jp_customer_add extends javax.swing.JPanel {
+public class Admin_customerManagment extends javax.swing.JPanel {
 
     /**
      * Creates new form jp_customer_add
      */
-    public jp_customer_add() {
+    public Admin_customerManagment() {
 
         initComponents();
         pro_lookandfeel.Set();
@@ -563,7 +563,6 @@ public class jp_customer_add extends javax.swing.JPanel {
                     .addGroup(jPanel4Layout.createSequentialGroup()
                         .addComponent(jLabel21, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGap(1, 1, 1)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lb_v_period)
                     .addComponent(jLabel3))
@@ -625,9 +624,9 @@ public class jp_customer_add extends javax.swing.JPanel {
 
             try {
                 String gender = "male";
-                if (jp_customer_add.rb_male.isSelected()) {
+                if (Admin_customerManagment.rb_male.isSelected()) {
                     gender = "male";
-                } else if (jp_customer_add.rb_female.isSelected()) {
+                } else if (Admin_customerManagment.rb_female.isSelected()) {
                     gender = "female";
                 }
 
@@ -639,7 +638,7 @@ public class jp_customer_add extends javax.swing.JPanel {
                     ResultSet rs = MC_DB.myConnection().createStatement().executeQuery("SELECT e.`funder_name`, e.`idfunder`, u.`fund`, u.`fund_date`,u.`idfund` FROM `funder` AS e LEFT JOIN `fund` AS u ON e.`idfunder` = u.`funder_idfunder`;");
                     ResultSet rs_idFunder = MC_DB.myConnection().createStatement().executeQuery("SELECT * from funder where idfunder='" + md_funderID() + "' ");
                 } catch (SQLException ex) {
-                    Logger.getLogger(jp_customer_add.class.getName()).log(Level.SEVERE, null, ex);
+                    Logger.getLogger(Admin_customerManagment.class.getName()).log(Level.SEVERE, null, ex);
                 }
 
                 //////////////////////////////////////////////////////////

@@ -10,12 +10,12 @@ package com.softidea.www.private_access.adminstrator;
  *
  * @author deepalsuranga
  */
-public class Admin_ExpanceManagment extends javax.swing.JPanel {
+public class Admin_reportManagment extends javax.swing.JPanel {
 
     /**
-     * Creates new form Admin_ExpanceManagment
+     * Creates new form Admin_installmentManagment
      */
-    public Admin_ExpanceManagment() {
+    public Admin_reportManagment() {
         initComponents();
     }
 

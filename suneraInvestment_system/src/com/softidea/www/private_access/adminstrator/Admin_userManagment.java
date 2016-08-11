@@ -27,21 +27,8 @@ public class Admin_userManagment extends javax.swing.JPanel {
      */
     DefaultTableModel dtm;
 
-    String Type_ty;
-
-    public Admin_userManagment(String type) {
+    public Admin_userManagment() {
         initComponents();
-        switch (type) {
-            case "user":
-                type = this.Type_ty;
-                cb_chooseAdminUser.setSelectedIndex(0);
-
-                break;
-            case "admin":
-                type = this.Type_ty;
-                cb_chooseAdminUser.setSelectedIndex(1);
-                break;
-        }
 
         tb_loadAdmin();
 
@@ -385,17 +372,17 @@ public class Admin_userManagment extends javax.swing.JPanel {
                     Logger.getLogger(Admin_userManagment.class.getName()).log(Level.SEVERE, null, ex);
                 }
             } else if (cb_chooseAdminUser.getSelectedIndex() == 1) {
-                try {
-                    if (password.equals(conpass)) {
-                        MC_DB.update_data("INSERT INTO user_account (us_username,us_password,us_type,us_status) VALUES ('" + tf_Username.getText().trim().toLowerCase() + "','" + tf_Conpassword.getText().trim() + "','admin','11')");
-                        // MC_JavaDataBaseConnection.myConnection().createStatement().executeUpdate("");
-                        JOptionPane.showMessageDialog(this, "Administrator Successfully Added");
-                    }
-
-                } catch (Exception ex) {
-                    Logger.getLogger(Admin_userManagment.class.getName()).log(Level.SEVERE, null, ex);
-
-                }
+//                try {
+//                    if (password.equals(conpass)) {
+//                        MC_DB.update_data("INSERT INTO user_account (us_username,us_password,us_type,us_status) VALUES ('" + tf_Username.getText().trim().toLowerCase() + "','" + tf_Conpassword.getText().trim() + "','admin','11')");
+//                        // MC_JavaDataBaseConnection.myConnection().createStatement().executeUpdate("");
+//                        JOptionPane.showMessageDialog(this, "Administrator Successfully Added");
+//                    }
+//
+//                } catch (Exception ex) {
+//                    Logger.getLogger(Admin_userManagment.class.getName()).log(Level.SEVERE, null, ex);
+//
+//                }
             }
         }
 
@@ -403,7 +390,7 @@ public class Admin_userManagment extends javax.swing.JPanel {
 
     private void tf_UsernameMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tf_UsernameMouseClicked
 
-        int i = JOptionPane.showConfirmDialog(this, "Are You Sure Add "+Type_ty+"?", "Confirm?", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE
+        int i = JOptionPane.showConfirmDialog(this, "Are You Sure Add User?", "Confirm?", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE
         );
         if (i == JOptionPane.YES_OPTION) {
             i = 1;

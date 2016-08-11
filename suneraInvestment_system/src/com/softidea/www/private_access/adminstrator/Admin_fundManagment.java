@@ -21,12 +21,12 @@ import javax.swing.table.DefaultTableModel;
  *
  * @author deepalsuranga
  */
-public class Admin_funderInformation extends javax.swing.JPanel {
+public class Admin_fundManagment extends javax.swing.JPanel {
 
     /**
      * Creates new form Admin_funderInformation
      */
-    public Admin_funderInformation() {
+    public Admin_fundManagment() {
         initComponents();
         pro_lookandfeel.Set();
         tf_funderName.grabFocus();
@@ -333,7 +333,7 @@ public class Admin_funderInformation extends javax.swing.JPanel {
                         new Thread(() -> {
                             try {
                                 MC_DB.myConnection().createStatement().executeUpdate(qu_addFunder);
-                                JOptionPane.showMessageDialog(Admin_funderInformation.this, "Funder " + name + " Successfully Saved!");
+                                JOptionPane.showMessageDialog(Admin_fundManagment.this, "Funder " + name + " Successfully Saved!");
                                 md_clearFunder();
                                 md_loadFunder();
                                 md_tb_load_Funder();
@@ -435,11 +435,11 @@ public class Admin_funderInformation extends javax.swing.JPanel {
                 }
 
             } catch (SQLException ex) {
-                Logger.getLogger(Admin_funderInformation.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(Admin_fundManagment.class.getName()).log(Level.SEVERE, null, ex);
             }
             rs_ldfunder.close();
         } catch (SQLException ex) {
-            Logger.getLogger(Admin_funderInformation.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Admin_fundManagment.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -500,7 +500,7 @@ public class Admin_funderInformation extends javax.swing.JPanel {
             }
             rs11.close();
         } catch (SQLException ex) {
-            Logger.getLogger(Admin_funderInformation.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Admin_fundManagment.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -532,7 +532,7 @@ public class Admin_funderInformation extends javax.swing.JPanel {
                 }
                 rss.close();
             } catch (SQLException ex) {
-                Logger.getLogger(Admin_funderInformation.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(Admin_fundManagment.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
 

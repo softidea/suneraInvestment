@@ -12,12 +12,12 @@ import com.fsczone.www.lookAndFeel.pro_lookandfeel;
  *
  * @author deepalsuranga
  */
-public class admin_customerAdd extends javax.swing.JPanel {
+public class Admin_loanManagment extends javax.swing.JPanel {
 
     /**
      * Creates new form admin_customerAdd
      */
-    public admin_customerAdd() {
+    public Admin_loanManagment() {
         initComponents();
         pro_lookandfeel.Set();
     }
