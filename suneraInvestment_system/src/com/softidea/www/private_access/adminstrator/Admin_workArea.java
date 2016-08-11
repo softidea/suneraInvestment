@@ -50,6 +50,27 @@ public class Admin_workArea extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jp_OmainMenu = new javax.swing.JPanel();
+        bt_Ouser = new javax.swing.JButton();
+        bt_Ocustomer = new javax.swing.JButton();
+        bt_Ofund = new javax.swing.JButton();
+        bt_Oinstallment = new javax.swing.JButton();
+        bt_Ocash = new javax.swing.JButton();
+        bt_Oloan = new javax.swing.JButton();
+        bt_Oadministrator = new javax.swing.JButton();
+        bt_Oreports = new javax.swing.JButton();
+        jPanel4 = new javax.swing.JPanel();
+        lb_customerCount2 = new javax.swing.JLabel();
+        jLabel11 = new javax.swing.JLabel();
+        jLabel12 = new javax.swing.JLabel();
+        lb_funderCount2 = new javax.swing.JLabel();
+        jPanel5 = new javax.swing.JPanel();
+        lb_customerCount3 = new javax.swing.JLabel();
+        jLabel13 = new javax.swing.JLabel();
+        jLabel14 = new javax.swing.JLabel();
+        lb_funderCount3 = new javax.swing.JLabel();
+        jLabel15 = new javax.swing.JLabel();
+        jLabel16 = new javax.swing.JLabel();
         pl_systemExit = new javax.swing.JPanel();
         jl_systemExit = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
@@ -85,6 +106,260 @@ public class Admin_workArea extends javax.swing.JFrame {
         jLabel5 = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
+
+        jp_OmainMenu.setBackground(new java.awt.Color(102, 102, 102));
+        jp_OmainMenu.setMaximumSize(new java.awt.Dimension(1300, 600));
+        jp_OmainMenu.setMinimumSize(new java.awt.Dimension(1300, 600));
+        jp_OmainMenu.setPreferredSize(new java.awt.Dimension(1300, 600));
+        jp_OmainMenu.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        bt_Ouser.setBackground(new java.awt.Color(0, 153, 102));
+        bt_Ouser.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        bt_Ouser.setForeground(new java.awt.Color(255, 255, 255));
+        bt_Ouser.setIcon(new javax.swing.ImageIcon(getClass().getResource("/admin/home/images/admin_buttonMenu_in.png"))); // NOI18N
+        bt_Ouser.setText("User Managment");
+        bt_Ouser.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        bt_Ouser.setMaximumSize(new java.awt.Dimension(200, 200));
+        bt_Ouser.setMinimumSize(new java.awt.Dimension(200, 200));
+        bt_Ouser.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/admin/home/images/admin_buttonMenu.png"))); // NOI18N
+        bt_Ouser.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bt_OuserActionPerformed(evt);
+            }
+        });
+        jp_OmainMenu.add(bt_Ouser, new org.netbeans.lib.awtextra.AbsoluteConstraints(104, 115, 200, 200));
+
+        bt_Ocustomer.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        bt_Ocustomer.setForeground(new java.awt.Color(255, 255, 255));
+        bt_Ocustomer.setIcon(new javax.swing.ImageIcon(getClass().getResource("/admin/home/images/admin_buttonMenu_in.png"))); // NOI18N
+        bt_Ocustomer.setText("Customer Managment");
+        bt_Ocustomer.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        bt_Ocustomer.setMaximumSize(new java.awt.Dimension(200, 200));
+        bt_Ocustomer.setMinimumSize(new java.awt.Dimension(200, 200));
+        bt_Ocustomer.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/admin/home/images/admin_buttonMenu.png"))); // NOI18N
+        bt_Ocustomer.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bt_OcustomerActionPerformed(evt);
+            }
+        });
+        jp_OmainMenu.add(bt_Ocustomer, new org.netbeans.lib.awtextra.AbsoluteConstraints(322, 115, 200, 200));
+
+        bt_Ofund.setBackground(new java.awt.Color(0, 153, 102));
+        bt_Ofund.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        bt_Ofund.setForeground(new java.awt.Color(255, 255, 255));
+        bt_Ofund.setIcon(new javax.swing.ImageIcon(getClass().getResource("/admin/home/images/admin_buttonMenu_in.png"))); // NOI18N
+        bt_Ofund.setText("Fund Managment");
+        bt_Ofund.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        bt_Ofund.setMaximumSize(new java.awt.Dimension(200, 200));
+        bt_Ofund.setMinimumSize(new java.awt.Dimension(200, 200));
+        bt_Ofund.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/admin/home/images/admin_buttonMenu.png"))); // NOI18N
+        bt_Ofund.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bt_OfundActionPerformed(evt);
+            }
+        });
+        jp_OmainMenu.add(bt_Ofund, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 115, 200, 200));
+
+        bt_Oinstallment.setBackground(new java.awt.Color(0, 153, 102));
+        bt_Oinstallment.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        bt_Oinstallment.setForeground(new java.awt.Color(255, 255, 255));
+        bt_Oinstallment.setIcon(new javax.swing.ImageIcon(getClass().getResource("/admin/home/images/admin_buttonMenu_in.png"))); // NOI18N
+        bt_Oinstallment.setText("Installment Management");
+        bt_Oinstallment.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        bt_Oinstallment.setMaximumSize(new java.awt.Dimension(200, 200));
+        bt_Oinstallment.setMinimumSize(new java.awt.Dimension(200, 200));
+        bt_Oinstallment.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/admin/home/images/admin_buttonMenu.png"))); // NOI18N
+        bt_Oinstallment.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bt_OinstallmentActionPerformed(evt);
+            }
+        });
+        jp_OmainMenu.add(bt_Oinstallment, new org.netbeans.lib.awtextra.AbsoluteConstraints(758, 115, 200, 200));
+
+        bt_Ocash.setBackground(new java.awt.Color(0, 153, 102));
+        bt_Ocash.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        bt_Ocash.setForeground(new java.awt.Color(255, 255, 255));
+        bt_Ocash.setIcon(new javax.swing.ImageIcon(getClass().getResource("/admin/home/images/admin_buttonMenu_in.png"))); // NOI18N
+        bt_Ocash.setText("Cash Management");
+        bt_Ocash.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        bt_Ocash.setMaximumSize(new java.awt.Dimension(200, 200));
+        bt_Ocash.setMinimumSize(new java.awt.Dimension(200, 200));
+        bt_Ocash.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/admin/home/images/admin_buttonMenu.png"))); // NOI18N
+        bt_Ocash.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bt_OcashActionPerformed(evt);
+            }
+        });
+        jp_OmainMenu.add(bt_Ocash, new org.netbeans.lib.awtextra.AbsoluteConstraints(104, 333, 200, 200));
+
+        bt_Oloan.setBackground(new java.awt.Color(0, 153, 102));
+        bt_Oloan.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        bt_Oloan.setForeground(new java.awt.Color(255, 255, 255));
+        bt_Oloan.setIcon(new javax.swing.ImageIcon(getClass().getResource("/admin/home/images/admin_buttonMenu_in.png"))); // NOI18N
+        bt_Oloan.setText("Loan Managment");
+        bt_Oloan.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        bt_Oloan.setMaximumSize(new java.awt.Dimension(200, 200));
+        bt_Oloan.setMinimumSize(new java.awt.Dimension(200, 200));
+        bt_Oloan.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/admin/home/images/admin_buttonMenu.png"))); // NOI18N
+        bt_Oloan.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bt_OloanActionPerformed(evt);
+            }
+        });
+        jp_OmainMenu.add(bt_Oloan, new org.netbeans.lib.awtextra.AbsoluteConstraints(322, 333, 200, 200));
+
+        bt_Oadministrator.setBackground(new java.awt.Color(0, 153, 102));
+        bt_Oadministrator.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        bt_Oadministrator.setForeground(new java.awt.Color(255, 255, 255));
+        bt_Oadministrator.setIcon(new javax.swing.ImageIcon(getClass().getResource("/admin/home/images/admin_buttonMenu_in.png"))); // NOI18N
+        bt_Oadministrator.setText("Administrator Managment");
+        bt_Oadministrator.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        bt_Oadministrator.setMaximumSize(new java.awt.Dimension(200, 200));
+        bt_Oadministrator.setMinimumSize(new java.awt.Dimension(200, 200));
+        bt_Oadministrator.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/admin/home/images/admin_buttonMenu.png"))); // NOI18N
+        bt_Oadministrator.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bt_OadministratorActionPerformed(evt);
+            }
+        });
+        jp_OmainMenu.add(bt_Oadministrator, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 333, 200, 200));
+
+        bt_Oreports.setBackground(new java.awt.Color(0, 153, 102));
+        bt_Oreports.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        bt_Oreports.setForeground(new java.awt.Color(255, 255, 255));
+        bt_Oreports.setIcon(new javax.swing.ImageIcon(getClass().getResource("/admin/home/images/admin_buttonMenu_in.png"))); // NOI18N
+        bt_Oreports.setText("Reports Managment");
+        bt_Oreports.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        bt_Oreports.setMaximumSize(new java.awt.Dimension(200, 200));
+        bt_Oreports.setMinimumSize(new java.awt.Dimension(200, 200));
+        bt_Oreports.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/admin/home/images/admin_buttonMenu.png"))); // NOI18N
+        bt_Oreports.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bt_OreportsActionPerformed(evt);
+            }
+        });
+        jp_OmainMenu.add(bt_Oreports, new org.netbeans.lib.awtextra.AbsoluteConstraints(758, 333, 200, 200));
+
+        jPanel4.setBackground(new java.awt.Color(0, 200, 83));
+        jPanel4.setMaximumSize(new java.awt.Dimension(200, 200));
+        jPanel4.setMinimumSize(new java.awt.Dimension(200, 200));
+
+        lb_customerCount2.setBackground(new java.awt.Color(255, 255, 255));
+        lb_customerCount2.setFont(new java.awt.Font("Tahoma", 0, 36)); // NOI18N
+        lb_customerCount2.setForeground(new java.awt.Color(255, 255, 255));
+        lb_customerCount2.setText("FOP");
+
+        jLabel11.setBackground(new java.awt.Color(255, 255, 255));
+        jLabel11.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel11.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel11.setText("Time");
+
+        jLabel12.setBackground(new java.awt.Color(255, 255, 255));
+        jLabel12.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel12.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel12.setText("Date");
+
+        lb_funderCount2.setBackground(new java.awt.Color(255, 255, 255));
+        lb_funderCount2.setFont(new java.awt.Font("Tahoma", 0, 36)); // NOI18N
+        lb_funderCount2.setForeground(new java.awt.Color(255, 255, 255));
+        lb_funderCount2.setText("CIP");
+
+        javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
+        jPanel4.setLayout(jPanel4Layout);
+        jPanel4Layout.setHorizontalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLabel11, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel4Layout.createSequentialGroup()
+                        .addComponent(lb_funderCount2, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel4Layout.createSequentialGroup()
+                        .addComponent(lb_customerCount2, javax.swing.GroupLayout.DEFAULT_SIZE, 107, Short.MAX_VALUE)
+                        .addGap(93, 93, 93))
+                    .addComponent(jLabel12, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
+        );
+        jPanel4Layout.setVerticalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(lb_customerCount2)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(lb_funderCount2)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel11)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel12)
+                .addContainerGap())
+        );
+
+        jp_OmainMenu.add(jPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(976, 115, -1, 200));
+
+        jPanel5.setBackground(new java.awt.Color(0, 200, 83));
+        jPanel5.setMaximumSize(new java.awt.Dimension(200, 200));
+        jPanel5.setMinimumSize(new java.awt.Dimension(200, 200));
+
+        lb_customerCount3.setBackground(new java.awt.Color(255, 255, 255));
+        lb_customerCount3.setFont(new java.awt.Font("Tahoma", 0, 36)); // NOI18N
+        lb_customerCount3.setForeground(new java.awt.Color(255, 255, 255));
+        lb_customerCount3.setText("CCT");
+
+        jLabel13.setBackground(new java.awt.Color(255, 255, 255));
+        jLabel13.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel13.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel13.setText("Time");
+
+        jLabel14.setBackground(new java.awt.Color(255, 255, 255));
+        jLabel14.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel14.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel14.setText("Date");
+
+        lb_funderCount3.setBackground(new java.awt.Color(255, 255, 255));
+        lb_funderCount3.setFont(new java.awt.Font("Tahoma", 0, 36)); // NOI18N
+        lb_funderCount3.setForeground(new java.awt.Color(255, 255, 255));
+        lb_funderCount3.setText("FCT");
+
+        javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
+        jPanel5.setLayout(jPanel5Layout);
+        jPanel5Layout.setHorizontalGroup(
+            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLabel14, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel13, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel5Layout.createSequentialGroup()
+                        .addComponent(lb_customerCount3, javax.swing.GroupLayout.DEFAULT_SIZE, 107, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(lb_funderCount3, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap())
+        );
+        jPanel5Layout.setVerticalGroup(
+            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel5Layout.createSequentialGroup()
+                .addGap(39, 39, 39)
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lb_customerCount3)
+                    .addComponent(lb_funderCount3))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel13)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel14)
+                .addContainerGap())
+        );
+
+        jp_OmainMenu.add(jPanel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(976, 333, -1, 200));
+
+        jLabel15.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel15.setIcon(new javax.swing.ImageIcon(getClass().getResource("/admin/home/images/Vector-PNG-Pictureright.png"))); // NOI18N
+        jLabel15.setVerticalAlignment(javax.swing.SwingConstants.BOTTOM);
+        jp_OmainMenu.add(jLabel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 510, 600));
+
+        jLabel16.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel16.setIcon(new javax.swing.ImageIcon(getClass().getResource("/admin/home/images/vt.png"))); // NOI18N
+        jp_OmainMenu.add(jLabel16, new org.netbeans.lib.awtextra.AbsoluteConstraints(904, 94, 390, 510));
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setMinimumSize(new java.awt.Dimension(1300, 700));
@@ -548,9 +823,16 @@ public class Admin_workArea extends javax.swing.JFrame {
 
     private void lb_wk_option1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lb_wk_option1MouseClicked
 
-        this.dispose();
-        Admin_workArea admin = new Admin_workArea();
-        admin.setVisible(true);
+        try {
+            jp_adminMainPanel.removeAll();
+            jp_adminMainPanel.setLayout(new FlowLayout());
+            jp_OmainMenu.setVisible(true);
+            jp_adminMainPanel.add(jp_OmainMenu);
+            jp_adminMainPanel.updateUI();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
 
     }//GEN-LAST:event_lb_wk_option1MouseClicked
@@ -597,6 +879,38 @@ public class Admin_workArea extends javax.swing.JFrame {
 
     }//GEN-LAST:event_jButton9ActionPerformed
 
+    private void bt_OuserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_OuserActionPerformed
+        load_user_managment();
+    }//GEN-LAST:event_bt_OuserActionPerformed
+
+    private void bt_OcustomerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_OcustomerActionPerformed
+        load_customer_managment();
+    }//GEN-LAST:event_bt_OcustomerActionPerformed
+
+    private void bt_OfundActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_OfundActionPerformed
+        load_fundManagment();
+    }//GEN-LAST:event_bt_OfundActionPerformed
+
+    private void bt_OinstallmentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_OinstallmentActionPerformed
+        load_installmentManagment();
+    }//GEN-LAST:event_bt_OinstallmentActionPerformed
+
+    private void bt_OcashActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_OcashActionPerformed
+        load_cashManagment();
+    }//GEN-LAST:event_bt_OcashActionPerformed
+
+    private void bt_OloanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_OloanActionPerformed
+        load_loanManagment();
+    }//GEN-LAST:event_bt_OloanActionPerformed
+
+    private void bt_OadministratorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_OadministratorActionPerformed
+        load_admin_managment();
+    }//GEN-LAST:event_bt_OadministratorActionPerformed
+
+    private void bt_OreportsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_OreportsActionPerformed
+        load_reportManagment();
+    }//GEN-LAST:event_bt_OreportsActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -631,6 +945,14 @@ public class Admin_workArea extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton bt_Oadministrator;
+    private javax.swing.JButton bt_Ocash;
+    private javax.swing.JButton bt_Ocustomer;
+    private javax.swing.JButton bt_Ofund;
+    private javax.swing.JButton bt_Oinstallment;
+    private javax.swing.JButton bt_Oloan;
+    private javax.swing.JButton bt_Oreports;
+    private javax.swing.JButton bt_Ouser;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
@@ -641,6 +963,12 @@ public class Admin_workArea extends javax.swing.JFrame {
     private javax.swing.JButton jButton9;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
+    private javax.swing.JLabel jLabel12;
+    private javax.swing.JLabel jLabel13;
+    private javax.swing.JLabel jLabel14;
+    private javax.swing.JLabel jLabel15;
+    private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -651,12 +979,19 @@ public class Admin_workArea extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel4;
+    private javax.swing.JPanel jPanel5;
     private javax.swing.JLabel jl_systemExit;
+    public javax.swing.JPanel jp_OmainMenu;
     public static javax.swing.JPanel jp_adminMainPanel;
     private javax.swing.JLabel lb_customerCount;
     private javax.swing.JLabel lb_customerCount1;
+    private javax.swing.JLabel lb_customerCount2;
+    private javax.swing.JLabel lb_customerCount3;
     private javax.swing.JLabel lb_funderCount;
     private javax.swing.JLabel lb_funderCount1;
+    private javax.swing.JLabel lb_funderCount2;
+    private javax.swing.JLabel lb_funderCount3;
     public static javax.swing.JLabel lb_wk_option1;
     public static javax.swing.JLabel lb_wk_option2;
     public static javax.swing.JLabel lb_wk_option3;
@@ -771,7 +1106,7 @@ public class Admin_workArea extends javax.swing.JFrame {
 
     private void md_HomeMenuVisibleLabel(boolean visible) {
 
-        lb_wk_option1.setVisible(visible);
+        //lb_wk_option1.setVisible(visible);
         lb_wk_option2.setVisible(visible);
         lb_wk_option3.setVisible(visible);
         lb_wk_option4.setVisible(visible);

@@ -28,6 +28,7 @@ public class Admin_adminManagment extends javax.swing.JPanel {
 
     public Admin_adminManagment() {
         initComponents();
+        
     }
 
     @SuppressWarnings("unchecked")
@@ -314,7 +315,7 @@ public class Admin_adminManagment extends javax.swing.JPanel {
 
             try {
                 if (password.equals(conpass)) {
-                    MC_DB.update_data("INSERT INTO user_account (us_fullname,us_username,us_password,us_type,us_status) VALUES ('" + tf_Username.getText().trim().toLowerCase() + "','" + tf_Conpassword.getText().trim() + "','admin','11')");
+                    MC_DB.update_data("INSERT INTO user_account (us_fullname,us_username,us_password,us_type,us_status) VALUES ('" + tf_adminFullName.getText().trim().toLowerCase() + "','" + tf_Username.getText().trim().toLowerCase() + "','" + tf_Conpassword.getText().trim() + "','admin','11')");
                     // MC_JavaDataBaseConnection.myConnection().createStatement().executeUpdate("");
                     JOptionPane.showMessageDialog(this, "Administrator Successfully Added");
                 }

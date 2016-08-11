@@ -13,10 +13,13 @@ import java.awt.event.KeyEvent;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -34,7 +37,7 @@ public class Admin_customerManagment extends javax.swing.JPanel {
         tf_nic.grabFocus();
 
         md_loadFunder();
-//        md_tb_loadCustomer();
+        md_tb_loadCustomer();
 
         //DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         //get current date time with Date()
@@ -99,6 +102,8 @@ public class Admin_customerManagment extends javax.swing.JPanel {
         lb_v_profit = new javax.swing.JLabel();
         lb_v_period = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
+        lb_v_finalDate = new javax.swing.JLabel();
+        jLabel24 = new javax.swing.JLabel();
 
         setBackground(new java.awt.Color(102, 102, 102));
 
@@ -527,6 +532,15 @@ public class Admin_customerManagment extends javax.swing.JPanel {
         jLabel3.setForeground(new java.awt.Color(255, 255, 255));
         jLabel3.setText("Period :");
 
+        lb_v_finalDate.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        lb_v_finalDate.setForeground(new java.awt.Color(255, 255, 255));
+        lb_v_finalDate.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        lb_v_finalDate.setText("0000-00-00");
+
+        jLabel24.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel24.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel24.setText("Total Payble Amount:");
+
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
         jPanel4Layout.setHorizontalGroup(
@@ -534,6 +548,7 @@ public class Admin_customerManagment extends javax.swing.JPanel {
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jLabel24, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jLabel21, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jLabel23, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -547,13 +562,14 @@ public class Admin_customerManagment extends javax.swing.JPanel {
                     .addComponent(lb_v_installment, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(lb_v_profit, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 138, Short.MAX_VALUE)
                     .addComponent(lb_v_totalAmount, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(lb_v_loanAmount, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(lb_v_loanAmount, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(lb_v_finalDate, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel4Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap(24, Short.MAX_VALUE)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
                     .addComponent(lb_v_loanAmount))
@@ -574,7 +590,11 @@ public class Admin_customerManagment extends javax.swing.JPanel {
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(lb_v_profit, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jLabel23, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(10, 10, 10))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jLabel24, javax.swing.GroupLayout.DEFAULT_SIZE, 21, Short.MAX_VALUE)
+                    .addComponent(lb_v_finalDate, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(33, 33, 33))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
@@ -761,6 +781,7 @@ public class Admin_customerManagment extends javax.swing.JPanel {
         if (key == KeyEvent.VK_ENTER) {
 
             md_profitCalculation();
+            calDate();
         }
 
     }//GEN-LAST:event_tf_periodKeyReleased
@@ -815,6 +836,7 @@ public class Admin_customerManagment extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel21;
     private javax.swing.JLabel jLabel22;
     private javax.swing.JLabel jLabel23;
+    private javax.swing.JLabel jLabel24;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel7;
@@ -825,6 +847,7 @@ public class Admin_customerManagment extends javax.swing.JPanel {
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JLabel lb_v_finalDate;
     private javax.swing.JLabel lb_v_installment;
     private javax.swing.JLabel lb_v_loanAmount;
     private javax.swing.JLabel lb_v_period;
@@ -946,47 +969,51 @@ public class Admin_customerManagment extends javax.swing.JPanel {
 
     private void md_profitCalculation() {
 
-        Double loanAmount = Double.parseDouble(tf_loanAmount.getText().trim());
-        Double extraInterest = Double.parseDouble(tf_extraInterest.getText().trim());
-        Double period = Double.parseDouble(tf_period.getText().trim());
+        try {
+            Double loanAmount = Double.parseDouble(tf_loanAmount.getText().trim());
+            Double extraInterest = Double.parseDouble(tf_extraInterest.getText().trim());
+            Double period = Double.parseDouble(tf_period.getText().trim());
 
-        Double fullAmount = loanAmount + extraInterest;
-        Double profit = fullAmount - loanAmount;
-        Double installment = fullAmount / period;
+            Double fullAmount = loanAmount + extraInterest;
+            Double profit = fullAmount - loanAmount;
+            Double installment = fullAmount / period;
 
-        Long roundloanAmount = Math.round(loanAmount);
-        Long roundfullAmount = Math.round(fullAmount);
-        Long roundInstallment = Math.round(installment);
-        Long roundProfit = Math.round(profit);
+            Long roundloanAmount = Math.round(loanAmount);
+            Long roundfullAmount = Math.round(fullAmount);
+            Long roundInstallment = Math.round(installment);
+            Long roundProfit = Math.round(profit);
 
-        int loanAmount_int = roundloanAmount.intValue();
-        int fullAmount_int = roundfullAmount.intValue();
-        int installment_int = roundInstallment.intValue();
-        int Profit_int = roundProfit.intValue();
-        int Period_int = period.intValue();
+            int loanAmount_int = roundloanAmount.intValue();
+            int fullAmount_int = roundfullAmount.intValue();
+            int installment_int = roundInstallment.intValue();
+            int Profit_int = roundProfit.intValue();
+            int Period_int = period.intValue();
 
-        String loanAmount_text = loanAmount_int + ".00";
-        String fullAmount_text = fullAmount_int + ".00";
-        String installment_text = installment_int + ".00";
-        String Profit_text = Profit_int + ".00";
-        String Period_text = Period_int + "";
+            String loanAmount_text = loanAmount_int + ".00";
+            String fullAmount_text = fullAmount_int + ".00";
+            String installment_text = installment_int + ".00";
+            String Profit_text = Profit_int + ".00";
+            String Period_text = Period_int + "";
 
-        lb_v_period.setText("");
-        lb_v_period.setText(Period_text);
+            lb_v_period.setText("");
+            lb_v_period.setText(Period_text);
 
-        lb_v_totalAmount.setText("");
-        lb_v_totalAmount.setText(fullAmount_text);
+            lb_v_totalAmount.setText("");
+            lb_v_totalAmount.setText(fullAmount_text);
 
-        lb_v_installment.setText("");
-        lb_v_installment.setText(installment_text);
+            lb_v_installment.setText("");
+            lb_v_installment.setText(installment_text);
 
-        lb_v_loanAmount.setText("");
-        lb_v_loanAmount.setText(loanAmount_text);
+            lb_v_loanAmount.setText("");
+            lb_v_loanAmount.setText(loanAmount_text);
 
-        lb_v_profit.setText("");
-        lb_v_profit.setText(Profit_text);
+            lb_v_profit.setText("");
+            lb_v_profit.setText(Profit_text);
 
-        Toolkit.getDefaultToolkit().beep();
+            Toolkit.getDefaultToolkit().beep();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
     }
 
@@ -1022,4 +1049,93 @@ public class Admin_customerManagment extends javax.swing.JPanel {
 //        
 //        
 //    }
+    private void calDate() {
+        if (cb_periodType.getSelectedIndex() == 1) {
+            dateCounter(2);
+        } else {
+            dateCounter(1);
+        }
+    }
+
+    private void dateCounter(int daysToSkip) {
+        int dayCount = Integer.parseInt(tf_period.getText());
+        Calendar cd = Calendar.getInstance();
+        int day = cd.get(Calendar.DAY_OF_WEEK);
+        int datediff = 0;
+        if (daysToSkip == 2) {
+            datediff = Calendar.SATURDAY - day;
+        } else {
+            datediff = Calendar.SUNDAY - day;
+            if (datediff < 0) {
+                datediff += 7;
+            }
+        }
+        System.out.println(datediff);
+        dayCount -= datediff;
+//        dayCount -= daysToSkip;
+        cd.add(Calendar.DATE, datediff);
+        cd.add(Calendar.DATE, daysToSkip);
+        System.out.println(cd.getTime());
+        while (dayCount >= 0) {
+            if (daysToSkip == 2) {
+                if (cd.get(Calendar.DAY_OF_WEEK) != Calendar.SATURDAY) {
+                    dayCount--;
+                }
+            } else if (cd.get(Calendar.DAY_OF_WEEK) != Calendar.SUNDAY) {
+                dayCount--;
+                System.out.println(dayCount);
+            }
+
+            cd.add(Calendar.DATE, 1);
+            System.out.println(cd.getTime());
+        }
+        String tt_v_finalDate = cd.getTime() + "";
+        String text = tt_v_finalDate;
+        String[] split = text.split(" ");
+        String t1 = split[0];
+        String t2 = split[1];
+        String t3 = split[2];
+        String t4 = split[5];
+
+        lb_v_finalDate.setText(t1 + "-" + t2 + "-" + t3 + "-" + t4);
+        String notformat = t2 + "-" + t3 + "-" + t4;
+        Date d = new Date(notformat);
+        // JOptionPane.showMessageDialog(this, d);
+
+    }
+
+    private void md_tb_loadCustomer() {
+        DefaultTableModel dtm;
+        try {
+
+            ResultSet rs;
+            //rs = MC_JavaDataBaseConnection.search_AlluseTable("funder");
+            dtm = (DefaultTableModel) tb_customerAddView.getModel();
+            dtm.setRowCount(0);
+
+            rs = MC_DB.myConnection().createStatement().executeQuery("SELECT * FROM customer ORDER BY idcustomer DESC");
+            while (rs.next()) {
+                int cus_id = rs.getRow();
+                String cus_nic = rs.getString("cus_nic");
+                String cus_name = rs.getString("cus_fullname");
+                String cus_address = rs.getString("cus_address");
+                String cus_contact = rs.getString("cus_contact");
+                String cus_gender = rs.getString("cus_gender");
+
+                Vector v=new Vector();
+                v.add(rs.getRow());
+                v.add(rs.getString("cus_nic"));
+                v.add(rs.getString("cus_fullname"));
+                v.add(rs.getString("cus_address"));
+                v.add(rs.getString("cus_contact"));
+                v.add(rs.getString("cus_gender"));
+                dtm.addRow(v);
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+    }
+
 }

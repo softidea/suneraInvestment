@@ -30,7 +30,7 @@ public class Admin_userManagment extends javax.swing.JPanel {
     public Admin_userManagment() {
         initComponents();
 
-        tb_loadAdmin();
+        tb_load_users();
 
     }
 
@@ -46,9 +46,6 @@ public class Admin_userManagment extends javax.swing.JPanel {
         jPanel2 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tb_viewUsers = new javax.swing.JTable();
-        jPanel3 = new javax.swing.JPanel();
-        jScrollPane2 = new javax.swing.JScrollPane();
-        tb_viewAdmins = new javax.swing.JTable();
         jPanel1 = new javax.swing.JPanel();
         bt_AddAdminOrUser = new javax.swing.JButton();
         tf_Username = new javax.swing.JTextField();
@@ -57,8 +54,8 @@ public class Admin_userManagment extends javax.swing.JPanel {
         lb_addRoute4 = new javax.swing.JLabel();
         tf_Password = new javax.swing.JTextField();
         tf_Conpassword = new javax.swing.JTextField();
-        cb_chooseAdminUser = new javax.swing.JComboBox();
         lb_addRoute6 = new javax.swing.JLabel();
+        tf_FullName = new javax.swing.JTextField();
         jPanel4 = new javax.swing.JPanel();
         lb_addRoute7 = new javax.swing.JLabel();
         tf_newPassword = new javax.swing.JTextField();
@@ -94,56 +91,13 @@ public class Admin_userManagment extends javax.swing.JPanel {
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 922, Short.MAX_VALUE)
                 .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                .addContainerGap())
-        );
-
-        jPanel3.setBackground(new java.awt.Color(66, 66, 66));
-        jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Add Administrator", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 14), new java.awt.Color(255, 255, 255))); // NOI18N
-        jPanel3.setPreferredSize(new java.awt.Dimension(484, 250));
-
-        tb_viewAdmins.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-
-            },
-            new String [] {
-                "No", "Username", "Password", "Status"
-            }
-        ) {
-            boolean[] canEdit = new boolean [] {
-                false, false, true, false
-            };
-
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit [columnIndex];
-            }
-        });
-        tb_viewAdmins.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                tb_viewAdminsMouseClicked(evt);
-            }
-        });
-        jScrollPane2.setViewportView(tb_viewAdmins);
-
-        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
-        jPanel3.setLayout(jPanel3Layout);
-        jPanel3Layout.setHorizontalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel3Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 922, Short.MAX_VALUE)
-                .addContainerGap())
-        );
-        jPanel3Layout.setVerticalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel3Layout.createSequentialGroup()
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 139, Short.MAX_VALUE)
+                .addComponent(jScrollPane1)
                 .addContainerGap())
         );
 
@@ -191,23 +145,19 @@ public class Admin_userManagment extends javax.swing.JPanel {
         tf_Conpassword.setMaximumSize(new java.awt.Dimension(300, 40));
         tf_Conpassword.setMinimumSize(new java.awt.Dimension(300, 40));
 
-        cb_chooseAdminUser.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        cb_chooseAdminUser.setMaximumRowCount(3);
-        cb_chooseAdminUser.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "User", "Administrator" }));
-        cb_chooseAdminUser.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cb_chooseAdminUserActionPerformed(evt);
-            }
-        });
-        cb_chooseAdminUser.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
-            public void propertyChange(java.beans.PropertyChangeEvent evt) {
-                cb_chooseAdminUserPropertyChange(evt);
-            }
-        });
-
         lb_addRoute6.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         lb_addRoute6.setForeground(new java.awt.Color(255, 255, 255));
-        lb_addRoute6.setText("User Type:");
+        lb_addRoute6.setText("Full Name:");
+
+        tf_FullName.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        tf_FullName.setEnabled(false);
+        tf_FullName.setMaximumSize(new java.awt.Dimension(300, 40));
+        tf_FullName.setMinimumSize(new java.awt.Dimension(300, 40));
+        tf_FullName.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tf_FullNameMouseClicked(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -217,19 +167,17 @@ public class Admin_userManagment extends javax.swing.JPanel {
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                        .addComponent(cb_chooseAdminUser, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                .addComponent(lb_addRoute3, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(tf_Username, javax.swing.GroupLayout.DEFAULT_SIZE, 300, Short.MAX_VALUE))
-                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                .addComponent(lb_addRoute4, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(tf_Password, javax.swing.GroupLayout.DEFAULT_SIZE, 300, Short.MAX_VALUE))
-                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                .addComponent(lb_addRoute5, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(tf_Conpassword, javax.swing.GroupLayout.DEFAULT_SIZE, 300, Short.MAX_VALUE))
-                            .addComponent(bt_AddAdminOrUser, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addComponent(lb_addRoute6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addComponent(lb_addRoute3, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(tf_Username, javax.swing.GroupLayout.DEFAULT_SIZE, 300, Short.MAX_VALUE))
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                        .addComponent(lb_addRoute4, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(tf_Password, javax.swing.GroupLayout.DEFAULT_SIZE, 300, Short.MAX_VALUE))
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                        .addComponent(lb_addRoute5, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(tf_Conpassword, javax.swing.GroupLayout.DEFAULT_SIZE, 300, Short.MAX_VALUE))
+                    .addComponent(bt_AddAdminOrUser, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lb_addRoute6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(tf_FullName, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -237,8 +185,8 @@ public class Admin_userManagment extends javax.swing.JPanel {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addContainerGap(16, Short.MAX_VALUE)
                 .addComponent(lb_addRoute6)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(cb_chooseAdminUser, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(7, 7, 7)
+                .addComponent(tf_FullName, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(lb_addRoute3)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -280,7 +228,6 @@ public class Admin_userManagment extends javax.swing.JPanel {
 
         lb_loadusernameToPasswordChange.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
         lb_loadusernameToPasswordChange.setForeground(new java.awt.Color(255, 255, 255));
-        lb_loadusernameToPasswordChange.setText("Select Table Row First");
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
@@ -327,20 +274,15 @@ public class Admin_userManagment extends javax.swing.JPanel {
                     .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, 954, Short.MAX_VALUE))
+                .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 176, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -360,30 +302,18 @@ public class Admin_userManagment extends javax.swing.JPanel {
         int w = JOptionPane.showConfirmDialog(this, "Are You Sure?", "Add Access", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
 
         if (w == JOptionPane.YES_OPTION) {
-            if (cb_chooseAdminUser.getSelectedIndex() == 0) {
-                try {
-                    if (password.equals(conpass)) {
 
-                        MC_DB.update_data("INSERT INTO user_account (us_username,us_password,us_type,us_status) VALUES ('" + tf_Username.getText().trim().toLowerCase() + "','" + tf_Conpassword.getText().trim() + "','user','01')");
-                        // MC_JavaDataBaseConnection.myConnection().createStatement().executeUpdate("");
-                        JOptionPane.showMessageDialog(this, "User Successfully Added");
-                    }
-                } catch (Exception ex) {
-                    Logger.getLogger(Admin_userManagment.class.getName()).log(Level.SEVERE, null, ex);
+            try {
+                if (password.equals(conpass)) {
+
+                    MC_DB.update_data("INSERT INTO user_account (us_fullname,us_username,us_password,us_type,us_status) VALUES ('" + tf_FullName.getText().trim().toLowerCase() + "','" + tf_Username.getText().trim().toLowerCase() + "','" + tf_Conpassword.getText().trim() + "','user','01')");
+                    // MC_JavaDataBaseConnection.myConnection().createStatement().executeUpdate("");
+                    JOptionPane.showMessageDialog(this, "User Successfully Added");
                 }
-            } else if (cb_chooseAdminUser.getSelectedIndex() == 1) {
-//                try {
-//                    if (password.equals(conpass)) {
-//                        MC_DB.update_data("INSERT INTO user_account (us_username,us_password,us_type,us_status) VALUES ('" + tf_Username.getText().trim().toLowerCase() + "','" + tf_Conpassword.getText().trim() + "','admin','11')");
-//                        // MC_JavaDataBaseConnection.myConnection().createStatement().executeUpdate("");
-//                        JOptionPane.showMessageDialog(this, "Administrator Successfully Added");
-//                    }
-//
-//                } catch (Exception ex) {
-//                    Logger.getLogger(Admin_userManagment.class.getName()).log(Level.SEVERE, null, ex);
-//
-//                }
+            } catch (HeadlessException ex) {
+                Logger.getLogger(Admin_userManagment.class.getName()).log(Level.SEVERE, null, ex);
             }
+
         }
 
     }//GEN-LAST:event_bt_AddAdminOrUserActionPerformed
@@ -405,82 +335,56 @@ public class Admin_userManagment extends javax.swing.JPanel {
 
     }//GEN-LAST:event_tf_UsernameMouseClicked
 
-    private void cb_chooseAdminUserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cb_chooseAdminUserActionPerformed
-
-        if (cb_chooseAdminUser.getSelectedIndex() == 0) {
-            bt_AddAdminOrUser.setText("Add New User");
-        } else if (cb_chooseAdminUser.getSelectedIndex() == 1) {
-            bt_AddAdminOrUser.setText("Add NewAdministartor");
-        }
-
-    }//GEN-LAST:event_cb_chooseAdminUserActionPerformed
-
-    private void cb_chooseAdminUserPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_cb_chooseAdminUserPropertyChange
-
-        if (cb_chooseAdminUser.getSelectedIndex() == 0) {
-            bt_AddAdminOrUser.setText("Add New User");
-        } else if (cb_chooseAdminUser.getSelectedIndex() == 1) {
-            bt_AddAdminOrUser.setText("Add New Administartor");
-        }
-
-    }//GEN-LAST:event_cb_chooseAdminUserPropertyChange
-
     private void bt_updatePasswordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_updatePasswordActionPerformed
 
-        if (!(tf_newPassword.equals(""))) {
-            String qu_up_adminPassword = "UPDATE user_account SET us_password = '" + tf_newPassword.getText().trim() + "' WHERE `us_username` = '" + lb_loadusernameToPasswordChange.getText() + "' ;";
+        if (lb_loadusernameToPasswordChange.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Firstly,Please select name of administrator \n in the table!");
+        } else {
 
-            MC_DB.update_data(qu_up_adminPassword);
-            JOptionPane.showMessageDialog(this, dtb + " :Password is successfully updated!");
-            tf_newPassword.setText("");
-            lb_loadusernameToPasswordChange.setText("Select Table Row First");
+            if (!(tf_newPassword.equals(""))) {
+                String qu_up_adminPassword = "UPDATE user_account SET us_password = '" + tf_newPassword.getText().trim() + "' WHERE `us_username` = '" + lb_loadusernameToPasswordChange.getText() + "' ;";
+
+                MC_DB.update_data(qu_up_adminPassword);
+                JOptionPane.showMessageDialog(this, dtb + " :Password is successfully updated!");
+                tf_newPassword.setText("");
+                lb_loadusernameToPasswordChange.setText("Select Table Row First");
+            }
         }
-
 
     }//GEN-LAST:event_bt_updatePasswordActionPerformed
     String dtb;
-    private void tb_viewAdminsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tb_viewAdminsMouseClicked
-        try {
-            dtb = (String) dtm.getValueAt(tb_viewAdmins.getSelectedRow(), 1);
-            lb_loadusernameToPasswordChange.setText(dtb);
-
-        } catch (HeadlessException e) {
-            e.printStackTrace();
-        }
-
-    }//GEN-LAST:event_tb_viewAdminsMouseClicked
+    private void tf_FullNameMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tf_FullNameMouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_tf_FullNameMouseClicked
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton bt_AddAdminOrUser;
     private javax.swing.JButton bt_updatePassword;
-    private javax.swing.JComboBox cb_chooseAdminUser;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
-    private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JLabel lb_addRoute3;
     private javax.swing.JLabel lb_addRoute4;
     private javax.swing.JLabel lb_addRoute5;
     private javax.swing.JLabel lb_addRoute6;
     private javax.swing.JLabel lb_addRoute7;
     private javax.swing.JLabel lb_loadusernameToPasswordChange;
-    private javax.swing.JTable tb_viewAdmins;
     private javax.swing.JTable tb_viewUsers;
     private javax.swing.JTextField tf_Conpassword;
+    private javax.swing.JTextField tf_FullName;
     private javax.swing.JTextField tf_Password;
     private javax.swing.JTextField tf_Username;
     private javax.swing.JTextField tf_newPassword;
     // End of variables declaration//GEN-END:variables
 
-    private void tb_loadAdmin() {
+    private void tb_load_users() {
         try {
             ResultSet rs;
-            rs = MC_DB.search_dataOne("user_account", "us_type", "admin");
+            rs = MC_DB.search_dataOne("user_account", "us_type", "user");
 
-            dtm = (DefaultTableModel) tb_viewAdmins.getModel();
+            dtm = (DefaultTableModel) tb_viewUsers.getModel();
             dtm.setRowCount(0);
 
             while (rs.next()) {
