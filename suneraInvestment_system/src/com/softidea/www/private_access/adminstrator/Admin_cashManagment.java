@@ -2,14 +2,66 @@
 
 package com.softidea.www.private_access.adminstrator;
 
+import com.softidea.www.public_connection.MC_DB;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.Statement;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import javax.swing.JOptionPane;
+
 
 public class Admin_cashManagment extends javax.swing.JPanel {
 
    
     public Admin_cashManagment() {
         initComponents();
+        setCurrentDate();
     }
+   
+    //saving wihdrawal to cash account
+    public void saveWithdrawCash(){
+        try {
+            String withdrawDate = new SimpleDateFormat("YYYY-MM-dd").format(new Date());
+            String withdrawAmount=tf_withdrawalAmount.getText();
+            String withdrawDes=ta_withdrawlDescription.getText();
+            String cashType="Withdrawal";
+            String cashStatus="Active";
+            if(!(withdrawAmount.isEmpty() && withdrawDes.isEmpty())){
+                           
+//               
+               //////////////////////////////////////////////////////////////////////////////
+               
+            ResultSet rs1;
+            String qry_save_withdraw = "INSERT INTO cash_account(`date`,amount,cash_ac_type,`cash_ac_discription`,cash_ac_status) VALUES ('"+withdrawDate+"','"+withdrawAmount+"','"+cashType+"','"+withdrawDes+"','"+cashStatus+"');";
+            //String qry_add_customer = "CALL addCus('" + nic.trim().toUpperCase() + "','" + fullname.trim() + "','" + address.trim() + "','" + phoneNumber.trim() + "','" + gender_o + "');";
+            Connection myConnection = MC_DB.myConnection();
+            Statement createStatement = myConnection.createStatement();
+            createStatement.executeUpdate(qry_save_withdraw);
+            /////////////////////////////////////////////////////////////////
+            long cashId = 0;
+            PreparedStatement getLastInsertId = myConnection.prepareStatement("SELECT LAST_INSERT_ID()");
+            ResultSet rslast = getLastInsertId.executeQuery();
+            if (rslast.next()) {
+                cashId = rslast.getLong("last_insert_id()");
 
+            }
+            
+            
+               
+               ////////////////////////////////////////////////////////////////////////////
+               
+                
+                JOptionPane.showMessageDialog(null, "Cash Withdraw Successfully");
+            }
+            
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    
+    }
+    //saving withdrawal to cash account
    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -17,17 +69,17 @@ public class Admin_cashManagment extends javax.swing.JPanel {
 
         jPanel1 = new javax.swing.JPanel();
         jLabel4 = new javax.swing.JLabel();
-        dt_startDate = new com.toedter.calendar.JDateChooser();
-        dt_endDate = new com.toedter.calendar.JDateChooser();
+        dc_startDate = new com.toedter.calendar.JDateChooser();
+        dc_endDate = new com.toedter.calendar.JDateChooser();
         jLabel5 = new javax.swing.JLabel();
         jButton2 = new javax.swing.JButton();
         jLabel6 = new javax.swing.JLabel();
         cb_cashType = new javax.swing.JComboBox();
         jPanel3 = new javax.swing.JPanel();
-        tf_fundAmount = new javax.swing.JTextField();
+        tf_withdrawalAmount = new javax.swing.JTextField();
         lb_addRoute4 = new javax.swing.JLabel();
         jScrollPane3 = new javax.swing.JScrollPane();
-        ta_FundDiscription = new javax.swing.JTextArea();
+        ta_withdrawlDescription = new javax.swing.JTextArea();
         bt_addFund1 = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         tb_cashAccount = new javax.swing.JTable();
@@ -77,7 +129,7 @@ public class Admin_cashManagment extends javax.swing.JPanel {
         jLabel6.setText("Select Cash Type :");
 
         cb_cashType.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        cb_cashType.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Funds", "Loans", "Withdrawals" }));
+        cb_cashType.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "All", "Funds", "Loans", "Withdrawals" }));
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -87,14 +139,14 @@ public class Admin_cashManagment extends javax.swing.JPanel {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel4)
-                    .addComponent(dt_startDate, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(dc_startDate, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLabel5))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(6, 6, 6)
-                        .addComponent(dt_endDate, javax.swing.GroupLayout.PREFERRED_SIZE, 253, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(dc_endDate, javax.swing.GroupLayout.PREFERRED_SIZE, 253, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -120,25 +172,25 @@ public class Admin_cashManagment extends javax.swing.JPanel {
                             .addComponent(jLabel5, javax.swing.GroupLayout.Alignment.TRAILING))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(dt_endDate, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(dc_endDate, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(dt_startDate, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                            .addComponent(dc_startDate, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         jPanel3.setBackground(new java.awt.Color(66, 66, 66));
 
-        tf_fundAmount.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        tf_fundAmount.setMaximumSize(new java.awt.Dimension(300, 40));
-        tf_fundAmount.setMinimumSize(new java.awt.Dimension(300, 40));
+        tf_withdrawalAmount.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        tf_withdrawalAmount.setMaximumSize(new java.awt.Dimension(300, 40));
+        tf_withdrawalAmount.setMinimumSize(new java.awt.Dimension(300, 40));
 
         lb_addRoute4.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         lb_addRoute4.setForeground(new java.awt.Color(255, 255, 255));
         lb_addRoute4.setText("Withdrawal Amount :");
 
-        ta_FundDiscription.setColumns(20);
-        ta_FundDiscription.setRows(5);
-        jScrollPane3.setViewportView(ta_FundDiscription);
+        ta_withdrawlDescription.setColumns(20);
+        ta_withdrawlDescription.setRows(5);
+        jScrollPane3.setViewportView(ta_withdrawlDescription);
 
         bt_addFund1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         bt_addFund1.setForeground(new java.awt.Color(255, 255, 255));
@@ -162,7 +214,7 @@ public class Admin_cashManagment extends javax.swing.JPanel {
                     .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                         .addComponent(jScrollPane3)
                         .addComponent(lb_addRoute4, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(tf_fundAmount, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(tf_withdrawalAmount, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(bt_addFund1, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
@@ -172,7 +224,7 @@ public class Admin_cashManagment extends javax.swing.JPanel {
                 .addContainerGap()
                 .addComponent(lb_addRoute4)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(tf_fundAmount, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(tf_withdrawalAmount, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 66, Short.MAX_VALUE)
                 .addGap(10, 10, 10)
@@ -410,7 +462,7 @@ public class Admin_cashManagment extends javax.swing.JPanel {
     }//GEN-LAST:event_bt_addFundActionPerformed
 
     private void bt_addFund1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_addFund1ActionPerformed
-        // TODO add your handling code here:
+       
     }//GEN-LAST:event_bt_addFund1ActionPerformed
 
 
@@ -418,8 +470,8 @@ public class Admin_cashManagment extends javax.swing.JPanel {
     private javax.swing.JButton bt_addFund;
     private javax.swing.JButton bt_addFund1;
     private javax.swing.JComboBox cb_cashType;
-    private com.toedter.calendar.JDateChooser dt_endDate;
-    private com.toedter.calendar.JDateChooser dt_startDate;
+    private com.toedter.calendar.JDateChooser dc_endDate;
+    private com.toedter.calendar.JDateChooser dc_startDate;
     private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
@@ -446,8 +498,13 @@ public class Admin_cashManagment extends javax.swing.JPanel {
     private javax.swing.JLabel lb_v_totalCapital;
     private javax.swing.JLabel lb_v_totalFund;
     private javax.swing.JLabel lb_v_totalLoan;
-    private javax.swing.JTextArea ta_FundDiscription;
+    private javax.swing.JTextArea ta_withdrawlDescription;
     private javax.swing.JTable tb_cashAccount;
-    private javax.swing.JTextField tf_fundAmount;
+    private javax.swing.JTextField tf_withdrawalAmount;
     // End of variables declaration//GEN-END:variables
+
+    private void setCurrentDate() {
+       dc_startDate.setDate(new Date());
+       dc_endDate.setDate(new Date());
+    }
 }
