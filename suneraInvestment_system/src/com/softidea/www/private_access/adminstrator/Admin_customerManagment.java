@@ -16,6 +16,7 @@ import java.awt.event.KeyEvent;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Vector;
@@ -385,8 +386,13 @@ public class Admin_customerManagment extends javax.swing.JPanel {
         jLabel12.setForeground(new java.awt.Color(255, 255, 255));
         jLabel12.setText("Loan No :");
 
-        tf_loanNumber.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        tf_loanNumber.setText("LON-W-00000000-00000");
+        tf_loanNumber.setEditable(false);
+        tf_loanNumber.setBackground(new java.awt.Color(255, 255, 255));
+        tf_loanNumber.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        tf_loanNumber.setForeground(new java.awt.Color(255, 51, 51));
+        tf_loanNumber.setText("LO-00000000-0X-0");
+        tf_loanNumber.setToolTipText("");
+        tf_loanNumber.setDisabledTextColor(new java.awt.Color(255, 255, 255));
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -433,6 +439,11 @@ public class Admin_customerManagment extends javax.swing.JPanel {
 
         cb_selectFund.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         cb_selectFund.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "No Fund" }));
+        cb_selectFund.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                cb_selectFundItemStateChanged(evt);
+            }
+        });
         cb_selectFund.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
                 cb_selectFundKeyReleased(evt);
@@ -458,6 +469,11 @@ public class Admin_customerManagment extends javax.swing.JPanel {
 
         cb_mainInstallmentPeriodType.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         cb_mainInstallmentPeriodType.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Dailly", "Weekly", "Monthly" }));
+        cb_mainInstallmentPeriodType.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                cb_mainInstallmentPeriodTypeItemStateChanged(evt);
+            }
+        });
         cb_mainInstallmentPeriodType.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
                 cb_mainInstallmentPeriodTypeKeyReleased(evt);
@@ -731,8 +747,8 @@ public class Admin_customerManagment extends javax.swing.JPanel {
 
                 ////////////////////////////////////////////////////////////////
                 try {
-                    ResultSet rs = MC_DB.myConnection().createStatement().executeQuery("SELECT e.`funder_name`, e.`idfunder`, u.`fund`, u.`fund_date`,u.`idfund` FROM `funder` AS e LEFT JOIN `fund` AS u ON e.`idfunder` = u.`funder_idfunder`;");
-                    ResultSet rs_idFunder = MC_DB.myConnection().createStatement().executeQuery("SELECT * from funder where idfunder='" + md_funderID() + "' ");
+                    MC_DB.myConnection().createStatement().executeQuery("SELECT e.`funder_name`, e.`idfunder`, u.`fund`, u.`fund_date`,u.`idfund` FROM `funder` AS e LEFT JOIN `fund` AS u ON e.`idfunder` = u.`funder_idfunder`;");
+                    MC_DB.myConnection().createStatement().executeQuery("SELECT * from funder where idfunder='" + md_funderID() + "' ");
                 } catch (SQLException ex) {
                     Logger.getLogger(Admin_customerManagment.class.getName()).log(Level.SEVERE, null, ex);
                 }
@@ -1068,6 +1084,18 @@ public class Admin_customerManagment extends javax.swing.JPanel {
 
     }//GEN-LAST:event_tf_nicKeyTyped
 
+    private void cb_mainInstallmentPeriodTypeItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cb_mainInstallmentPeriodTypeItemStateChanged
+
+        md_genLoadId();
+
+    }//GEN-LAST:event_cb_mainInstallmentPeriodTypeItemStateChanged
+
+    private void cb_selectFundItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cb_selectFundItemStateChanged
+
+        md_genLoadId();
+
+    }//GEN-LAST:event_cb_selectFundItemStateChanged
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton bt_addLoan;
@@ -1151,7 +1179,11 @@ public class Admin_customerManagment extends javax.swing.JPanel {
 
             ResultSet rs;
             //rs = MC_JavaDataBaseConnection.search_AlluseTable("funder");
-            cb_selectFund.removeAllItems();
+
+            if (cb_selectFund.getItemCount() > 0) {
+                cb_selectFund.removeAllItems();
+            }
+
             //rs = MC_DB.myConnection().createStatement().executeQuery("SELECT e.funder_name, e.idfunder, u.fund, u.fund_date,u.idfund FROM funder AS e LEFT JOIN fund AS u ON e.idfunder = u.funder_idfunder;");
             rs = MC_DB.myConnection().createStatement().executeQuery("SELECT * FROM fund WHERE funder_idfunder='" + id + "'  ORDER BY idfund DESC;");
 
@@ -1189,9 +1221,18 @@ public class Admin_customerManagment extends javax.swing.JPanel {
                 periodType = "M";
             }
 
+            dc_registrationDate.setDate(new Date());
             Date date = dc_registrationDate.getDate();
             SimpleDateFormat sdff = new SimpleDateFormat("yyyy-MM-dd");
-            String registration_date = sdff.format(date);
+            String registration_date= sdff.format(date);
+            try {
+                sdff = new SimpleDateFormat("yyyy-MM-dd");
+            registration_date = sdff.format(date);
+            } catch (Exception e) {
+                 registration_date = sdff.format(new Date());
+            }
+            
+            
 //            JOptionPane.showMessageDialog(this, "Innnnnnnnnnnnneeeeee" + registration_date + "-" + periodType);
             ResultSet rs = MC_DB.myConnection().createStatement().executeQuery("SELECT MAX(idcustomer) AS HighestID FROM customer;");
             while (rs.next()) {
