@@ -7,6 +7,8 @@ package com.softidea.www.private_access.adminstrator;
 
 import com.fsczone.www.lookAndFeel.pro_lookandfeel;
 import com.softidea.www.public_connection.MC_DB;
+import java.awt.HeadlessException;
+import java.awt.event.KeyEvent;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
@@ -71,6 +73,7 @@ public class Admin_fundManagment extends javax.swing.JPanel {
 
         jPanel1.setBackground(new java.awt.Color(102, 102, 102));
 
+        tb_funder.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         tb_funder.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
@@ -98,6 +101,7 @@ public class Admin_fundManagment extends javax.swing.JPanel {
             tb_funder.getColumnModel().getColumn(4).setPreferredWidth(10);
         }
 
+        tb_fund.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         tb_fund.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
@@ -126,6 +130,11 @@ public class Admin_fundManagment extends javax.swing.JPanel {
         tf_address.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         tf_address.setMaximumSize(new java.awt.Dimension(300, 40));
         tf_address.setMinimumSize(new java.awt.Dimension(300, 40));
+        tf_address.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                tf_addressKeyReleased(evt);
+            }
+        });
 
         lb_addRoute.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         lb_addRoute.setForeground(new java.awt.Color(255, 255, 255));
@@ -134,6 +143,11 @@ public class Admin_fundManagment extends javax.swing.JPanel {
         tf_funderName.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         tf_funderName.setMaximumSize(new java.awt.Dimension(300, 40));
         tf_funderName.setMinimumSize(new java.awt.Dimension(300, 40));
+        tf_funderName.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                tf_funderNameKeyReleased(evt);
+            }
+        });
 
         lb_addRoute1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         lb_addRoute1.setForeground(new java.awt.Color(255, 255, 255));
@@ -154,6 +168,11 @@ public class Admin_fundManagment extends javax.swing.JPanel {
         tf_contactNumber.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         tf_contactNumber.setMaximumSize(new java.awt.Dimension(300, 40));
         tf_contactNumber.setMinimumSize(new java.awt.Dimension(300, 40));
+        tf_contactNumber.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                tf_contactNumberKeyReleased(evt);
+            }
+        });
 
         lb_addRoute2.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         lb_addRoute2.setForeground(new java.awt.Color(255, 255, 255));
@@ -203,6 +222,14 @@ public class Admin_fundManagment extends javax.swing.JPanel {
         tf_fundAmount.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         tf_fundAmount.setMaximumSize(new java.awt.Dimension(300, 40));
         tf_fundAmount.setMinimumSize(new java.awt.Dimension(300, 40));
+        tf_fundAmount.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                tf_fundAmountKeyReleased(evt);
+            }
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                tf_fundAmountKeyTyped(evt);
+            }
+        });
 
         lb_addRoute3.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         lb_addRoute3.setForeground(new java.awt.Color(255, 255, 255));
@@ -294,7 +321,7 @@ public class Admin_fundManagment extends javax.swing.JPanel {
                             .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)))
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 303, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
 
@@ -319,42 +346,61 @@ public class Admin_fundManagment extends javax.swing.JPanel {
 
     private void bt_funderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_funderActionPerformed
 
-        String name = tf_funderName.getText().trim();
-        String address = tf_address.getText().trim();
-        String contact = tf_contactNumber.getText().trim();
-        String qu_addFunder = "INSERT INTO funder (funder_name,funder_address,funder_contact,funder_status) VALUES('" + name + "','" + address + "','" + contact + "','Active')";
+        try {
 
-        if (name != "") {
-            if (address != "") {
-                if (contact != "") {
+            String name = tf_funderName.getText().trim();
+            String address = tf_address.getText().trim();
+            String contact = tf_contactNumber.getText().trim();
+            ResultSet search_fundername = MC_DB.search_dataOne("funder", "funder_name", name);
+            String db_fundername = "";
+            while (search_fundername.next()) {
+                db_fundername = search_fundername.getString("funder_name").toLowerCase();
 
-                    int i = JOptionPane.showConfirmDialog(this, "Are You Sure? \n Name :" + name + "\n Address :" + address + "\n Tel :" + contact + "", "Save Funder?", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
-                    if (i == JOptionPane.YES_OPTION) {
-                        new Thread(() -> {
-                            try {
-                                MC_DB.myConnection().createStatement().executeUpdate(qu_addFunder);
-                                JOptionPane.showMessageDialog(Admin_fundManagment.this, "Funder " + name + " Successfully Saved!");
-                                md_clearFunder();
-                                md_loadFunder();
-                                md_tb_load_Funder();
-                            } catch (SQLException ex) {
-                                Logger.getLogger(Admin_userManagment.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
+            if (db_fundername.equals(name.toLowerCase())) {
+
+                JOptionPane.showMessageDialog(this, db_fundername + " alrady exists");
+
+            } else {
+
+                String qu_addFunder = "INSERT INTO funder (funder_name,funder_address,funder_contact,funder_status) VALUES('" + name + "','" + address + "','" + contact + "','Active')";
+
+                if (name != "") {
+                    if (address != "") {
+                        if (contact != "") {
+
+                            int i = JOptionPane.showConfirmDialog(this, "Are You Sure? \n Name :" + name + "\n Address :" + address + "\n Tel :" + contact + "", "Save Funder?", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+                            if (i == JOptionPane.YES_OPTION) {
+                                new Thread(() -> {
+                                    try {
+                                        MC_DB.myConnection().createStatement().executeUpdate(qu_addFunder);
+                                        JOptionPane.showMessageDialog(Admin_fundManagment.this, "Funder " + name + " Successfully Saved!");
+                                        tf_fundAmount.grabFocus();
+                                        md_clearFunder();
+                                        md_loadFunder();
+                                        md_tb_load_Funder();
+                                    } catch (SQLException ex) {
+                                        Logger.getLogger(Admin_userManagment.class.getName()).log(Level.SEVERE, null, ex);
+                                    }
+                                }).start();
                             }
-                        }).start();
+                        } else {
+                            JOptionPane.showMessageDialog(this, "Contact Filed is empty!");
+                        }
+                    } else {
+                        JOptionPane.showMessageDialog(this, "Address Filed is empty!");
                     }
                 } else {
-                    JOptionPane.showMessageDialog(this, "Contact Filed is empty!");
+
+                    JOptionPane.showMessageDialog(this, "Name Filed is empty!");
+
                 }
-            } else {
-                JOptionPane.showMessageDialog(this, "Address Filed is empty!");
             }
-        } else {
-
-            JOptionPane.showMessageDialog(this, "Name Filed is empty!");
-
+        } catch (HeadlessException e) {
+        } catch (SQLException ex) {
+            Logger.getLogger(Admin_fundManagment.class.getName()).log(Level.SEVERE, null, ex);
         }
-
-
     }//GEN-LAST:event_bt_funderActionPerformed
 
     private void bt_addFundActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_addFundActionPerformed
@@ -391,6 +437,51 @@ public class Admin_fundManagment extends javax.swing.JPanel {
         md_tb_load_Fund();
 
     }//GEN-LAST:event_tb_fundMouseClicked
+
+    private void tf_funderNameKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tf_funderNameKeyReleased
+
+        int key = evt.getKeyCode();
+        if (key == KeyEvent.VK_ENTER) {
+            tf_address.grabFocus();
+        }
+
+    }//GEN-LAST:event_tf_funderNameKeyReleased
+
+    private void tf_addressKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tf_addressKeyReleased
+
+        int key = evt.getKeyCode();
+        if (key == KeyEvent.VK_ENTER) {
+            tf_contactNumber.grabFocus();
+        }
+
+    }//GEN-LAST:event_tf_addressKeyReleased
+
+    private void tf_contactNumberKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tf_contactNumberKeyReleased
+
+        int key = evt.getKeyCode();
+        if (key == KeyEvent.VK_ENTER) {
+            bt_funder.doClick();
+        }
+
+    }//GEN-LAST:event_tf_contactNumberKeyReleased
+
+    private void tf_fundAmountKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tf_fundAmountKeyReleased
+
+        int key = evt.getKeyCode();
+        if (key == KeyEvent.VK_ENTER) {
+            ta_FundDiscription.grabFocus();
+        }
+
+    }//GEN-LAST:event_tf_fundAmountKeyReleased
+
+    private void tf_fundAmountKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tf_fundAmountKeyTyped
+
+        char c = evt.getKeyChar();
+        if (!(c >= '0' && c <= '9' || c == KeyEvent.VK_PERIOD)) {
+            evt.consume();
+        }
+
+    }//GEN-LAST:event_tf_fundAmountKeyTyped
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -463,7 +554,7 @@ public class Admin_fundManagment extends javax.swing.JPanel {
                 v.add(rs_fund.getRow());
                 yu = MC_DB.myConnection().createStatement().executeQuery("SELECT funder_name FROM funder where idfunder='" + rs_fund.getInt("funder_idfunder") + "'");
                 while (yu.next()) {
-                 v.add(yu.getString("funder_name"));
+                    v.add(yu.getString("funder_name"));
                 }
 
                 v.add(rs_fund.getString("fund"));
@@ -514,7 +605,15 @@ public class Admin_fundManagment extends javax.swing.JPanel {
         String fundDiscription = ta_FundDiscription.getText().trim();
         ResultSet rss = null;
 
-        if (!("".equals(fundAmount) && "".equals(fundDiscription))) {
+        Double fundAmountD = Double.parseDouble(fundAmount);
+
+        Long roundfundAmount = Math.round(fundAmountD);
+
+        int fundAmount_int = roundfundAmount.intValue();
+
+        String fundAmount_text = fundAmount_int + ".00";
+
+        if (!(fundAmount.isEmpty() && fundDiscription.isEmpty())) {
             try {
                 try {
                     Date d = new Date();
@@ -528,7 +627,7 @@ public class Admin_fundManagment extends javax.swing.JPanel {
                         idfunder = rss.getInt("idfunder");
                     }
 
-                    String sql_qury = "INSERT INTO fund (fund,fund_date,descriptin,funder_idfunder) VALUES ('" + tf_fundAmount.getText().trim() + "','" + date + "','" + ta_FundDiscription.getText().trim() + "','" + idfunder + "')";
+                    String sql_qury = "INSERT INTO fund (fund,fund_update,fund_date,descriptin,funder_idfunder) VALUES ('" + fundAmount_text + "','" + fundAmount_text + "','" + date + "','" + ta_FundDiscription.getText().trim() + "','" + idfunder + "')";
                     MC_DB.update_data(sql_qury);
 
                 } catch (SQLException e) {

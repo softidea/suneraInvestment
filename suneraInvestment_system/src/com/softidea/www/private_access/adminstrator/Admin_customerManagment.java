@@ -71,7 +71,7 @@ public class Admin_customerManagment extends javax.swing.JPanel {
         tf_name = new javax.swing.JTextField();
         rb_female = new javax.swing.JRadioButton();
         tf_nic = new javax.swing.JTextField();
-        jButton1 = new javax.swing.JButton();
+        bt_search = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
         jLabel16 = new javax.swing.JLabel();
         jLabel18 = new javax.swing.JLabel();
@@ -207,13 +207,13 @@ public class Admin_customerManagment extends javax.swing.JPanel {
             }
         });
 
-        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/admin/home/images/Google Web Search_40.png"))); // NOI18N
-        jButton1.setBorderPainted(false);
-        jButton1.setContentAreaFilled(false);
-        jButton1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        bt_search.setIcon(new javax.swing.ImageIcon(getClass().getResource("/admin/home/images/Google Web Search_40.png"))); // NOI18N
+        bt_search.setBorderPainted(false);
+        bt_search.setContentAreaFilled(false);
+        bt_search.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        bt_search.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                bt_searchActionPerformed(evt);
             }
         });
 
@@ -231,7 +231,7 @@ public class Admin_customerManagment extends javax.swing.JPanel {
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(tf_nic)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(bt_search, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jLabel11, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jLabel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(jPanel2Layout.createSequentialGroup()
@@ -252,7 +252,7 @@ public class Admin_customerManagment extends javax.swing.JPanel {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(tf_nic, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(bt_search, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel10)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -739,6 +739,13 @@ public class Admin_customerManagment extends javax.swing.JPanel {
                 //////////////////////////////////////////////////////////
                 String idwithFund = cb_selectFund.getSelectedItem().toString();
 
+                if (cb_selectFund.getSelectedIndex() == 0) {
+                    cb_periodType.setEnabled(true);
+                } else {
+                    cb_periodType.setEnabled(false);
+                    lb_v_finalDate.setText("");
+                }
+
                 int fundID = 0;
                 try {
                     String[] id = idwithFund.split("-", 0);
@@ -775,9 +782,9 @@ public class Admin_customerManagment extends javax.swing.JPanel {
                         fundID + "",
                         md_funderID()
                 );
-                
+
                 md_loans.minToFunderFund();
-                
+
                 if (isture == true) {
                     JOptionPane.showMessageDialog(this, "Customer And Loan Successfully \n Saved!");
                     md_genLoadId();
@@ -961,7 +968,7 @@ public class Admin_customerManagment extends javax.swing.JPanel {
     String gt_contact = "";
     String gt_gender = "male";
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void bt_searchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_searchActionPerformed
         localNIC = tf_nic.getText().trim().toLowerCase();
 
         gt_nic = tf_nic.getText().toLowerCase().trim();
@@ -990,6 +997,7 @@ public class Admin_customerManagment extends javax.swing.JPanel {
                     rb_female.setSelected(true);
                 }
                 tf_contact.setText(dbcontact);
+                bt_updateCustomer.setEnabled(true);
             }
 
             if (rb_female.isSelected()) {
@@ -997,11 +1005,11 @@ public class Admin_customerManagment extends javax.swing.JPanel {
             } else {
                 gt_gender = "female";
             }
-            bt_updateCustomer.setEnabled(true);
+
         } catch (SQLException e) {
         }
 
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_bt_searchActionPerformed
 
     private void tf_loanAmountKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tf_loanAmountKeyTyped
 
@@ -1009,7 +1017,7 @@ public class Admin_customerManagment extends javax.swing.JPanel {
         if (!(c >= '0' && c <= '9' || c == KeyEvent.VK_PERIOD)) {
             evt.consume();
         }
-        
+
     }//GEN-LAST:event_tf_loanAmountKeyTyped
 
     private void tf_extraInterestKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tf_extraInterestKeyTyped
@@ -1018,7 +1026,7 @@ public class Admin_customerManagment extends javax.swing.JPanel {
         if (!(c >= '0' && c <= '9' || c == KeyEvent.VK_PERIOD)) {
             evt.consume();
         }
-        
+
     }//GEN-LAST:event_tf_extraInterestKeyTyped
 
     private void tf_periodKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tf_periodKeyTyped
@@ -1027,7 +1035,7 @@ public class Admin_customerManagment extends javax.swing.JPanel {
         if (!(c >= '0' && c <= '9')) {
             evt.consume();
         }
-        
+
     }//GEN-LAST:event_tf_periodKeyTyped
 
     private void tf_contactKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tf_contactKeyTyped
@@ -1036,7 +1044,7 @@ public class Admin_customerManagment extends javax.swing.JPanel {
         if (!(c >= '0' && c <= '9' || c == KeyEvent.VK_PLUS)) {
             evt.consume();
         }
-        
+
     }//GEN-LAST:event_tf_contactKeyTyped
 
     private void tf_nicKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tf_nicKeyTyped
@@ -1045,12 +1053,13 @@ public class Admin_customerManagment extends javax.swing.JPanel {
         if (!(c >= '0' && c <= '9' || c == KeyEvent.VK_V)) {
             evt.consume();
         }
-        
+
     }//GEN-LAST:event_tf_nicKeyTyped
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton bt_addLoan;
+    private javax.swing.JButton bt_search;
     private javax.swing.JButton bt_updateCustomer;
     private javax.swing.JComboBox cb_mainInstallmentPeriodType;
     private javax.swing.JComboBox cb_periodType;
@@ -1058,7 +1067,6 @@ public class Admin_customerManagment extends javax.swing.JPanel {
     public static javax.swing.JComboBox cb_selectFunder_customer;
     private com.toedter.calendar.JDateChooser dc_registrationDate;
     private javax.swing.ButtonGroup genderGroup;
-    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
