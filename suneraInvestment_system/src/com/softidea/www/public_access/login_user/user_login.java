@@ -5,19 +5,13 @@
  */
 package com.softidea.www.public_access.login_user;
 
-import com.javav.fsc.zone.PasswordValidator;
-import com.javav.fsc.zone.UsernameValidator;
 import com.softidea.www.private_access.adminstrator.Admin_workArea;
-import com.softidea.www.private_access.adminstrator.admin_index;
-import com.softidea.www.public_access.user.user_index;
 import com.softidea.www.public_connection.MC_DB;
 import java.awt.Color;
 import java.awt.HeadlessException;
 import java.awt.event.KeyEvent;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 /**
@@ -177,7 +171,7 @@ public class user_login extends javax.swing.JFrame {
         jPanel3.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 440, 100, -1));
 
         jLabel5.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
-        jLabel5.setForeground(new java.awt.Color(0, 153, 0));
+        jLabel5.setForeground(new java.awt.Color(255, 255, 255));
         jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel5.setText("LOGIN SYSTEM");
         jPanel3.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 194, 280, 30));
@@ -219,7 +213,12 @@ public class user_login extends javax.swing.JFrame {
 
     private void jLabel6MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel6MouseClicked
 
-        System.exit(0);
+        int isOK = JOptionPane.showConfirmDialog(this, "Are you sure?", "Conform!", JOptionPane.YES_NO_OPTION, JOptionPane.CLOSED_OPTION);
+        if (isOK == JOptionPane.YES_OPTION) {
+
+            System.exit(0);
+
+        }
 
     }//GEN-LAST:event_jLabel6MouseClicked
 
@@ -295,13 +294,13 @@ public class user_login extends javax.swing.JFrame {
                 String username = tf_username.getText().trim().toLowerCase();
                 String password = new String(pf_password.getPassword()).trim();
 
-                if (!(username == "" && password == "")) {
+                if (!(username.isEmpty() && password.isEmpty())) {
                     check_userlogin(username, password);
 
                 } else {
-                    if ("".equals(username)) {
+                    if (username.isEmpty()) {
                         tf_username.setBackground(Color.yellow);
-                    } else if ("".equals(password)) {
+                    } else if (password.isEmpty()) {
                         pf_password.setBackground(Color.yellow);
                     }
 
@@ -374,44 +373,36 @@ public class user_login extends javax.swing.JFrame {
 
         if (username != "" && password != "") {
 
-            UsernameValidator uv = new UsernameValidator();
-            PasswordValidator pv = new PasswordValidator();
-            boolean is_username = uv.validate(username);
-            boolean is_password = pv.validate(password);
+            try {
 
-            if (is_password && is_username) {
-                try {
+                ResultSet rs_username;
+                ResultSet rs_password;
 
-                    ResultSet rs_username;
-                    ResultSet rs_password;
+                rs_username = MC_DB.search_dataOne("user_account", "us_username", username);
+                rs_password = MC_DB.search_dataOne("user_account", "us_password", password);
 
-                    rs_username = MC_DB.search_dataOne("user_account", "us_username", username);
-                    rs_password = MC_DB.search_dataOne("user_account", "us_password", password);
-
-                    if (rs_username.next()) {
-                        if (rs_password.next()) {
+                if (rs_username.next()) {
+                    if (rs_password.next()) {
 
                         // JOptionPane.showMessageDialog(this, "user status" + rs_username.getInt("us_status"));
-                            if (rs_username.getInt("us_status") == 00) {
-                                JOptionPane.showMessageDialog(this, "Your Are Not System Access!");
-                            } else {
-                                Check_login_type(rs_username.getInt("us_status"));
-                                //login success
-                            }
-
-                        }else{
-                        JOptionPane.showMessageDialog(this, "Invalid Password!");
+                        if (rs_username.getInt("us_status") == 00) {
+                            JOptionPane.showMessageDialog(this, "Your Are Not System Access!");
+                        } else {
+                            Check_login_type(rs_username.getInt("us_status"));
+                            //login success
                         }
 
-                    }else{
-                    JOptionPane.showMessageDialog(this, "Invalid Username!");
+                    } else {
+                        JOptionPane.showMessageDialog(this, "Invalid Password!\n Please try again!");
                     }
-                } catch (HeadlessException | SQLException e) {
-                    e.printStackTrace();
+
+                } else {
+                    JOptionPane.showMessageDialog(this, "Invalid Username!\n Please try again!");
                 }
-            } else {
-                JOptionPane.showMessageDialog(this, "Invalid Username or Password!");
+            } catch (HeadlessException | SQLException e) {
+                e.printStackTrace();
             }
+
         }
         //ResultSet search_username = MC_JavaDataBaseConnection.search_data("user_account", "us_username", username);
         //ResultSet search_password = MC_JavaDataBaseConnection.search_data("user_account", "us_password", password);

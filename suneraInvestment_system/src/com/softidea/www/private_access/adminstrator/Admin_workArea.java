@@ -633,6 +633,7 @@ public class Admin_workArea extends javax.swing.JFrame {
         jp_adminMainPanel.add(jButton9, new org.netbeans.lib.awtextra.AbsoluteConstraints(758, 333, 200, 200));
 
         jPanel2.setBackground(new java.awt.Color(0, 200, 83));
+        jPanel2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255), 2));
         jPanel2.setMaximumSize(new java.awt.Dimension(200, 200));
         jPanel2.setMinimumSize(new java.awt.Dimension(200, 200));
 
@@ -690,6 +691,7 @@ public class Admin_workArea extends javax.swing.JFrame {
         jp_adminMainPanel.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(976, 115, -1, 200));
 
         jPanel1.setBackground(new java.awt.Color(0, 200, 83));
+        jPanel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255), 2));
         jPanel1.setMaximumSize(new java.awt.Dimension(200, 200));
         jPanel1.setMinimumSize(new java.awt.Dimension(200, 200));
 
@@ -805,7 +807,7 @@ public class Admin_workArea extends javax.swing.JFrame {
     }//GEN-LAST:event_lb_wk_option3MouseClicked
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-
+        lb_wk_option1.setVisible(true);
         load_user_managment();
 
     }//GEN-LAST:event_jButton1ActionPerformed
@@ -823,6 +825,8 @@ public class Admin_workArea extends javax.swing.JFrame {
 
     private void lb_wk_option1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lb_wk_option1MouseClicked
 
+        lb_wk_option1.setVisible(false);
+        
         try {
             jp_adminMainPanel.removeAll();
             jp_adminMainPanel.setLayout(new FlowLayout());
@@ -838,76 +842,84 @@ public class Admin_workArea extends javax.swing.JFrame {
     }//GEN-LAST:event_lb_wk_option1MouseClicked
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-
+        lb_wk_option1.setVisible(true);
         load_customer_managment();
 
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-
+        lb_wk_option1.setVisible(true);
         load_fundManagment();
 
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
-
+        lb_wk_option1.setVisible(true);
         load_installmentManagment();
 
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
-
+        lb_wk_option1.setVisible(true);
         load_cashManagment();
 
     }//GEN-LAST:event_jButton6ActionPerformed
 
     private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
-
+        lb_wk_option1.setVisible(true);
         load_loanManagment();
 
     }//GEN-LAST:event_jButton7ActionPerformed
 
     private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton8ActionPerformed
-
+        lb_wk_option1.setVisible(true);
         load_admin_managment();
 
     }//GEN-LAST:event_jButton8ActionPerformed
 
     private void jButton9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton9ActionPerformed
-
+        lb_wk_option1.setVisible(true);
         load_reportManagment();
 
     }//GEN-LAST:event_jButton9ActionPerformed
 
     private void bt_OuserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_OuserActionPerformed
+        lb_wk_option1.setVisible(true);
         load_user_managment();
     }//GEN-LAST:event_bt_OuserActionPerformed
 
     private void bt_OcustomerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_OcustomerActionPerformed
+        lb_wk_option1.setVisible(true);
         load_customer_managment();
     }//GEN-LAST:event_bt_OcustomerActionPerformed
 
     private void bt_OfundActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_OfundActionPerformed
+        lb_wk_option1.setVisible(true);
         load_fundManagment();
     }//GEN-LAST:event_bt_OfundActionPerformed
 
     private void bt_OinstallmentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_OinstallmentActionPerformed
+        lb_wk_option1.setVisible(true);
         load_installmentManagment();
     }//GEN-LAST:event_bt_OinstallmentActionPerformed
 
     private void bt_OcashActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_OcashActionPerformed
+        lb_wk_option1.setVisible(true);
         load_cashManagment();
     }//GEN-LAST:event_bt_OcashActionPerformed
 
     private void bt_OloanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_OloanActionPerformed
+        lb_wk_option1.setVisible(true);
         load_loanManagment();
     }//GEN-LAST:event_bt_OloanActionPerformed
 
     private void bt_OadministratorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_OadministratorActionPerformed
+        lb_wk_option1.setVisible(true);
         load_admin_managment();
     }//GEN-LAST:event_bt_OadministratorActionPerformed
 
     private void bt_OreportsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_OreportsActionPerformed
+        lb_wk_option1.setVisible(true);
         load_reportManagment();
     }//GEN-LAST:event_bt_OreportsActionPerformed
 
@@ -1106,7 +1118,7 @@ public class Admin_workArea extends javax.swing.JFrame {
 
     private void md_HomeMenuVisibleLabel(boolean visible) {
 
-        //lb_wk_option1.setVisible(visible);
+        lb_wk_option1.setVisible(visible);
         lb_wk_option2.setVisible(visible);
         lb_wk_option3.setVisible(visible);
         lb_wk_option4.setVisible(visible);

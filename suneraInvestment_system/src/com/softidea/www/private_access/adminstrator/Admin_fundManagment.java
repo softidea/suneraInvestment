@@ -103,11 +103,11 @@ public class Admin_fundManagment extends javax.swing.JPanel {
 
             },
             new String [] {
-                "No", "Funder", "Fund Amount", "Date", "Status"
+                "No", "Funder", "Fund Amount", "Date", "Discription", "Status"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false
+                false, false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -360,10 +360,15 @@ public class Admin_fundManagment extends javax.swing.JPanel {
     private void bt_addFundActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_addFundActionPerformed
 
         if (cb_selectFunder.getItemCount() > 0) {
-            md_addFund();
-            JOptionPane.showMessageDialog(this, "Successfully Fund Added!");
-            clearFund();
-            md_tb_load_Fund();
+
+            int i = JOptionPane.showConfirmDialog(this, "Are You Sure? ", "Save Fund?", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+            if (i == JOptionPane.YES_OPTION) {
+                md_addFund();
+                JOptionPane.showMessageDialog(this, "Successfully Fund Added!");
+                clearFund();
+                md_tb_load_Fund();
+            }
+
         } else {
             JOptionPane.showMessageDialog(this, "First of all add the funder ");
         }
@@ -447,28 +452,28 @@ public class Admin_fundManagment extends javax.swing.JPanel {
         ResultSet rs_fund;
         ResultSet yu;
         try {
-            
+
             //STR_TO_DATE(fund_date,\"%Y-%M-%d\")
             rs_fund = MC_DB.myConnection().createStatement().executeQuery("SELECT * FROM fund ORDER BY idfund DESC");
             DefaultTableModel dtm_fund = (DefaultTableModel) tb_fund.getModel();
             dtm_fund.setRowCount(0);
             while (rs_fund.next()) {
-                
+
                 Vector v = new Vector();
                 v.add(rs_fund.getRow());
                 yu = MC_DB.myConnection().createStatement().executeQuery("SELECT funder_name FROM funder where idfunder='" + rs_fund.getInt("funder_idfunder") + "'");
                 while (yu.next()) {
-                    v.add(yu.getString("funder_name"));
+                 v.add(yu.getString("funder_name"));
                 }
-                
+
                 v.add(rs_fund.getString("fund"));
                 v.add(rs_fund.getString("fund_date"));
                 v.add(rs_fund.getString("descriptin"));
                 v.add(rs_fund.getString("fund_status"));
-                
+
                 dtm_fund.addRow(v);
             }
-            
+
         } catch (SQLException e) {
             e.printStackTrace();
         }
