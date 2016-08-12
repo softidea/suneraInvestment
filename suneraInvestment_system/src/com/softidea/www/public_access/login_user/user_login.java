@@ -354,7 +354,8 @@ public class user_login extends javax.swing.JFrame {
 
     private void jLabel8MouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel8MouseMoved
 
-        
+        //jLabel8.setToolTipText("Safe Area");
+        //JOptionPane.showMessageDialog(this, "Safe Mode ON");
         
     }//GEN-LAST:event_jLabel8MouseMoved
 
