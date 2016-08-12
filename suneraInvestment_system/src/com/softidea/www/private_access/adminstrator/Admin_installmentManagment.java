@@ -1,12 +1,99 @@
 package com.softidea.www.private_access.adminstrator;
 
+import com.softidea.www.public_connection.MC_DB;
+import java.sql.ResultSet;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Vector;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 
 public class Admin_installmentManagment extends javax.swing.JPanel {
 
+    int loanID = 0;
+
     public Admin_installmentManagment() {
         initComponents();
+        setCurrentDate();
     }
 
+    public void setCurrentDate() {
+
+        Date date = new Date();
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        dc_installment.setDate(date);
+    }
+
+    //get installment count
+    public int getInstallmentCount(int loanID) {
+        try {
+            ResultSet rs = MC_DB.myConnection().createStatement().executeQuery("SELECT COUNT(installment) AS installmentCount WHERE idloans='" + loanID + "'");
+            if (rs.next()) {
+                return rs.getInt("installmentCount");
+            } else {
+                return -1;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            return -1;
+        }
+    }
+    //get installment count
+
+    //get Loan Amount
+    public double getLoanAmount(int loanID) {
+        try {
+            ResultSet rs = MC_DB.search_dataOne("loans", "loan_amount", loanID + "");
+            if (rs.next()) {
+                return Double.parseDouble(rs.getString("loan_amount"));
+            } else {
+                return -1;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            return -1;
+        }
+    }
+    //get Loan Amount
+
+    //get Installment Count total
+    public double getInstalmentLoanAmount(int loanID) {
+        double amount = 0;
+        try {
+            ResultSet rs = MC_DB.search_dataOne("installment", "payment", loanID + "");
+            while (rs.next()) {
+                amount += Double.parseDouble(rs.getString("payment"));
+            }
+            return amount;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return -1;
+        }
+    }
+    //get Installment Count total
+
+    //view installment to the table
+    public void viewInstalments(int LoanID) 
+    {
+        try {
+            DefaultTableModel dtm = (DefaultTableModel) tb_loanInstallment.getModel();
+            dtm.setRowCount(0);
+            ResultSet rs = MC_DB.search_dataOne("installment", "idloan", loanID + "");
+            while (rs.next()) {
+                Vector v = new Vector();
+                v.add(rs.getString("idinstallment"));
+                v.add(rs.getString("payment"));
+                v.add(rs.getString("payment_date"));
+                v.add(rs.getString("discount"));
+                dtm.addRow(v);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    //view installment to the table
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -18,7 +105,6 @@ public class Admin_installmentManagment extends javax.swing.JPanel {
         tf_nic = new javax.swing.JTextField();
         jLabel18 = new javax.swing.JLabel();
         tf_name = new javax.swing.JTextField();
-        jButton1 = new javax.swing.JButton();
         tf_contact = new javax.swing.JTextField();
         jLabel19 = new javax.swing.JLabel();
         jButton2 = new javax.swing.JButton();
@@ -28,7 +114,7 @@ public class Admin_installmentManagment extends javax.swing.JPanel {
         jLabel9 = new javax.swing.JLabel();
         tf_installment = new javax.swing.JTextField();
         jLabel10 = new javax.swing.JLabel();
-        tf_address3 = new javax.swing.JTextField();
+        tf_regDate = new javax.swing.JTextField();
         jLabel11 = new javax.swing.JLabel();
         tf_loanAmount = new javax.swing.JTextField();
         jPanel3 = new javax.swing.JPanel();
@@ -41,12 +127,14 @@ public class Admin_installmentManagment extends javax.swing.JPanel {
         tf_payableInterest = new javax.swing.JTextField();
         jLabel15 = new javax.swing.JLabel();
         jPanel4 = new javax.swing.JPanel();
-        tf_nic6 = new javax.swing.JTextField();
+        tf_payment = new javax.swing.JTextField();
         jLabel16 = new javax.swing.JLabel();
         jLabel17 = new javax.swing.JLabel();
-        tf_nic7 = new javax.swing.JTextField();
         bt_updateCustomer = new javax.swing.JButton();
         bt_updateCustomer1 = new javax.swing.JButton();
+        dc_installment = new com.toedter.calendar.JDateChooser();
+        jLabel20 = new javax.swing.JLabel();
+        tf_discount = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
         tb_loanInstallment = new javax.swing.JTable();
 
@@ -91,16 +179,6 @@ public class Admin_installmentManagment extends javax.swing.JPanel {
             }
         });
 
-        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/admin/home/images/Google Web Search_40.png"))); // NOI18N
-        jButton1.setBorderPainted(false);
-        jButton1.setContentAreaFilled(false);
-        jButton1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
-            }
-        });
-
         tf_contact.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         tf_contact.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
@@ -127,24 +205,25 @@ public class Admin_installmentManagment extends javax.swing.JPanel {
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(0, 0, 0)
+                .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel7)
-                    .addComponent(jLabel4)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(tf_nic, javax.swing.GroupLayout.PREFERRED_SIZE, 254, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addComponent(jLabel18, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jLabel19, javax.swing.GroupLayout.DEFAULT_SIZE, 300, Short.MAX_VALUE)
-                        .addComponent(tf_address)
-                        .addGroup(jPanel1Layout.createSequentialGroup()
-                            .addComponent(tf_name, javax.swing.GroupLayout.PREFERRED_SIZE, 253, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addComponent(tf_contact)))
-                .addGap(0, 12, Short.MAX_VALUE))
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel7)
+                            .addComponent(jLabel4)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(tf_nic, javax.swing.GroupLayout.PREFERRED_SIZE, 254, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addContainerGap(16, Short.MAX_VALUE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jLabel18, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jLabel19, javax.swing.GroupLayout.DEFAULT_SIZE, 300, Short.MAX_VALUE)
+                            .addComponent(tf_contact)
+                            .addComponent(tf_address)
+                            .addComponent(tf_name))
+                        .addGap(0, 0, Short.MAX_VALUE))))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -156,21 +235,18 @@ public class Admin_installmentManagment extends javax.swing.JPanel {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(tf_nic, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jLabel18)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(tf_name, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel19)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(tf_contact, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(11, 11, 11)
-                        .addComponent(jLabel7)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(tf_address, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(jLabel18))
                     .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(tf_name, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel19)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(tf_contact, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(11, 11, 11)
+                .addComponent(jLabel7)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(tf_address, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -205,10 +281,10 @@ public class Admin_installmentManagment extends javax.swing.JPanel {
         jLabel10.setForeground(new java.awt.Color(255, 255, 255));
         jLabel10.setText("Installment :");
 
-        tf_address3.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        tf_address3.addKeyListener(new java.awt.event.KeyAdapter() {
+        tf_regDate.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        tf_regDate.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
-                tf_address3KeyReleased(evt);
+                tf_regDateKeyReleased(evt);
             }
         });
 
@@ -234,15 +310,16 @@ public class Admin_installmentManagment extends javax.swing.JPanel {
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel11)
                             .addComponent(jLabel8))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 186, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addComponent(jLabel9)
-                        .addComponent(jLabel10)
-                        .addComponent(tf_loanAmount)
-                        .addComponent(tf_period)
-                        .addComponent(tf_installment)
-                        .addComponent(tf_address3, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jLabel9)
+                            .addComponent(jLabel10)
+                            .addComponent(tf_loanAmount, javax.swing.GroupLayout.DEFAULT_SIZE, 300, Short.MAX_VALUE)
+                            .addComponent(tf_period)
+                            .addComponent(tf_installment)
+                            .addComponent(tf_regDate))
+                        .addGap(0, 18, Short.MAX_VALUE))))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -262,7 +339,7 @@ public class Admin_installmentManagment extends javax.swing.JPanel {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel11)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(tf_address3, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(tf_regDate, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -323,13 +400,13 @@ public class Admin_installmentManagment extends javax.swing.JPanel {
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
-                .addGap(4, 4, 4)
+                .addContainerGap()
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel15)
                             .addComponent(jLabel12))
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addContainerGap(210, Short.MAX_VALUE))
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                             .addComponent(tf_paidAmount, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 307, Short.MAX_VALUE)
@@ -338,7 +415,7 @@ public class Admin_installmentManagment extends javax.swing.JPanel {
                             .addComponent(tf_paidInterest, javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(tf_payableInterest, javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(tf_dueAmount, javax.swing.GroupLayout.Alignment.LEADING))
-                        .addGap(0, 4, Short.MAX_VALUE))))
+                        .addGap(0, 0, Short.MAX_VALUE))))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -364,13 +441,13 @@ public class Admin_installmentManagment extends javax.swing.JPanel {
 
         jPanel4.setBackground(new java.awt.Color(66, 66, 66));
 
-        tf_nic6.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        tf_nic6.addKeyListener(new java.awt.event.KeyAdapter() {
+        tf_payment.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        tf_payment.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
-                tf_nic6KeyReleased(evt);
+                tf_paymentKeyReleased(evt);
             }
             public void keyTyped(java.awt.event.KeyEvent evt) {
-                tf_nic6KeyTyped(evt);
+                tf_paymentKeyTyped(evt);
             }
         });
 
@@ -381,16 +458,6 @@ public class Admin_installmentManagment extends javax.swing.JPanel {
         jLabel17.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel17.setForeground(new java.awt.Color(255, 255, 255));
         jLabel17.setText("Date :");
-
-        tf_nic7.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        tf_nic7.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyReleased(java.awt.event.KeyEvent evt) {
-                tf_nic7KeyReleased(evt);
-            }
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                tf_nic7KeyTyped(evt);
-            }
-        });
 
         bt_updateCustomer.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         bt_updateCustomer.setForeground(new java.awt.Color(255, 255, 255));
@@ -416,40 +483,62 @@ public class Admin_installmentManagment extends javax.swing.JPanel {
             }
         });
 
+        jLabel20.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel20.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel20.setText("Discount :");
+
+        tf_discount.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        tf_discount.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                tf_discountKeyReleased(evt);
+            }
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                tf_discountKeyTyped(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
         jPanel4Layout.setHorizontalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel4Layout.createSequentialGroup()
-                .addGap(4, 4, 4)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
+                .addContainerGap(19, Short.MAX_VALUE)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                        .addComponent(tf_discount, javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(jPanel4Layout.createSequentialGroup()
+                            .addComponent(jLabel20)
+                            .addGap(234, 234, 234)))
                     .addComponent(bt_updateCustomer, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(bt_updateCustomer1, javax.swing.GroupLayout.PREFERRED_SIZE, 298, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel17)
                     .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                        .addComponent(tf_nic6, javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(dc_installment, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(tf_payment, javax.swing.GroupLayout.Alignment.LEADING)
                         .addGroup(jPanel4Layout.createSequentialGroup()
                             .addComponent(jLabel16)
-                            .addGap(234, 234, 234)))
-                    .addComponent(jLabel17)
-                    .addComponent(tf_nic7, javax.swing.GroupLayout.PREFERRED_SIZE, 298, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(4, 4, 4))
+                            .addGap(234, 234, 234))))
+                .addGap(18, 18, 18))
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel4Layout.createSequentialGroup()
-                .addContainerGap()
                 .addComponent(jLabel17)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(tf_nic7, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(dc_installment, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel16)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(tf_nic6, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(tf_payment, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel20)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(tf_discount, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(bt_updateCustomer1, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(bt_updateCustomer, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(19, 19, 19))
+                .addGap(5, 5, 5))
         );
 
         tb_loanInstallment.setModel(new javax.swing.table.DefaultTableModel(
@@ -457,7 +546,7 @@ public class Admin_installmentManagment extends javax.swing.JPanel {
 
             },
             new String [] {
-                "No", "Payament Date", "Payment", "Due Amount"
+                "No", "Payament Date", "Payment", "Discount"
             }
         ) {
             boolean[] canEdit = new boolean [] {
@@ -475,19 +564,18 @@ public class Admin_installmentManagment extends javax.swing.JPanel {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane1)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(6, 6, 6)
                         .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 1280, Short.MAX_VALUE)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -500,7 +588,7 @@ public class Admin_installmentManagment extends javax.swing.JPanel {
                     .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 270, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 269, Short.MAX_VALUE)
                 .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
@@ -521,9 +609,9 @@ public class Admin_installmentManagment extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_tf_installmentKeyReleased
 
-    private void tf_address3KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tf_address3KeyReleased
+    private void tf_regDateKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tf_regDateKeyReleased
         // TODO add your handling code here:
-    }//GEN-LAST:event_tf_address3KeyReleased
+    }//GEN-LAST:event_tf_regDateKeyReleased
 
     private void tf_dueAmountKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tf_dueAmountKeyReleased
         // TODO add your handling code here:
@@ -549,69 +637,136 @@ public class Admin_installmentManagment extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_tf_payableInterestKeyReleased
 
-    private void tf_nic6KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tf_nic6KeyReleased
+    private void tf_paymentKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tf_paymentKeyReleased
         // TODO add your handling code here:
-    }//GEN-LAST:event_tf_nic6KeyReleased
+    }//GEN-LAST:event_tf_paymentKeyReleased
 
-    private void tf_nic6KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tf_nic6KeyTyped
+    private void tf_paymentKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tf_paymentKeyTyped
         // TODO add your handling code here:
-    }//GEN-LAST:event_tf_nic6KeyTyped
-
-    private void tf_nic7KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tf_nic7KeyReleased
-        // TODO add your handling code here:
-    }//GEN-LAST:event_tf_nic7KeyReleased
-
-    private void tf_nic7KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tf_nic7KeyTyped
-        // TODO add your handling code here:
-    }//GEN-LAST:event_tf_nic7KeyTyped
+    }//GEN-LAST:event_tf_paymentKeyTyped
 
     private void bt_updateCustomerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_updateCustomerActionPerformed
 
-       
+
     }//GEN-LAST:event_bt_updateCustomerActionPerformed
 
     private void bt_updateCustomer1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_updateCustomer1ActionPerformed
-        // TODO add your handling code here:
+
+        if (loanID != 0) {
+            if (!(dc_installment.getDate() == null && tf_payment.getText() == null && tf_payment.getText().isEmpty())) {
+                try {
+                    int PERIOD = 0;
+                    int INSTALLMENT_COUNT = 0;
+                    double LOAN_AMOUNT = 0;
+                    double PAID_AMOUNT = 0;
+
+                    ResultSet rs = MC_DB.search_dataOne("loans", "period", loanID + "");
+                    if (rs.next()) {
+
+                        PERIOD = Integer.parseInt(rs.getString("period"));
+                        INSTALLMENT_COUNT = getInstallmentCount(loanID);
+                        LOAN_AMOUNT = getLoanAmount(loanID);
+                        PAID_AMOUNT = getInstalmentLoanAmount(loanID);
+
+                        if (PERIOD >= INSTALLMENT_COUNT) {
+                            if (INSTALLMENT_COUNT <= 0) {
+                                if (LOAN_AMOUNT > PAID_AMOUNT) {
+                                    String qy_saveInstallment = "INSERT INTO installment (payment,payment_date,discount,idloans) VALUES ('" + dc_installment.getDate() + "','" + tf_payment.getText() + "','" + tf_discount + "','" + loanID + "')";
+                                    MC_DB.update_data(qy_saveInstallment);
+                                    JOptionPane.showMessageDialog(null, "Installment added successfully");
+                                    viewInstalments(loanID);
+                                } else if (LOAN_AMOUNT == PAID_AMOUNT) {
+                                    MC_DB.update_data("UPDATE loans SET loan_status='Deactive' WHERE idloans='" + loanID + "'");
+                                    JOptionPane.showMessageDialog(null, "Loan already settled");
+                                }
+
+                            }
+                        }
+
+                    }
+
+                } catch (Exception e) {
+
+                    e.printStackTrace();
+                }
+
+            }
+        }
+
     }//GEN-LAST:event_bt_updateCustomer1ActionPerformed
 
     private void tf_nicKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tf_nicKeyReleased
 
-       
+
     }//GEN-LAST:event_tf_nicKeyReleased
 
     private void tf_nicKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tf_nicKeyTyped
 
-       
 
     }//GEN-LAST:event_tf_nicKeyTyped
 
     private void tf_nameKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tf_nameKeyReleased
 
-        
-    }//GEN-LAST:event_tf_nameKeyReleased
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_tf_nameKeyReleased
 
     private void tf_contactKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tf_contactKeyReleased
 
-       
+
     }//GEN-LAST:event_tf_contactKeyReleased
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        // TODO add your handling code here:
+
+        if (tf_nic.getText() != "" || tf_nic.getText() != null) {
+
+            try {
+                ResultSet rs = MC_DB.search_dataOne("customer", "cus_nic", tf_nic.getText().trim().toLowerCase());
+                if (rs.next()) {
+                    tf_name.setText(rs.getString("cus_fullname"));
+                    tf_address.setText(rs.getString("cus_address"));
+                    tf_contact.setText(rs.getString("cus_contact"));
+
+                    int cus_id = rs.getInt("idcustomer");
+
+                    ResultSet rs2 = MC_DB.search_dataOne("loans", "idcustomer", cus_id + "");
+                    ResultSet rs3 = MC_DB.search_dataOne("loans", "loan_status", "active");
+
+                    if (rs2.next() && rs3.next()) {
+                        loanID = Integer.parseInt(rs.getString("idloans"));
+                        tf_loanAmount.setText(rs.getString("loan_amount"));
+                        tf_period.setText(rs.getString("loan_period"));
+                        tf_installment.setText(rs.getString("loan_installment"));
+                        tf_regDate.setText(rs.getString("loan_date"));
+
+                    }
+
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+        }
+
+
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void tf_loanAmountKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tf_loanAmountKeyReleased
         // TODO add your handling code here:
     }//GEN-LAST:event_tf_loanAmountKeyReleased
 
+    private void tf_discountKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tf_discountKeyReleased
+        // TODO add your handling code here:
+    }//GEN-LAST:event_tf_discountKeyReleased
+
+    private void tf_discountKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tf_discountKeyTyped
+        // TODO add your handling code here:
+    }//GEN-LAST:event_tf_discountKeyTyped
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton bt_updateCustomer;
     private javax.swing.JButton bt_updateCustomer1;
-    private javax.swing.JButton jButton1;
+    private com.toedter.calendar.JDateChooser dc_installment;
     private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -623,6 +778,7 @@ public class Admin_installmentManagment extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel17;
     private javax.swing.JLabel jLabel18;
     private javax.swing.JLabel jLabel19;
+    private javax.swing.JLabel jLabel20;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
@@ -634,18 +790,18 @@ public class Admin_installmentManagment extends javax.swing.JPanel {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable tb_loanInstallment;
     public static javax.swing.JTextField tf_address;
-    public static javax.swing.JTextField tf_address3;
     public static javax.swing.JTextField tf_contact;
+    public static javax.swing.JTextField tf_discount;
     public static javax.swing.JTextField tf_dueAmount;
     public static javax.swing.JTextField tf_installment;
     public static javax.swing.JTextField tf_loanAmount;
     public static javax.swing.JTextField tf_name;
     public static javax.swing.JTextField tf_nic;
-    public static javax.swing.JTextField tf_nic6;
-    public static javax.swing.JTextField tf_nic7;
     public static javax.swing.JTextField tf_paidAmount;
     public static javax.swing.JTextField tf_paidInterest;
     public static javax.swing.JTextField tf_payableInterest;
+    public static javax.swing.JTextField tf_payment;
     public static javax.swing.JTextField tf_period;
+    public static javax.swing.JTextField tf_regDate;
     // End of variables declaration//GEN-END:variables
 }
