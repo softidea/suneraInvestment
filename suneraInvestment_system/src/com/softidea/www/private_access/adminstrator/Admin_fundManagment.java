@@ -66,8 +66,8 @@ public class Admin_fundManagment extends javax.swing.JPanel {
         lb_addRoute4 = new javax.swing.JLabel();
         bt_addFund = new javax.swing.JButton();
         cb_selectFunder = new javax.swing.JComboBox();
-        jScrollPane3 = new javax.swing.JScrollPane();
-        ta_FundDiscription = new javax.swing.JTextArea();
+        ta_FundDiscription = new javax.swing.JTextField();
+        lb_addRoute5 = new javax.swing.JLabel();
 
         setBackground(new java.awt.Color(102, 102, 102));
 
@@ -258,9 +258,16 @@ public class Admin_fundManagment extends javax.swing.JPanel {
             }
         });
 
-        ta_FundDiscription.setColumns(20);
-        ta_FundDiscription.setRows(5);
-        jScrollPane3.setViewportView(ta_FundDiscription);
+        ta_FundDiscription.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        ta_FundDiscription.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ta_FundDiscriptionActionPerformed(evt);
+            }
+        });
+
+        lb_addRoute5.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        lb_addRoute5.setForeground(new java.awt.Color(255, 255, 255));
+        lb_addRoute5.setText("Discription:");
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -268,14 +275,19 @@ public class Admin_fundManagment extends javax.swing.JPanel {
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addComponent(jScrollPane3)
-                    .addComponent(cb_selectFunder, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(lb_addRoute3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(lb_addRoute4, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(tf_fundAmount, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(bt_addFund, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                .addComponent(cb_selectFunder, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(lb_addRoute3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(lb_addRoute4, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(tf_fundAmount, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(bt_addFund, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(ta_FundDiscription, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(lb_addRoute5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -289,7 +301,9 @@ public class Admin_fundManagment extends javax.swing.JPanel {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(tf_fundAmount, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                .addComponent(lb_addRoute5)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(ta_FundDiscription, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(bt_addFund, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
@@ -366,20 +380,23 @@ public class Admin_fundManagment extends javax.swing.JPanel {
 
                 String qu_addFunder = "INSERT INTO funder (funder_name,funder_address,funder_contact,funder_status) VALUES('" + name + "','" + address + "','" + contact + "','Active')";
 
-                if (name != "") {
-                    if (address != "") {
-                        if (contact != "") {
+                if (!name.isEmpty()) {
+                    if (!address.isEmpty()) {
+                        if (!contact.isEmpty()) {
 
                             int i = JOptionPane.showConfirmDialog(this, "Are You Sure? \n Name :" + name + "\n Address :" + address + "\n Tel :" + contact + "", "Save Funder?", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
                             if (i == JOptionPane.YES_OPTION) {
                                 new Thread(() -> {
                                     try {
-                                        MC_DB.myConnection().createStatement().executeUpdate(qu_addFunder);
-                                        JOptionPane.showMessageDialog(Admin_fundManagment.this, "Funder " + name + " Successfully Saved!");
-                                        tf_fundAmount.grabFocus();
-                                        md_clearFunder();
-                                        md_loadFunder();
-                                        md_tb_load_Funder();
+                                        int executeUpdate = MC_DB.myConnection().createStatement().executeUpdate(qu_addFunder);
+                                        if (executeUpdate > 0) {
+                                            JOptionPane.showMessageDialog(Admin_fundManagment.this, "Funder " + name + " Successfully Saved!");
+                                            tf_fundAmount.grabFocus();
+                                            md_clearFunder();
+                                            md_loadFunder();
+                                            md_tb_load_Funder();
+                                        }
+
                                     } catch (SQLException ex) {
                                         Logger.getLogger(Admin_userManagment.class.getName()).log(Level.SEVERE, null, ex);
                                     }
@@ -460,7 +477,7 @@ public class Admin_fundManagment extends javax.swing.JPanel {
 
         int key = evt.getKeyCode();
         if (key == KeyEvent.VK_ENTER) {
-            bt_funder.doClick();
+            //bt_funder.doClick();
         }
 
     }//GEN-LAST:event_tf_contactNumberKeyReleased
@@ -483,6 +500,10 @@ public class Admin_fundManagment extends javax.swing.JPanel {
 
     }//GEN-LAST:event_tf_fundAmountKeyTyped
 
+    private void ta_FundDiscriptionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ta_FundDiscriptionActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_ta_FundDiscriptionActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton bt_addFund;
@@ -493,13 +514,13 @@ public class Admin_fundManagment extends javax.swing.JPanel {
     private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JLabel lb_addRoute;
     private javax.swing.JLabel lb_addRoute1;
     private javax.swing.JLabel lb_addRoute2;
     private javax.swing.JLabel lb_addRoute3;
     private javax.swing.JLabel lb_addRoute4;
-    private javax.swing.JTextArea ta_FundDiscription;
+    private javax.swing.JLabel lb_addRoute5;
+    private javax.swing.JTextField ta_FundDiscription;
     private javax.swing.JTable tb_fund;
     private javax.swing.JTable tb_funder;
     private javax.swing.JTextField tf_address;
@@ -631,7 +652,7 @@ public class Admin_fundManagment extends javax.swing.JPanel {
                     MC_DB.update_data(sql_qury);
 
                 } catch (SQLException e) {
-                    
+
                     e.printStackTrace();
                 }
                 rss.close();
@@ -645,7 +666,7 @@ public class Admin_fundManagment extends javax.swing.JPanel {
     private void clearFund() {
 
         tf_fundAmount.setText("");
-        ta_FundDiscription.append("");
+        ta_FundDiscription.setText("");
 
     }
 

@@ -8,6 +8,7 @@ package com.softidea.www.private_access.adminstrator;
 import com.fsczone.www.lookAndFeel.pro_lookandfeel;
 import com.softidea.www.private_access.methods.md_cus;
 import com.softidea.www.private_access.methods.md_loans;
+import com.softidea.www.public_access.pmd;
 import com.softidea.www.public_connection.MC_DB;
 import java.awt.HeadlessException;
 import java.awt.Toolkit;
@@ -764,32 +765,42 @@ public class Admin_customerManagment extends javax.swing.JPanel {
                 dc_registrationDate.setDate(date);
 
                 ///////////////////////////////////////////////////////   
-                boolean isture = md_cus.saveCustomer(
-                        tf_nic.getText().toLowerCase(),
-                        tf_name.getText().toLowerCase(),
-                        tf_address.getText().toLowerCase(),
-                        tf_contact.getText().toLowerCase(),
-                        gender,
-                        gen_loan_id,
-                        dc_registrationDate.getDate().toString(),
-                        tf_loanAmount.getText().trim(),
-                        cb_mainInstallmentPeriodType.getSelectedItem().toString(),
-                        tf_period.getText(),
-                        lb_v_installment.getText(),
-                        tf_extraInterest.getText(),
-                        lb_v_totalAmount.getText(),
-                        "active",
-                        fundID + "",
-                        md_funderID()
-                );
+                if (pmd.EmtyisTextFiled(tf_nic) && pmd.EmtyisTextFiled(tf_name) && pmd.EmtyisTextFiled(tf_address) && pmd.EmtyisTextFiled(tf_contact) && pmd.EmtyisTextFiled(tf_loanAmount) && pmd.EmtyisTextFiled(tf_period)) {
+                    SimpleDateFormat sdfc = new SimpleDateFormat("yyyy-MM-dd");
+                    String register_date = sdf.format(d);
 
-                JOptionPane.showMessageDialog(this, fundID);
-               md_loans.minToFunderFund(fundID, lb_v_loanAmount.getText());
-                if (isture == true) {
-                    JOptionPane.showMessageDialog(this, "Customer And Loan Successfully \n Saved!");
-                    md_genLoadId();
+                    boolean isture = md_cus.saveCustomer(
+                            tf_nic.getText().toLowerCase(),
+                            tf_name.getText().toLowerCase(),
+                            tf_address.getText().toLowerCase(),
+                            tf_contact.getText().toLowerCase(),
+                            gender,
+                            gen_loan_id,
+                            register_date,
+                            tf_loanAmount.getText().trim(),
+                            cb_mainInstallmentPeriodType.getSelectedItem().toString(),
+                            tf_period.getText(),
+                            lb_v_installment.getText(),
+                            tf_extraInterest.getText(),
+                            lb_v_totalAmount.getText(),
+                            "0.00",
+                            "active",
+                            fundID + "",
+                            md_funderID()
+                    );
+
+                    JOptionPane.showMessageDialog(this, fundID);
+                    md_loans.minToFunderFund(fundID, lb_v_loanAmount.getText());
+
+                    if (isture == true) {
+                        JOptionPane.showMessageDialog(this, "Customer And Loan Successfully \n Saved!");
+                        md_genLoadId();
+                    } else {
+                        JOptionPane.showMessageDialog(this, "Customer And Loan  \n Not Saved!");
+                    }
+
                 } else {
-                    JOptionPane.showMessageDialog(this, "Customer And Loan  \n Not Saved!");
+                    JOptionPane.showMessageDialog(this, "Field(s) is Empty! \n Can't add Loan");
                 }
 
             } catch (HeadlessException e) {
@@ -952,6 +963,7 @@ public class Admin_customerManagment extends javax.swing.JPanel {
 
         md_updateCustomer();
         bt_updateCustomer.setEnabled(false);
+        md_clear_funder();
 
     }//GEN-LAST:event_bt_updateCustomerActionPerformed
 
@@ -1409,6 +1421,17 @@ public class Admin_customerManagment extends javax.swing.JPanel {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    private void md_clear_funder() {
+
+        tf_nic.setText("");
+        tf_name.setText("");
+        tf_address.setText("");
+        rb_male.setSelected(false);
+        rb_female.setSelected(false);
+        tf_contact.setText("");
+
     }
 
 }
