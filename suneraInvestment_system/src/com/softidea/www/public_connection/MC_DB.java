@@ -71,7 +71,6 @@ public class MC_DB {
         String DB_URL = "jdbc:mysql://" + HOST + ":" + PORT + "/" + DATABASE;
 
         //System.out.println("-------- MySQL JDBC Connection ------------");
-
         try {
             Class.forName(JDBC_DRIVER);
         } catch (ClassNotFoundException ex2) {
@@ -174,6 +173,7 @@ public class MC_DB {
         return resultSet;
 
     }
+
     public static ResultSet search_AlluseTable(String use_table) {
         Connection connection = MC_DB.myConnection();
         ResultSet resultSet = null;
@@ -193,11 +193,43 @@ public class MC_DB {
         return resultSet;
 
     }
-    
-    
-    
-    
 
+    ////////////////////////////////////////////////////
+    /**
+     *
+     * @param tablename
+     * @param columesWithcoma
+     * @param valueWithcoma
+     * @param ConnectionName
+     * @param StatementName
+     * @param PreparedStatementName
+     * @param ResultSetName
+     * @return LastId
+     */
+    public static long insertDataWithgetIDlast(String tablename, String columesWithcoma, String valueWithcoma, Connection ConnectionName, Statement StatementName, PreparedStatement PreparedStatementName, ResultSet ResultSetName) {
+        long insertId = 0;
+        try {
+
+            String qry_add_customer = "INSERT INTO " + tablename + "(" + columesWithcoma + ") VALUES (" + valueWithcoma + ");";
+            //String qry_add_customer = "CALL addCus('" + nic.trim().toUpperCase() + "','" + fullname.trim() + "','" + address.trim() + "','" + phoneNumber.trim() + "','" + gender_o + "');";
+            ConnectionName = MC_DB.myConnection();
+            StatementName = ConnectionName.createStatement();
+            StatementName.executeUpdate(qry_add_customer);
+            /////////////////////////////////////////////////////////////////
+
+            PreparedStatementName = ConnectionName.prepareStatement("SELECT LAST_INSERT_ID()");
+            ResultSetName = PreparedStatementName.executeQuery();
+            if (ResultSetName.next()) {
+                insertId = ResultSetName.getLong("last_insert_id()");
+
+            }
+        } catch (Exception e) {
+        }
+        return insertId;
+
+    }
+
+    /////////////////////////////////////////////////////////
 //    public static void main(String[] args) {
 //        MC_JavaDataBaseConnection.add_data_WithColumns("test","id,fname,lname,age", "5,'deeA','surA',10");
 //    }

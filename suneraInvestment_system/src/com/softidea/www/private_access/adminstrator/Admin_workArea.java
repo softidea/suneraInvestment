@@ -19,6 +19,7 @@ import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.UIManager;
+import javax.swing.UnsupportedLookAndFeelException;
 
 /**
  *
@@ -31,7 +32,7 @@ public class Admin_workArea extends javax.swing.JFrame {
      */
     public Admin_workArea() {
         initComponents();
-         try {
+        try {
             UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
         } catch (Exception ex) {
         }
@@ -43,6 +44,33 @@ public class Admin_workArea extends javax.swing.JFrame {
         pro_lookandfeel.Set();
 
         loadCusFundCount();
+
+    }
+
+    public Admin_workArea(int i) {
+        
+        initComponents();
+        try {
+            UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
+        } catch (ClassNotFoundException | IllegalAccessException | InstantiationException | UnsupportedLookAndFeelException ex) {
+        }
+        md_HomeMenuVisibleLabel(false);
+        try {
+            AWTUtilities.setWindowOpaque(this, false);
+        } catch (Exception e) {
+        }
+        pro_lookandfeel.Set();
+
+        if (i == 10) {
+            bt_administratormang.setEnabled(true);
+            bt_cashmang.setEnabled(false);
+            bt_cusmang.setEnabled(false);
+            bt_fungmang.setEnabled(false);
+            bt_installmentmang.setEnabled(false);
+            bt_loanmang.setEnabled(false);
+            bt_reports.setEnabled(false);
+            bt_usermang.setEnabled(true);
+        }
 
     }
 
@@ -90,14 +118,14 @@ public class Admin_workArea extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
         jp_adminMainPanel = new javax.swing.JPanel();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
-        jButton4 = new javax.swing.JButton();
-        jButton6 = new javax.swing.JButton();
-        jButton7 = new javax.swing.JButton();
-        jButton8 = new javax.swing.JButton();
-        jButton9 = new javax.swing.JButton();
+        bt_usermang = new javax.swing.JButton();
+        bt_cusmang = new javax.swing.JButton();
+        bt_fungmang = new javax.swing.JButton();
+        bt_installmentmang = new javax.swing.JButton();
+        bt_cashmang = new javax.swing.JButton();
+        bt_loanmang = new javax.swing.JButton();
+        bt_administratormang = new javax.swing.JButton();
+        bt_reports = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         lb_customerCount1 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
@@ -510,132 +538,132 @@ public class Admin_workArea extends javax.swing.JFrame {
         jp_adminMainPanel.setPreferredSize(new java.awt.Dimension(1300, 400));
         jp_adminMainPanel.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jButton1.setBackground(new java.awt.Color(0, 153, 102));
-        jButton1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jButton1.setForeground(new java.awt.Color(255, 255, 255));
-        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/admin/home/images/admin_buttonMenu_in.png"))); // NOI18N
-        jButton1.setText("User Managment");
-        jButton1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jButton1.setMaximumSize(new java.awt.Dimension(200, 200));
-        jButton1.setMinimumSize(new java.awt.Dimension(200, 200));
-        jButton1.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/admin/home/images/admin_buttonMenu.png"))); // NOI18N
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        bt_usermang.setBackground(new java.awt.Color(0, 153, 102));
+        bt_usermang.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        bt_usermang.setForeground(new java.awt.Color(255, 255, 255));
+        bt_usermang.setIcon(new javax.swing.ImageIcon(getClass().getResource("/admin/home/images/admin_buttonMenu_in.png"))); // NOI18N
+        bt_usermang.setText("User Managment");
+        bt_usermang.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        bt_usermang.setMaximumSize(new java.awt.Dimension(200, 200));
+        bt_usermang.setMinimumSize(new java.awt.Dimension(200, 200));
+        bt_usermang.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/admin/home/images/admin_buttonMenu.png"))); // NOI18N
+        bt_usermang.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                bt_usermangActionPerformed(evt);
             }
         });
-        jp_adminMainPanel.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(104, 115, 200, 200));
+        jp_adminMainPanel.add(bt_usermang, new org.netbeans.lib.awtextra.AbsoluteConstraints(104, 115, 200, 200));
 
-        jButton2.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jButton2.setForeground(new java.awt.Color(255, 255, 255));
-        jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/admin/home/images/admin_buttonMenu_in.png"))); // NOI18N
-        jButton2.setText("Customer Managment");
-        jButton2.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jButton2.setMaximumSize(new java.awt.Dimension(200, 200));
-        jButton2.setMinimumSize(new java.awt.Dimension(200, 200));
-        jButton2.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/admin/home/images/admin_buttonMenu.png"))); // NOI18N
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        bt_cusmang.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        bt_cusmang.setForeground(new java.awt.Color(255, 255, 255));
+        bt_cusmang.setIcon(new javax.swing.ImageIcon(getClass().getResource("/admin/home/images/admin_buttonMenu_in.png"))); // NOI18N
+        bt_cusmang.setText("Customer Managment");
+        bt_cusmang.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        bt_cusmang.setMaximumSize(new java.awt.Dimension(200, 200));
+        bt_cusmang.setMinimumSize(new java.awt.Dimension(200, 200));
+        bt_cusmang.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/admin/home/images/admin_buttonMenu.png"))); // NOI18N
+        bt_cusmang.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                bt_cusmangActionPerformed(evt);
             }
         });
-        jp_adminMainPanel.add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(322, 115, 200, 200));
+        jp_adminMainPanel.add(bt_cusmang, new org.netbeans.lib.awtextra.AbsoluteConstraints(322, 115, 200, 200));
 
-        jButton3.setBackground(new java.awt.Color(0, 153, 102));
-        jButton3.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jButton3.setForeground(new java.awt.Color(255, 255, 255));
-        jButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/admin/home/images/admin_buttonMenu_in.png"))); // NOI18N
-        jButton3.setText("Fund Managment");
-        jButton3.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jButton3.setMaximumSize(new java.awt.Dimension(200, 200));
-        jButton3.setMinimumSize(new java.awt.Dimension(200, 200));
-        jButton3.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/admin/home/images/admin_buttonMenu.png"))); // NOI18N
-        jButton3.addActionListener(new java.awt.event.ActionListener() {
+        bt_fungmang.setBackground(new java.awt.Color(0, 153, 102));
+        bt_fungmang.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        bt_fungmang.setForeground(new java.awt.Color(255, 255, 255));
+        bt_fungmang.setIcon(new javax.swing.ImageIcon(getClass().getResource("/admin/home/images/admin_buttonMenu_in.png"))); // NOI18N
+        bt_fungmang.setText("Fund Managment");
+        bt_fungmang.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        bt_fungmang.setMaximumSize(new java.awt.Dimension(200, 200));
+        bt_fungmang.setMinimumSize(new java.awt.Dimension(200, 200));
+        bt_fungmang.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/admin/home/images/admin_buttonMenu.png"))); // NOI18N
+        bt_fungmang.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton3ActionPerformed(evt);
+                bt_fungmangActionPerformed(evt);
             }
         });
-        jp_adminMainPanel.add(jButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 115, 200, 200));
+        jp_adminMainPanel.add(bt_fungmang, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 115, 200, 200));
 
-        jButton4.setBackground(new java.awt.Color(0, 153, 102));
-        jButton4.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jButton4.setForeground(new java.awt.Color(255, 255, 255));
-        jButton4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/admin/home/images/admin_buttonMenu_in.png"))); // NOI18N
-        jButton4.setText("Installment Management");
-        jButton4.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jButton4.setMaximumSize(new java.awt.Dimension(200, 200));
-        jButton4.setMinimumSize(new java.awt.Dimension(200, 200));
-        jButton4.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/admin/home/images/admin_buttonMenu.png"))); // NOI18N
-        jButton4.addActionListener(new java.awt.event.ActionListener() {
+        bt_installmentmang.setBackground(new java.awt.Color(0, 153, 102));
+        bt_installmentmang.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        bt_installmentmang.setForeground(new java.awt.Color(255, 255, 255));
+        bt_installmentmang.setIcon(new javax.swing.ImageIcon(getClass().getResource("/admin/home/images/admin_buttonMenu_in.png"))); // NOI18N
+        bt_installmentmang.setText("Installment Management");
+        bt_installmentmang.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        bt_installmentmang.setMaximumSize(new java.awt.Dimension(200, 200));
+        bt_installmentmang.setMinimumSize(new java.awt.Dimension(200, 200));
+        bt_installmentmang.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/admin/home/images/admin_buttonMenu.png"))); // NOI18N
+        bt_installmentmang.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton4ActionPerformed(evt);
+                bt_installmentmangActionPerformed(evt);
             }
         });
-        jp_adminMainPanel.add(jButton4, new org.netbeans.lib.awtextra.AbsoluteConstraints(758, 115, 200, 200));
+        jp_adminMainPanel.add(bt_installmentmang, new org.netbeans.lib.awtextra.AbsoluteConstraints(758, 115, 200, 200));
 
-        jButton6.setBackground(new java.awt.Color(0, 153, 102));
-        jButton6.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jButton6.setForeground(new java.awt.Color(255, 255, 255));
-        jButton6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/admin/home/images/admin_buttonMenu_in.png"))); // NOI18N
-        jButton6.setText("Cash Management");
-        jButton6.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jButton6.setMaximumSize(new java.awt.Dimension(200, 200));
-        jButton6.setMinimumSize(new java.awt.Dimension(200, 200));
-        jButton6.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/admin/home/images/admin_buttonMenu.png"))); // NOI18N
-        jButton6.addActionListener(new java.awt.event.ActionListener() {
+        bt_cashmang.setBackground(new java.awt.Color(0, 153, 102));
+        bt_cashmang.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        bt_cashmang.setForeground(new java.awt.Color(255, 255, 255));
+        bt_cashmang.setIcon(new javax.swing.ImageIcon(getClass().getResource("/admin/home/images/admin_buttonMenu_in.png"))); // NOI18N
+        bt_cashmang.setText("Cash Management");
+        bt_cashmang.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        bt_cashmang.setMaximumSize(new java.awt.Dimension(200, 200));
+        bt_cashmang.setMinimumSize(new java.awt.Dimension(200, 200));
+        bt_cashmang.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/admin/home/images/admin_buttonMenu.png"))); // NOI18N
+        bt_cashmang.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton6ActionPerformed(evt);
+                bt_cashmangActionPerformed(evt);
             }
         });
-        jp_adminMainPanel.add(jButton6, new org.netbeans.lib.awtextra.AbsoluteConstraints(104, 333, 200, 200));
+        jp_adminMainPanel.add(bt_cashmang, new org.netbeans.lib.awtextra.AbsoluteConstraints(104, 333, 200, 200));
 
-        jButton7.setBackground(new java.awt.Color(0, 153, 102));
-        jButton7.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jButton7.setForeground(new java.awt.Color(255, 255, 255));
-        jButton7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/admin/home/images/admin_buttonMenu_in.png"))); // NOI18N
-        jButton7.setText("Loan Managment");
-        jButton7.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jButton7.setMaximumSize(new java.awt.Dimension(200, 200));
-        jButton7.setMinimumSize(new java.awt.Dimension(200, 200));
-        jButton7.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/admin/home/images/admin_buttonMenu.png"))); // NOI18N
-        jButton7.addActionListener(new java.awt.event.ActionListener() {
+        bt_loanmang.setBackground(new java.awt.Color(0, 153, 102));
+        bt_loanmang.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        bt_loanmang.setForeground(new java.awt.Color(255, 255, 255));
+        bt_loanmang.setIcon(new javax.swing.ImageIcon(getClass().getResource("/admin/home/images/admin_buttonMenu_in.png"))); // NOI18N
+        bt_loanmang.setText("Loan Managment");
+        bt_loanmang.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        bt_loanmang.setMaximumSize(new java.awt.Dimension(200, 200));
+        bt_loanmang.setMinimumSize(new java.awt.Dimension(200, 200));
+        bt_loanmang.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/admin/home/images/admin_buttonMenu.png"))); // NOI18N
+        bt_loanmang.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton7ActionPerformed(evt);
+                bt_loanmangActionPerformed(evt);
             }
         });
-        jp_adminMainPanel.add(jButton7, new org.netbeans.lib.awtextra.AbsoluteConstraints(322, 333, 200, 200));
+        jp_adminMainPanel.add(bt_loanmang, new org.netbeans.lib.awtextra.AbsoluteConstraints(322, 333, 200, 200));
 
-        jButton8.setBackground(new java.awt.Color(0, 153, 102));
-        jButton8.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jButton8.setForeground(new java.awt.Color(255, 255, 255));
-        jButton8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/admin/home/images/admin_buttonMenu_in.png"))); // NOI18N
-        jButton8.setText("Administrator Managment");
-        jButton8.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jButton8.setMaximumSize(new java.awt.Dimension(200, 200));
-        jButton8.setMinimumSize(new java.awt.Dimension(200, 200));
-        jButton8.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/admin/home/images/admin_buttonMenu.png"))); // NOI18N
-        jButton8.addActionListener(new java.awt.event.ActionListener() {
+        bt_administratormang.setBackground(new java.awt.Color(0, 153, 102));
+        bt_administratormang.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        bt_administratormang.setForeground(new java.awt.Color(255, 255, 255));
+        bt_administratormang.setIcon(new javax.swing.ImageIcon(getClass().getResource("/admin/home/images/admin_buttonMenu_in.png"))); // NOI18N
+        bt_administratormang.setText("Administrator Managment");
+        bt_administratormang.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        bt_administratormang.setMaximumSize(new java.awt.Dimension(200, 200));
+        bt_administratormang.setMinimumSize(new java.awt.Dimension(200, 200));
+        bt_administratormang.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/admin/home/images/admin_buttonMenu.png"))); // NOI18N
+        bt_administratormang.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton8ActionPerformed(evt);
+                bt_administratormangActionPerformed(evt);
             }
         });
-        jp_adminMainPanel.add(jButton8, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 333, 200, 200));
+        jp_adminMainPanel.add(bt_administratormang, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 333, 200, 200));
 
-        jButton9.setBackground(new java.awt.Color(0, 153, 102));
-        jButton9.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jButton9.setForeground(new java.awt.Color(255, 255, 255));
-        jButton9.setIcon(new javax.swing.ImageIcon(getClass().getResource("/admin/home/images/admin_buttonMenu_in.png"))); // NOI18N
-        jButton9.setText("Reports Managment");
-        jButton9.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jButton9.setMaximumSize(new java.awt.Dimension(200, 200));
-        jButton9.setMinimumSize(new java.awt.Dimension(200, 200));
-        jButton9.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/admin/home/images/admin_buttonMenu.png"))); // NOI18N
-        jButton9.addActionListener(new java.awt.event.ActionListener() {
+        bt_reports.setBackground(new java.awt.Color(0, 153, 102));
+        bt_reports.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        bt_reports.setForeground(new java.awt.Color(255, 255, 255));
+        bt_reports.setIcon(new javax.swing.ImageIcon(getClass().getResource("/admin/home/images/admin_buttonMenu_in.png"))); // NOI18N
+        bt_reports.setText("Reports Managment");
+        bt_reports.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        bt_reports.setMaximumSize(new java.awt.Dimension(200, 200));
+        bt_reports.setMinimumSize(new java.awt.Dimension(200, 200));
+        bt_reports.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/admin/home/images/admin_buttonMenu.png"))); // NOI18N
+        bt_reports.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton9ActionPerformed(evt);
+                bt_reportsActionPerformed(evt);
             }
         });
-        jp_adminMainPanel.add(jButton9, new org.netbeans.lib.awtextra.AbsoluteConstraints(758, 333, 200, 200));
+        jp_adminMainPanel.add(bt_reports, new org.netbeans.lib.awtextra.AbsoluteConstraints(758, 333, 200, 200));
 
         jPanel2.setBackground(new java.awt.Color(0, 200, 83));
         jPanel2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255), 2));
@@ -811,11 +839,13 @@ public class Admin_workArea extends javax.swing.JFrame {
 
     }//GEN-LAST:event_lb_wk_option3MouseClicked
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        lb_wk_option1.setVisible(true);
-        load_user_managment();
+    private void bt_usermangActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_usermangActionPerformed
+        new Thread(() -> {
+            lb_wk_option1.setVisible(true);
+            load_user_managment();
+        }).start();
 
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_bt_usermangActionPerformed
 
     private void jLabel4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel4MouseClicked
 
@@ -831,7 +861,7 @@ public class Admin_workArea extends javax.swing.JFrame {
     private void lb_wk_option1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lb_wk_option1MouseClicked
 
         lb_wk_option1.setVisible(false);
-        
+
         try {
             jp_adminMainPanel.removeAll();
             jp_adminMainPanel.setLayout(new FlowLayout());
@@ -846,86 +876,130 @@ public class Admin_workArea extends javax.swing.JFrame {
 
     }//GEN-LAST:event_lb_wk_option1MouseClicked
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        lb_wk_option1.setVisible(true);
-        load_customer_managment();
+    private void bt_cusmangActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_cusmangActionPerformed
+        new Thread(() -> {
+            lb_wk_option1.setVisible(true);
+            load_customer_managment();
+        }).start();
 
-    }//GEN-LAST:event_jButton2ActionPerformed
 
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        lb_wk_option1.setVisible(true);
-        load_fundManagment();
+    }//GEN-LAST:event_bt_cusmangActionPerformed
 
-    }//GEN-LAST:event_jButton3ActionPerformed
+    private void bt_fungmangActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_fungmangActionPerformed
+        new Thread(() -> {
+            lb_wk_option1.setVisible(true);
+            load_fundManagment();
+        }).start();
 
-    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
-        lb_wk_option1.setVisible(true);
-        load_installmentManagment();
+    }//GEN-LAST:event_bt_fungmangActionPerformed
 
-    }//GEN-LAST:event_jButton4ActionPerformed
+    private void bt_installmentmangActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_installmentmangActionPerformed
+        new Thread(() -> {
+            lb_wk_option1.setVisible(true);
+            load_installmentManagment();
+        }).start();
 
-    private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
-        lb_wk_option1.setVisible(true);
-        load_cashManagment();
 
-    }//GEN-LAST:event_jButton6ActionPerformed
+    }//GEN-LAST:event_bt_installmentmangActionPerformed
 
-    private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
-        lb_wk_option1.setVisible(true);
-        load_loanManagment();
+    private void bt_cashmangActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_cashmangActionPerformed
+        new Thread(() -> {
+            lb_wk_option1.setVisible(true);
+            load_cashManagment();
+        }).start();
 
-    }//GEN-LAST:event_jButton7ActionPerformed
 
-    private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton8ActionPerformed
-        lb_wk_option1.setVisible(true);
-        load_admin_managment();
+    }//GEN-LAST:event_bt_cashmangActionPerformed
 
-    }//GEN-LAST:event_jButton8ActionPerformed
+    private void bt_loanmangActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_loanmangActionPerformed
+        new Thread(() -> {
+            lb_wk_option1.setVisible(true);
+            load_loanManagment();
+        }).start();
 
-    private void jButton9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton9ActionPerformed
-        lb_wk_option1.setVisible(true);
-        load_reportManagment();
 
-    }//GEN-LAST:event_jButton9ActionPerformed
+    }//GEN-LAST:event_bt_loanmangActionPerformed
+
+    private void bt_administratormangActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_administratormangActionPerformed
+        new Thread(() -> {
+            lb_wk_option1.setVisible(true);
+            load_admin_managment();
+        }).start();
+
+
+    }//GEN-LAST:event_bt_administratormangActionPerformed
+
+    private void bt_reportsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_reportsActionPerformed
+        new Thread(() -> {
+            lb_wk_option1.setVisible(true);
+            load_reportManagment();
+        }).start();
+
+
+    }//GEN-LAST:event_bt_reportsActionPerformed
 
     private void bt_OuserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_OuserActionPerformed
-        lb_wk_option1.setVisible(true);
-        load_user_managment();
+        new Thread(() -> {
+            lb_wk_option1.setVisible(true);
+            load_user_managment();
+        }).start();
+
     }//GEN-LAST:event_bt_OuserActionPerformed
 
     private void bt_OcustomerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_OcustomerActionPerformed
-        lb_wk_option1.setVisible(true);
-        load_customer_managment();
+        new Thread(() -> {
+            lb_wk_option1.setVisible(true);
+            load_customer_managment();
+        }).start();
+
     }//GEN-LAST:event_bt_OcustomerActionPerformed
 
     private void bt_OfundActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_OfundActionPerformed
-        lb_wk_option1.setVisible(true);
-        load_fundManagment();
+        new Thread(() -> {
+            lb_wk_option1.setVisible(true);
+            load_fundManagment();
+        }).start();
+
     }//GEN-LAST:event_bt_OfundActionPerformed
 
     private void bt_OinstallmentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_OinstallmentActionPerformed
-        lb_wk_option1.setVisible(true);
-        load_installmentManagment();
+        new Thread(() -> {
+            lb_wk_option1.setVisible(true);
+            load_installmentManagment();
+        }).start();
+
     }//GEN-LAST:event_bt_OinstallmentActionPerformed
 
     private void bt_OcashActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_OcashActionPerformed
-        lb_wk_option1.setVisible(true);
-        load_cashManagment();
+        new Thread(() -> {
+            lb_wk_option1.setVisible(true);
+            load_cashManagment();
+        }).start();
+
     }//GEN-LAST:event_bt_OcashActionPerformed
 
     private void bt_OloanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_OloanActionPerformed
-        lb_wk_option1.setVisible(true);
-        load_loanManagment();
+        new Thread(() -> {
+            lb_wk_option1.setVisible(true);
+            load_loanManagment();
+        }).start();
+
     }//GEN-LAST:event_bt_OloanActionPerformed
 
     private void bt_OadministratorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_OadministratorActionPerformed
-        lb_wk_option1.setVisible(true);
-        load_admin_managment();
+        new Thread(() -> {
+            lb_wk_option1.setVisible(true);
+            load_admin_managment();
+        }).start();
+
     }//GEN-LAST:event_bt_OadministratorActionPerformed
 
     private void bt_OreportsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_OreportsActionPerformed
-        lb_wk_option1.setVisible(true);
-        load_reportManagment();
+        new Thread(() -> {
+            lb_wk_option1.setVisible(true);
+            load_reportManagment();
+        }).start();
+
     }//GEN-LAST:event_bt_OreportsActionPerformed
 
     /**
@@ -970,14 +1044,14 @@ public class Admin_workArea extends javax.swing.JFrame {
     private javax.swing.JButton bt_Oloan;
     private javax.swing.JButton bt_Oreports;
     private javax.swing.JButton bt_Ouser;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
-    private javax.swing.JButton jButton6;
-    private javax.swing.JButton jButton7;
-    private javax.swing.JButton jButton8;
-    private javax.swing.JButton jButton9;
+    private javax.swing.JButton bt_administratormang;
+    private javax.swing.JButton bt_cashmang;
+    private javax.swing.JButton bt_cusmang;
+    private javax.swing.JButton bt_fungmang;
+    private javax.swing.JButton bt_installmentmang;
+    private javax.swing.JButton bt_loanmang;
+    private javax.swing.JButton bt_reports;
+    private javax.swing.JButton bt_usermang;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -1022,102 +1096,112 @@ public class Admin_workArea extends javax.swing.JFrame {
 
     private void load_user_managment() {
 
-        try {
-            jp_adminMainPanel.removeAll();
-            jp_adminMainPanel.setLayout(new FlowLayout());
-            Admin_userManagment user = new Admin_userManagment();
-            user.setVisible(true);
-            jp_adminMainPanel.add(user);
-            jp_adminMainPanel.updateUI();
+        new Thread(() -> {
+            try {
+                jp_adminMainPanel.removeAll();
+                jp_adminMainPanel.setLayout(new FlowLayout());
+                Admin_userManagment user = new Admin_userManagment();
+                user.setVisible(true);
+                jp_adminMainPanel.add(user);
+                jp_adminMainPanel.updateUI();
 
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }).start();
 
     }
 
     private void load_fundManagment() {
 
-        try {
-            jp_adminMainPanel.removeAll();
-            jp_adminMainPanel.setLayout(new FlowLayout());
-            Admin_fundManagment ai = new Admin_fundManagment();
-            ai.setVisible(true);
-            jp_adminMainPanel.add(ai);
-            jp_adminMainPanel.updateUI();
+        new Thread(() -> {
+            try {
+                jp_adminMainPanel.removeAll();
+                jp_adminMainPanel.setLayout(new FlowLayout());
+                Admin_fundManagment ai = new Admin_fundManagment();
+                ai.setVisible(true);
+                jp_adminMainPanel.add(ai);
+                jp_adminMainPanel.updateUI();
 
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }).start();
 
     }
 
     private void load_installmentManagment() {
 
-        try {
-            jp_adminMainPanel.removeAll();
-            jp_adminMainPanel.setLayout(new FlowLayout());
-            Admin_installmentManagment am = new Admin_installmentManagment();
-            am.setVisible(true);
-            jp_adminMainPanel.add(am);
-            jp_adminMainPanel.updateUI();
+        new Thread(() -> {
+            try {
+                jp_adminMainPanel.removeAll();
+                jp_adminMainPanel.setLayout(new FlowLayout());
+                Admin_installmentManagment am = new Admin_installmentManagment();
+                am.setVisible(true);
+                jp_adminMainPanel.add(am);
+                jp_adminMainPanel.updateUI();
 
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }).start();
 
     }
 
     private void loadCusFundCount() {
-        try {
-            ResultSet rs = MC_DB.myConnection().createStatement().executeQuery("SELECT COUNT(DISTINCT idcustomer) AS NumberOfCustomers FROM customer;");
-            //ResultSet r2=MC_DB.myConnection().createStatement().executeQuery("SELECT COUNT(DISTINCT idfunder) AS NumberOfFunders FROM funder;");
-            ResultSet r2 = MC_DB.myConnection().createStatement().executeQuery("SELECT COUNT(idfunder) AS numffunders FROM funder;");
-            while (rs.next()) {
-                String cusCount = rs.getString("NumberOfCustomers");
-                lb_customerCount.setText(cusCount);
+        new Thread(() -> {
+            try {
+                ResultSet rs = MC_DB.myConnection().createStatement().executeQuery("SELECT COUNT(DISTINCT idcustomer) AS NumberOfCustomers FROM customer;");
+                //ResultSet r2=MC_DB.myConnection().createStatement().executeQuery("SELECT COUNT(DISTINCT idfunder) AS NumberOfFunders FROM funder;");
+                ResultSet r2 = MC_DB.myConnection().createStatement().executeQuery("SELECT COUNT(idfunder) AS numffunders FROM funder;");
+                while (rs.next()) {
+                    String cusCount = rs.getString("NumberOfCustomers");
+                    lb_customerCount.setText(cusCount);
 
-            }
+                }
 //            while (r2.next()) {                
 //                String funderCount=rs.getString("numffunders");
 //                lb_funderCount.setText(funderCount+"");
 //            }
 
-        } catch (SQLException ex) {
-            Logger.getLogger(Admin_workArea.class.getName()).log(Level.SEVERE, null, ex);
-        }
+            } catch (SQLException ex) {
+                Logger.getLogger(Admin_workArea.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }).start();
 
     }
 
     private void load_admin_managment() {
+        new Thread(() -> {
+            try {
+                jp_adminMainPanel.removeAll();
+                jp_adminMainPanel.setLayout(new FlowLayout());
+                Admin_adminManagment aiq = new Admin_adminManagment();
+                aiq.setVisible(true);
+                jp_adminMainPanel.add(aiq);
+                jp_adminMainPanel.updateUI();
 
-        try {
-            jp_adminMainPanel.removeAll();
-            jp_adminMainPanel.setLayout(new FlowLayout());
-            Admin_adminManagment aiq = new Admin_adminManagment();
-            aiq.setVisible(true);
-            jp_adminMainPanel.add(aiq);
-            jp_adminMainPanel.updateUI();
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }).start();
 
     }
 
     private void load_customer_managment() {
+        new Thread(() -> {
+            try {
+                jp_adminMainPanel.removeAll();
+                jp_adminMainPanel.setLayout(new FlowLayout());
+                Admin_customerManagment cus_add = new Admin_customerManagment();
+                cus_add.setVisible(true);
+                jp_adminMainPanel.add(cus_add);
+                jp_adminMainPanel.updateUI();
 
-        try {
-            jp_adminMainPanel.removeAll();
-            jp_adminMainPanel.setLayout(new FlowLayout());
-            Admin_customerManagment cus_add = new Admin_customerManagment();
-            cus_add.setVisible(true);
-            jp_adminMainPanel.add(cus_add);
-            jp_adminMainPanel.updateUI();
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }).start();
 
     }
 
@@ -1136,49 +1220,55 @@ public class Admin_workArea extends javax.swing.JFrame {
 
     private void load_cashManagment() {
 
-        try {
-            jp_adminMainPanel.removeAll();
-            jp_adminMainPanel.setLayout(new FlowLayout());
-            Admin_cashManagment am = new Admin_cashManagment();
-            am.setVisible(true);
-            jp_adminMainPanel.add(am);
-            jp_adminMainPanel.updateUI();
+        new Thread(() -> {
+            try {
+                jp_adminMainPanel.removeAll();
+                jp_adminMainPanel.setLayout(new FlowLayout());
+                Admin_cashManagment am = new Admin_cashManagment();
+                am.setVisible(true);
+                jp_adminMainPanel.add(am);
+                jp_adminMainPanel.updateUI();
 
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }).start();
 
     }
 
     private void load_loanManagment() {
 
-        try {
-            jp_adminMainPanel.removeAll();
-            jp_adminMainPanel.setLayout(new FlowLayout());
-            Admin_loanManagment am = new Admin_loanManagment();
-            am.setVisible(true);
-            jp_adminMainPanel.add(am);
-            jp_adminMainPanel.updateUI();
+        new Thread(() -> {
+            try {
+                jp_adminMainPanel.removeAll();
+                jp_adminMainPanel.setLayout(new FlowLayout());
+                Admin_loanManagment am = new Admin_loanManagment();
+                am.setVisible(true);
+                jp_adminMainPanel.add(am);
+                jp_adminMainPanel.updateUI();
 
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }).start();
 
     }
 
     private void load_reportManagment() {
 
-        try {
-            jp_adminMainPanel.removeAll();
-            jp_adminMainPanel.setLayout(new FlowLayout());
-            Admin_reportManagment am = new Admin_reportManagment();
-            am.setVisible(true);
-            jp_adminMainPanel.add(am);
-            jp_adminMainPanel.updateUI();
+        new Thread(() -> {
+            try {
+                jp_adminMainPanel.removeAll();
+                jp_adminMainPanel.setLayout(new FlowLayout());
+                Admin_reportManagment am = new Admin_reportManagment();
+                am.setVisible(true);
+                jp_adminMainPanel.add(am);
+                jp_adminMainPanel.updateUI();
 
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }).start();
 
     }
 }

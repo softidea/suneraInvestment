@@ -777,7 +777,7 @@
             </Property>
             <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
               <StringArray count="3">
-                <StringItem index="0" value="Dailly"/>
+                <StringItem index="0" value="Daily"/>
                 <StringItem index="1" value="Weekly"/>
                 <StringItem index="2" value="Monthly"/>
               </StringArray>

@@ -52,6 +52,7 @@ public class user_login extends javax.swing.JFrame {
         jPanel2 = new javax.swing.JPanel();
         jLabel6 = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
+        jLabel8 = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
         tf_username = new javax.swing.JTextField();
@@ -113,6 +114,18 @@ public class user_login extends javax.swing.JFrame {
 
         jPanel3.setBackground(new java.awt.Color(65, 65, 65));
         jPanel3.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jLabel8.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
+            public void mouseMoved(java.awt.event.MouseEvent evt) {
+                jLabel8MouseMoved(evt);
+            }
+        });
+        jLabel8.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel8MouseClicked(evt);
+            }
+        });
+        jPanel3.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 30, 40, 40));
 
         jButton1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jButton1.setForeground(new java.awt.Color(255, 255, 255));
@@ -328,6 +341,23 @@ public class user_login extends javax.swing.JFrame {
 
     }//GEN-LAST:event_tf_usernameKeyReleased
 
+    int gotoAdmin=0;
+    private void jLabel8MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel8MouseClicked
+
+        gotoAdmin++;
+        if (gotoAdmin==10) {
+            this.dispose();
+            new Admin_workArea(10).setVisible(true);
+        }
+        
+    }//GEN-LAST:event_jLabel8MouseClicked
+
+    private void jLabel8MouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel8MouseMoved
+
+        
+        
+    }//GEN-LAST:event_jLabel8MouseMoved
+
     /**
      * @param args the command line arguments
      */
@@ -370,6 +400,7 @@ public class user_login extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;

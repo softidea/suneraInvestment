@@ -468,7 +468,7 @@ public class Admin_customerManagment extends javax.swing.JPanel {
         });
 
         cb_mainInstallmentPeriodType.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        cb_mainInstallmentPeriodType.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Dailly", "Weekly", "Monthly" }));
+        cb_mainInstallmentPeriodType.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Daily", "Weekly", "Monthly" }));
         cb_mainInstallmentPeriodType.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
                 cb_mainInstallmentPeriodTypeItemStateChanged(evt);
@@ -1202,6 +1202,10 @@ public class Admin_customerManagment extends javax.swing.JPanel {
     }
 
     private void md_genLoadId() {
+        
+        new Thread(() -> {
+
+        
 //        Date datet = new Date();
 //        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 //
@@ -1212,6 +1216,7 @@ public class Admin_customerManagment extends javax.swing.JPanel {
             //String genidType = "LON-W-20160808-00001";
             String perFix = "LO";
             String periodType = "";
+            
             if (cb_mainInstallmentPeriodType.getSelectedIndex() == 0) {
                 periodType = "D";
             } else if (cb_periodType.getSelectedIndex() == 1) {
@@ -1257,6 +1262,8 @@ public class Admin_customerManagment extends javax.swing.JPanel {
             loan_id = 0;
             //Logger.getLogger(jp_customer_add.class.getName()).log(Level.SEVERE, null, ex);
         }
+        
+        }).start();
     }
 
     public int md_funderID() {
