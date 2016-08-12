@@ -6,6 +6,7 @@
 package com.softidea.www.public_access.login_user;
 
 import com.sun.awt.AWTUtilities;
+import javax.swing.UIManager;
 
 /**
  *
@@ -18,6 +19,10 @@ public class first_loadingWindow extends javax.swing.JFrame {
      */
     public first_loadingWindow() {
         initComponents();
+         try {
+            UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
+        } catch (Exception ex) {
+        }
         try {
             AWTUtilities.setWindowOpaque(this, false);
         } catch (Exception e) {

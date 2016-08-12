@@ -13,6 +13,7 @@ import java.awt.event.KeyEvent;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import javax.swing.JOptionPane;
+import javax.swing.UIManager;
 
 /**
  *
@@ -28,6 +29,10 @@ public class user_login extends javax.swing.JFrame {
     public user_login() {
 
         initComponents();
+         try {
+            UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
+        } catch (Exception ex) {
+        }
         setAlwaysOnTop(true);
         tf_username.setRequestFocusEnabled(true);
         tf_username.grabFocus();

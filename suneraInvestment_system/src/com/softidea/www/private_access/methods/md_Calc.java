@@ -24,4 +24,19 @@ public class md_Calc {
 
     }
 
+    public static double stringTodouble(String AmounttoTextFiled00) {
+        Double AmountD = Double.parseDouble(AmounttoTextFiled00);
+
+        Long roundAmount = Math.round(AmountD);
+
+        int Amount_int = roundAmount.intValue();
+
+        String Amount_text = Amount_int + ".00";
+
+        double new_amount = Double.parseDouble(Amount_text);
+
+        return new_amount;
+
+    }
+
 }

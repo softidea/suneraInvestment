@@ -627,11 +627,11 @@ public class Admin_fundManagment extends javax.swing.JPanel {
                         idfunder = rss.getInt("idfunder");
                     }
 
-                    String sql_qury = "INSERT INTO fund (fund,fund_update,fund_date,descriptin,funder_idfunder) VALUES ('" + fundAmount_text + "','" + fundAmount_text + "','" + date + "','" + ta_FundDiscription.getText().trim() + "','" + idfunder + "')";
+                    String sql_qury = "INSERT INTO fund (fund,fund_update,fund_date,descriptin,fund_status,funder_idfunder) VALUES ('" + fundAmount_text + "','" + fundAmount_text + "','" + date + "','" + ta_FundDiscription.getText().trim() + "','Active','" + idfunder + "')";
                     MC_DB.update_data(sql_qury);
 
                 } catch (SQLException e) {
-                    JOptionPane.showMessageDialog(this, e);
+                    
                     e.printStackTrace();
                 }
                 rss.close();

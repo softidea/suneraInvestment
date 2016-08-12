@@ -29,8 +29,9 @@ public class md_cus {
 
             }
             //System.out.println("DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD::::D" + insertId);
+            String due_amount = "0.00";
 
-            String qry_add_loan = "INSERT INTO loans (loan_no,loan_date,loan_amount,loan_mainperiodtype,loan_period,loan_installment,additional_interest,payable_amount,loan_status,idcustomer,idfunder) VALUES('" + loan_no + "','" + loan_date + "','" + loan_amount + "','" + loan_mainperiodtype + "','" + loan_period + "','" + loan_installment + "','" + additional_interest + "','" + payable_amount + "','" + status + "'," + insertId + "','" + idfunder + "');";
+            String qry_add_loan = "INSERT INTO loans (loan_no,loan_date,loan_amount,loan_mainperiodtype,loan_period,loan_installment,additional_interest,payable_amount,due_loan_amount,loan_status,idcustomer,idfunder) VALUES('" + loan_no + "','" + loan_date + "','" + loan_amount + "','" + loan_mainperiodtype + "','" + loan_period + "','" + loan_installment + "','" + additional_interest + "','" + payable_amount + "','" + due_amount + "','" + status + "'," + insertId + "','" + idfunder + "');";
 
             MC_DB.update_data(qry_add_loan);
             System.out.println("OK Customer And Loan Successfully Added!");

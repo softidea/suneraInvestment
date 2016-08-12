@@ -783,8 +783,8 @@ public class Admin_customerManagment extends javax.swing.JPanel {
                         md_funderID()
                 );
 
-                md_loans.minToFunderFund();
-
+                JOptionPane.showMessageDialog(this, fundID);
+               md_loans.minToFunderFund(fundID, lb_v_loanAmount.getText());
                 if (isture == true) {
                     JOptionPane.showMessageDialog(this, "Customer And Loan Successfully \n Saved!");
                     md_genLoadId();

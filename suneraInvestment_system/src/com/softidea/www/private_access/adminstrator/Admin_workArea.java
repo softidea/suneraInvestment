@@ -18,6 +18,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.UIManager;
 
 /**
  *
@@ -30,6 +31,10 @@ public class Admin_workArea extends javax.swing.JFrame {
      */
     public Admin_workArea() {
         initComponents();
+         try {
+            UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
+        } catch (Exception ex) {
+        }
         md_HomeMenuVisibleLabel(false);
         try {
             AWTUtilities.setWindowOpaque(this, false);

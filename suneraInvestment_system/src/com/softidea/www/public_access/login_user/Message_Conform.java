@@ -6,6 +6,7 @@
 package com.softidea.www.public_access.login_user;
 
 import java.awt.Color;
+import javax.swing.UIManager;
 
 
 public class Message_Conform extends javax.swing.JFrame {
@@ -15,6 +16,10 @@ public class Message_Conform extends javax.swing.JFrame {
      */
     public Message_Conform() {
         initComponents();
+         try {
+            UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
+        } catch (Exception ex) {
+        }
         getContentPane().setBackground(new Color(WIDTH, WIDTH, WIDTH));
     }
 
