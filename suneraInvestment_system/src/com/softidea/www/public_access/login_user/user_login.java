@@ -59,7 +59,7 @@ public class user_login extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
-        jLabel5 = new javax.swing.JLabel();
+        lb_locklogin = new javax.swing.JLabel();
         pf_password = new javax.swing.JPasswordField();
         jLabel7 = new javax.swing.JLabel();
 
@@ -178,7 +178,7 @@ public class user_login extends javax.swing.JFrame {
         jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/softidea/www/public_access/images/Logo150.png"))); // NOI18N
         jLabel3.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jPanel3.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(65, 29, 283, 190));
+        jPanel3.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 30, 150, 150));
 
         jLabel4.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(255, 255, 255));
@@ -191,11 +191,13 @@ public class user_login extends javax.swing.JFrame {
         });
         jPanel3.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 440, 100, -1));
 
-        jLabel5.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
-        jLabel5.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel5.setText("LOGIN SYSTEM");
-        jPanel3.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 194, 280, 30));
+        lb_locklogin.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+        lb_locklogin.setForeground(new java.awt.Color(255, 255, 255));
+        lb_locklogin.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lb_locklogin.setText("LOGIN SYSTEM");
+        lb_locklogin.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        lb_locklogin.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jPanel3.add(lb_locklogin, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 180, 300, 40));
 
         pf_password.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         pf_password.setForeground(new java.awt.Color(0, 150, 136));
@@ -398,13 +400,13 @@ public class user_login extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
+    private javax.swing.JLabel lb_locklogin;
     private javax.swing.JPasswordField pf_password;
     private javax.swing.JTextField tf_username;
     // End of variables declaration//GEN-END:variables

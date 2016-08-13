@@ -1,0 +1,232 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report_customerandloandetalsHistory" language="groovy" pageWidth="595" pageHeight="842" columnWidth="565" leftMargin="15" rightMargin="15" topMargin="20" bottomMargin="10" uuid="43add0e3-1208-4726-b0d6-cb97dbb51dcf">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<style name="Title" fontName="Arial" fontSize="26" isBold="true" pdfFontName="Helvetica-Bold"/>
+	<style name="SubTitle" forecolor="#666666" fontName="Arial" fontSize="18"/>
+	<style name="Column header" forecolor="#FFFFFF" fontName="Arial" fontSize="12" isBold="true"/>
+	<style name="Detail" fontName="Arial" fontSize="12"/>
+	<parameter name="startDate" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="endDate" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT * FROM customer AS c LEFT JOIN loans AS l ON l.idcustomer=c.idcustomer WHERE l.`loan_date` BETWEEN $P{startDate} AND $P{endDate};]]>
+	</queryString>
+	<field name="idcustomer" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="cus_nic" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="cus_fullname" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="cus_address" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="cus_contact" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="cus_gender" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="idloans" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="loan_no" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="loan_date" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="loan_amount" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="loan_mainperiodtype" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="loan_period" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="loan_installment" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="additional_interest" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="payable_amount" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="due_loan_amount" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="loan_status" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="idfunder" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<variable name="loan_amount_1" class="java.lang.Integer" calculation="DistinctCount">
+		<variableExpression><![CDATA[$F{loan_amount}]]></variableExpression>
+	</variable>
+	<variable name="variable1" class="java.lang.String">
+		<variableExpression><![CDATA[]]></variableExpression>
+	</variable>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="85" splitType="Stretch">
+			<staticText>
+				<reportElement style="Title" x="97" y="0" width="378" height="48" uuid="f8924cc5-fd07-472f-9f04-d10180290730"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Tahoma" size="28" isBold="false" pdfFontName="Helvetica"/>
+				</textElement>
+				<text><![CDATA[SUNERA INVESTMENTS]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="SubTitle" x="97" y="48" width="373" height="33" uuid="61f770b6-fd9a-4b39-b320-efa867045e0b"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Tahoma" size="22"/>
+				</textElement>
+				<text><![CDATA[Customer Reports]]></text>
+			</staticText>
+			<image>
+				<reportElement x="2" y="0" width="95" height="81" uuid="fff1528b-4c0a-4393-9f26-ba3600f57cce"/>
+				<imageExpression><![CDATA["E:\\Project_SE\\suneraInvestment\\suneraInvestment_system\\src\\com\\softidea\\www\\public_access\\images\\Logo.png"]]></imageExpression>
+			</image>
+		</band>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="33" splitType="Stretch">
+			<frame>
+				<reportElement mode="Opaque" x="0" y="5" width="565" height="20" backcolor="#666666" uuid="67a0f925-5c6a-43b9-ab88-d273853b3f93"/>
+				<staticText>
+					<reportElement style="Column header" x="0" y="0" width="34" height="15" uuid="3cf9cc35-a04d-4d8c-a89a-d06f1e5e4f01"/>
+					<textElement verticalAlignment="Middle">
+						<font fontName="Tahoma"/>
+					</textElement>
+					<text><![CDATA[NO]]></text>
+				</staticText>
+				<staticText>
+					<reportElement style="Column header" x="34" y="0" width="83" height="15" uuid="5902d54d-0faa-4a1c-97c6-1272e8190ddb"/>
+					<textElement verticalAlignment="Middle">
+						<font fontName="Tahoma"/>
+					</textElement>
+					<text><![CDATA[NIC No]]></text>
+				</staticText>
+				<staticText>
+					<reportElement style="Column header" x="119" y="0" width="147" height="15" uuid="72e8833f-5132-4287-b421-efdecc288e80"/>
+					<textElement verticalAlignment="Middle">
+						<font fontName="Tahoma"/>
+					</textElement>
+					<text><![CDATA[Full Name]]></text>
+				</staticText>
+				<staticText>
+					<reportElement style="Column header" x="266" y="0" width="204" height="15" uuid="4cad2476-179c-481d-ad79-db242f8e45f5"/>
+					<textElement verticalAlignment="Middle">
+						<font fontName="Tahoma"/>
+					</textElement>
+					<text><![CDATA[Address]]></text>
+				</staticText>
+				<staticText>
+					<reportElement style="Column header" x="473" y="0" width="85" height="15" uuid="ebbe26e2-6b52-4b5b-a577-79f4e4427ff5"/>
+					<textElement verticalAlignment="Middle">
+						<font fontName="Tahoma"/>
+					</textElement>
+					<text><![CDATA[Contact]]></text>
+				</staticText>
+			</frame>
+			<textField>
+				<reportElement x="13" y="6" width="100" height="20" uuid="1bf867a9-d531-4461-bebc-4e148a627ad5"/>
+				<textFieldExpression><![CDATA[$V{REPORT_COUNT}]]></textFieldExpression>
+			</textField>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="20" splitType="Stretch">
+			<frame>
+				<reportElement x="1" y="0" width="565" height="15" uuid="63daf0b3-e49c-4bf7-bfba-ca9bc683f370"/>
+				<textField>
+					<reportElement style="Detail" x="0" y="0" width="34" height="15" uuid="6f1d8fcc-f435-4455-b1e2-93c60bb4ab58"/>
+					<textElement verticalAlignment="Middle">
+						<font fontName="Tahoma"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{idcustomer}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement style="Detail" x="34" y="0" width="83" height="15" uuid="b1994fe8-7ffd-45b3-8a60-e4e4f408b0ff"/>
+					<textElement verticalAlignment="Middle">
+						<font fontName="Tahoma"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{cus_nic}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement style="Detail" x="119" y="0" width="147" height="15" uuid="b5ff667a-b225-444f-9176-106caa31b778"/>
+					<textElement verticalAlignment="Middle">
+						<font fontName="Tahoma"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{cus_fullname}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement style="Detail" x="266" y="0" width="204" height="15" uuid="872215fb-3878-4cfa-8b2d-8c44fa03da94"/>
+					<textElement verticalAlignment="Middle">
+						<font fontName="Tahoma"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{cus_address}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement style="Detail" x="475" y="0" width="85" height="15" uuid="c89c0d99-2d70-48da-9809-c0435b7426d7"/>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font fontName="Tahoma"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{cus_contact}]]></textFieldExpression>
+				</textField>
+			</frame>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="39" splitType="Stretch">
+			<textField pattern="EEEEE dd MMMMM yyyy">
+				<reportElement style="Column header" x="434" y="0" width="131" height="20" forecolor="#000000" uuid="dcb4db8e-0ac4-4d6f-845e-7d3d9a68adc6"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Tahoma" size="12" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="0" width="117" height="20" uuid="871ca556-499c-496d-8bf9-f12eedcb45fa"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Tahoma" size="12"/>
+				</textElement>
+				<text><![CDATA[Sunera Investments]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="238" y="0" width="100" height="20" uuid="e147e6d2-21cb-4190-a3b9-0bdbd58e931f"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Tahoma"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement positionType="FixRelativeToBottom" x="2" y="-1" width="558" height="1" uuid="6daadd17-9075-4d58-a55f-f1d50e0e8fd4"/>
+				<graphicElement>
+					<pen lineWidth="0.5" lineColor="#999999"/>
+				</graphicElement>
+			</line>
+		</band>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>

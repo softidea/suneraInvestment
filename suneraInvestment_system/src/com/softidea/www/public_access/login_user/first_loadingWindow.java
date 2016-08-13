@@ -6,6 +6,7 @@
 package com.softidea.www.public_access.login_user;
 
 import com.sun.awt.AWTUtilities;
+import java.awt.Toolkit;
 import javax.swing.UIManager;
 
 /**
@@ -19,8 +20,16 @@ public class first_loadingWindow extends javax.swing.JFrame {
      */
     public first_loadingWindow() {
         initComponents();
-         try {
+        
+        
+        try {
             UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
+            jLabel2.setIcon(null);
+            jLabel3.setIcon(null);
+            jLabel4.setIcon(null);
+            jLabel5.setIcon(null);
+            jLabel6.setIcon(null);
+            
         } catch (Exception ex) {
         }
         try {
@@ -42,8 +51,12 @@ public class first_loadingWindow extends javax.swing.JFrame {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
-        jLabel3 = new javax.swing.JLabel();
+        softidea = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -52,23 +65,23 @@ public class first_loadingWindow extends javax.swing.JFrame {
 
         jPanel1.setBackground(new java.awt.Color(25, 132, 3));
 
-        jLabel3.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jLabel3.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        jLabel3.setText("Softidea Creation (Pvt) Ltd.");
+        softidea.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        softidea.setForeground(new java.awt.Color(255, 255, 255));
+        softidea.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        softidea.setText("Softidea Creation (Pvt) Ltd.");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(249, Short.MAX_VALUE)
-                .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 241, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(310, Short.MAX_VALUE)
+                .addComponent(softidea, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, 40, Short.MAX_VALUE)
+            .addComponent(softidea, javax.swing.GroupLayout.DEFAULT_SIZE, 40, Short.MAX_VALUE)
         );
 
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 270, 500, 40));
@@ -77,11 +90,27 @@ public class first_loadingWindow extends javax.swing.JFrame {
         jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/softidea/www/public_access/images/loading.gif"))); // NOI18N
         getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 200, 60, 50));
 
+        jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/softidea/www/public_access/images/loading.gif"))); // NOI18N
+        getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 200, 60, 50));
+
+        jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/softidea/www/public_access/images/loading.gif"))); // NOI18N
+        getContentPane().add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 200, 60, 50));
+
+        jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/softidea/www/public_access/images/loading.gif"))); // NOI18N
+        getContentPane().add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 200, 60, 50));
+
+        jLabel6.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/softidea/www/public_access/images/loading.gif"))); // NOI18N
+        getContentPane().add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 200, 60, 50));
+
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/softidea/www/public_access/images/loading_window.png"))); // NOI18N
         getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, 350));
 
-        setSize(new java.awt.Dimension(500, 315));
+        setSize(new java.awt.Dimension(500, 314));
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
@@ -124,7 +153,11 @@ public class first_loadingWindow extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JLabel softidea;
     // End of variables declaration//GEN-END:variables
 
     private void loadingPage() {
@@ -134,8 +167,35 @@ public class first_loadingWindow extends javax.swing.JFrame {
 
                 public void run() {
                     try {
-                        for (int i = 0; i < 101; i++) {
+                        for (int i = 0; i < 102; i++) {
+
+                            if (i == 20) {
+                                jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/softidea/www/public_access/images/loading.gif")));
+                            }
+                            if (i == 40) {
+                                jLabel2.setIcon(null);
+                                jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/softidea/www/public_access/images/loading.gif")));
+                            }
+                            if (i == 60) {
+                                jLabel2.setIcon(null);
+                                jLabel3.setIcon(null);
+                                jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/softidea/www/public_access/images/loading.gif")));
+                            }
+                            if (i == 80) {
+                                jLabel2.setIcon(null);
+                                jLabel3.setIcon(null);
+                                jLabel4.setIcon(null);
+                                jLabel5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/softidea/www/public_access/images/loading.gif")));
+                            }
                             if (i == 100) {
+                                jLabel2.setIcon(null);
+                                jLabel3.setIcon(null);
+                                jLabel4.setIcon(null);
+                                jLabel5.setIcon(null);
+                                jLabel6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/softidea/www/public_access/images/loading.gif")));
+                            }
+
+                            if (i == 101) {
                                 user_login user = new user_login();
                                 user.setVisible(true);
                                 first_loadingWindow.this.dispose();
@@ -150,4 +210,7 @@ public class first_loadingWindow extends javax.swing.JFrame {
         }
 
     }
+
+    
+    
 }

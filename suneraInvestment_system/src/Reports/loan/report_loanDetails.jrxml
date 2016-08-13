@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report_loanDetails" language="groovy" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="0" uuid="527a8eec-4c60-469f-ac1f-e63f969d5e21">
+	<property name="ireport.zoom" value="1.5"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<style name="Title" fontName="Arial" fontSize="26" isBold="true" pdfFontName="Helvetica-Bold"/>
+	<style name="SubTitle" forecolor="#666666" fontName="Arial" fontSize="18"/>
+	<style name="Column header" forecolor="#FFFFFF" fontName="Arial" fontSize="12" isBold="true"/>
+	<style name="Detail" fontName="Arial" fontSize="12"/>
+	<queryString language="SQL">
+		<![CDATA[SELECT * FROM customer AS c LEFT JOIN loans AS l ON l.idcustomer=c.idcustomer;]]>
+	</queryString>
+	<field name="loan_no" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="cus_fullname" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="loan_amount" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="loan_period" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="due_loan_amount" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="loan_date" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="loan_mainperiodtype" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="88" splitType="Stretch">
+			<staticText>
+				<reportElement style="SubTitle" x="98" y="52" width="373" height="33" uuid="7c6f7c16-36ce-4326-8010-4b0e98c61260"/>
+				<textElement>
+					<font size="22"/>
+				</textElement>
+				<text><![CDATA[Loan Reports]]></text>
+			</staticText>
+			<image>
+				<reportElement x="3" y="4" width="95" height="81" uuid="da6d473f-f4b1-4e6e-b9f8-aa6d97b5f1c8"/>
+				<imageExpression><![CDATA["E:\\Project_SE\\suneraInvestment\\suneraInvestment_system\\src\\com\\softidea\\www\\public_access\\images\\Logo.png"]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement style="Title" x="98" y="4" width="378" height="48" uuid="949405f2-10c9-4ef5-bdeb-fc07e5e39996"/>
+				<textElement verticalAlignment="Middle">
+					<font size="30" isBold="false" pdfFontName="Helvetica"/>
+				</textElement>
+				<text><![CDATA[SUNERA INVESTMENTS]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="28" splitType="Stretch">
+			<frame>
+				<reportElement mode="Opaque" x="5" y="4" width="550" height="20" backcolor="#666666" uuid="bfb731a3-3842-47dc-adcb-07b7eeb4d82a"/>
+				<staticText>
+					<reportElement style="Column header" x="0" y="0" width="123" height="15" uuid="0002bfcf-68de-4f9f-a4f9-dd8440e51a25"/>
+					<textElement verticalAlignment="Middle"/>
+					<text><![CDATA[Loan No]]></text>
+				</staticText>
+				<staticText>
+					<reportElement style="Column header" x="123" y="1" width="89" height="15" uuid="e0a47792-7ea9-468f-9880-df79209551f2"/>
+					<textElement verticalAlignment="Middle"/>
+					<text><![CDATA[Customer name]]></text>
+				</staticText>
+				<staticText>
+					<reportElement style="Column header" x="214" y="0" width="89" height="15" uuid="8d8d33ae-0970-443e-b9f6-b04aae360135"/>
+					<textElement verticalAlignment="Middle"/>
+					<text><![CDATA[Loan amount]]></text>
+				</staticText>
+				<staticText>
+					<reportElement style="Column header" x="303" y="0" width="35" height="15" uuid="ec7be361-8315-4568-a26d-2c5be418558a"/>
+					<textElement verticalAlignment="Middle"/>
+					<text><![CDATA[Period]]></text>
+				</staticText>
+				<staticText>
+					<reportElement style="Column header" x="338" y="1" width="95" height="15" uuid="5c8f37ba-8b5d-4b60-98d1-ab4d41b6c5f1"/>
+					<textElement verticalAlignment="Middle"/>
+					<text><![CDATA[Due Amount]]></text>
+				</staticText>
+				<staticText>
+					<reportElement style="Column header" x="433" y="1" width="65" height="15" uuid="1ac2ece8-bba5-4ba8-9d76-5d24c841e726"/>
+					<textElement textAlignment="Right" verticalAlignment="Middle"/>
+					<text><![CDATA[Reg Date]]></text>
+				</staticText>
+				<staticText>
+					<reportElement style="Column header" x="498" y="1" width="50" height="15" uuid="2ef443d0-53f9-49d4-9a1d-d17ee023972a"/>
+					<textElement textAlignment="Right" verticalAlignment="Middle"/>
+					<text><![CDATA[Loan Type]]></text>
+				</staticText>
+			</frame>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="23" splitType="Stretch">
+			<frame>
+				<reportElement x="3" y="4" width="552" height="15" uuid="f1fa8a89-ab06-44a3-af1c-e50c8b8c20c7"/>
+				<textField>
+					<reportElement style="Detail" x="0" y="0" width="125" height="15" uuid="bfc49e4d-2c68-4fad-bf77-c9a4317958fe"/>
+					<textElement verticalAlignment="Middle"/>
+					<textFieldExpression><![CDATA[$F{loan_no}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement style="Detail" x="216" y="0" width="89" height="15" uuid="11bb3472-c64e-47a4-947b-9e3cdad2ef16"/>
+					<textElement verticalAlignment="Middle"/>
+					<textFieldExpression><![CDATA[$F{loan_amount}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement style="Detail" x="305" y="0" width="35" height="15" uuid="b9857011-9ea8-4eab-b7e9-baf809418a20"/>
+					<textElement verticalAlignment="Middle"/>
+					<textFieldExpression><![CDATA[$F{loan_period}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement style="Detail" x="340" y="0" width="95" height="15" uuid="1cdc0a27-554e-4212-adc4-99a8cf4ca50a"/>
+					<textElement verticalAlignment="Middle"/>
+					<textFieldExpression><![CDATA[$F{due_loan_amount}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement style="Detail" x="435" y="0" width="65" height="15" uuid="cd2221d9-f500-4e8c-962c-099bea7dc49b"/>
+					<textElement textAlignment="Right" verticalAlignment="Middle"/>
+					<textFieldExpression><![CDATA[$F{loan_date}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement style="Detail" x="500" y="0" width="52" height="15" uuid="62431a49-1088-469f-9d78-6d1b692e588d"/>
+					<textElement textAlignment="Right" verticalAlignment="Middle"/>
+					<textFieldExpression><![CDATA[$F{loan_mainperiodtype}]]></textFieldExpression>
+				</textField>
+			</frame>
+			<textField>
+				<reportElement style="Detail" x="129" y="4" width="89" height="15" uuid="3de30220-8a2d-42c2-8fd8-ec135f3dd655"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{cus_fullname}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="23" splitType="Stretch">
+			<textField pattern="EEEEE dd MMMMM yyyy">
+				<reportElement style="Column header" x="424" y="0" width="131" height="20" forecolor="#000000" uuid="2ebfd3f6-9110-429b-b02c-84ffbc9136ae"/>
+				<textElement textAlignment="Right">
+					<font size="12" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement style="Column header" x="2" y="0" width="267" height="20" forecolor="#000000" uuid="9b8ae19c-5d2d-4d2c-83c3-2abd8b122b29"/>
+				<textElement>
+					<font size="12" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Silhouette Title Report]]></text>
+			</staticText>
+		</band>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>
