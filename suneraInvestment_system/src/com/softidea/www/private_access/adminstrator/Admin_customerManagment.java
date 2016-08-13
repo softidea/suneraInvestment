@@ -12,7 +12,7 @@ import com.softidea.www.private_access.methods.md_cus;
 import com.softidea.www.private_access.methods.md_loans;
 import com.softidea.www.public_access.pmd;
 import com.softidea.www.public_connection.MC_DB;
-import java.awt.FlowLayout;
+import java.awt.CardLayout;
 import java.awt.HeadlessException;
 import java.awt.Toolkit;
 import java.awt.event.KeyEvent;
@@ -44,7 +44,7 @@ public class Admin_customerManagment extends javax.swing.JPanel {
         tf_nic.grabFocus();
 
         md_loadFunder();
-        md_tb_loadCustomer();
+        md_tb_loadCustomer("active");
 
         //DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         //get current date time with Date()
@@ -77,6 +77,7 @@ public class Admin_customerManagment extends javax.swing.JPanel {
         rb_female = new javax.swing.JRadioButton();
         tf_nic = new javax.swing.JTextField();
         bt_search = new javax.swing.JButton();
+        bt_updateCustomer = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
         pl_viewCustomer = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -101,6 +102,9 @@ public class Admin_customerManagment extends javax.swing.JPanel {
         jLabel13 = new javax.swing.JLabel();
         cb_periodType = new javax.swing.JComboBox();
         cb_mainInstallmentPeriodType = new javax.swing.JComboBox();
+        cb_choseStatus = new javax.swing.JComboBox();
+        jLabel15 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
         jPanel4 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         lb_v_loanAmount = new javax.swing.JLabel();
@@ -114,7 +118,6 @@ public class Admin_customerManagment extends javax.swing.JPanel {
         jLabel3 = new javax.swing.JLabel();
         lb_v_finalDate = new javax.swing.JLabel();
         jLabel24 = new javax.swing.JLabel();
-        bt_updateCustomer = new javax.swing.JButton();
 
         setBackground(new java.awt.Color(102, 102, 102));
 
@@ -223,6 +226,18 @@ public class Admin_customerManagment extends javax.swing.JPanel {
             }
         });
 
+        bt_updateCustomer.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        bt_updateCustomer.setForeground(new java.awt.Color(255, 255, 255));
+        bt_updateCustomer.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/softidea/www/public_access/images/SuneraInvestment_selctButtonNormal.png"))); // NOI18N
+        bt_updateCustomer.setText("Update Customer");
+        bt_updateCustomer.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        bt_updateCustomer.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/com/softidea/www/public_access/images/SuneraInvestment_selctButtonHover.png"))); // NOI18N
+        bt_updateCustomer.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bt_updateCustomerActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -231,9 +246,6 @@ public class Admin_customerManagment extends javax.swing.JPanel {
                 .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel10, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(jLabel4)
-                        .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(tf_nic)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -247,7 +259,12 @@ public class Admin_customerManagment extends javax.swing.JPanel {
                     .addComponent(jLabel8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(tf_contact, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(tf_address)
-                    .addComponent(tf_name))
+                    .addComponent(tf_name)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel4)
+                            .addComponent(bt_updateCustomer, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
@@ -277,26 +294,36 @@ public class Admin_customerManagment extends javax.swing.JPanel {
                 .addComponent(jLabel8)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(tf_contact, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(bt_updateCustomer, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         jPanel3.setBackground(new java.awt.Color(66, 66, 66));
-        jPanel3.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
+        pl_viewCustomer.setLayout(new java.awt.CardLayout());
+
+        tb_customerAddView.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         tb_customerAddView.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
             new String [] {
-                "No", "Customer Name", "Regidtation Date", "Loan Amount", "Due Amount", "Due Period", "Title 7", "Title 8", "Title 9", "Title 10", "Title 11", "Title 12"
+                "No", "Regidtation Date", "Loan NO", "Customer NIC", "Loan Amount", "Installment", "Due Amount", "Payment Type", "Loan Period", "Full Name", "Address", "Contact"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, true, false, false, true, true, true, true, true, true, true
+                false, false, false, true, false, false, false, false, false, false, true, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return canEdit [columnIndex];
+            }
+        });
+        tb_customerAddView.getTableHeader().setReorderingAllowed(false);
+        tb_customerAddView.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
+            public void mouseMoved(java.awt.event.MouseEvent evt) {
+                tb_customerAddViewMouseMoved(evt);
             }
         });
         tb_customerAddView.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -310,38 +337,19 @@ public class Admin_customerManagment extends javax.swing.JPanel {
             tb_customerAddView.getColumnModel().getColumn(0).setPreferredWidth(4);
         }
 
-        javax.swing.GroupLayout pl_viewCustomerLayout = new javax.swing.GroupLayout(pl_viewCustomer);
-        pl_viewCustomer.setLayout(pl_viewCustomerLayout);
-        pl_viewCustomerLayout.setHorizontalGroup(
-            pl_viewCustomerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(pl_viewCustomerLayout.createSequentialGroup()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 630, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-        pl_viewCustomerLayout.setVerticalGroup(
-            pl_viewCustomerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(pl_viewCustomerLayout.createSequentialGroup()
-                .addGap(0, 0, 0)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 490, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, 0))
-        );
-
-        jPanel3.add(pl_viewCustomer, new org.netbeans.lib.awtextra.AbsoluteConstraints(328, 85, -1, -1));
+        pl_viewCustomer.add(jScrollPane1, "card2");
 
         jLabel16.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel16.setForeground(new java.awt.Color(255, 255, 255));
         jLabel16.setText("Registration Date:");
-        jPanel3.add(jLabel16, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 482, 297, -1));
 
         jLabel18.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel18.setForeground(new java.awt.Color(255, 255, 255));
         jLabel18.setText("Loan Amount :");
-        jPanel3.add(jLabel18, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 138, 300, -1));
 
         jLabel14.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel14.setForeground(new java.awt.Color(255, 255, 255));
         jLabel14.setText("Period :(Hit Enter)");
-        jPanel3.add(jLabel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 416, 300, -1));
 
         tf_period.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         tf_period.addActionListener(new java.awt.event.ActionListener() {
@@ -357,7 +365,6 @@ public class Admin_customerManagment extends javax.swing.JPanel {
                 tf_periodKeyTyped(evt);
             }
         });
-        jPanel3.add(tf_period, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 440, 300, 40));
 
         tf_loanAmount.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         tf_loanAmount.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -371,7 +378,6 @@ public class Admin_customerManagment extends javax.swing.JPanel {
                 tf_loanAmountKeyTyped(evt);
             }
         });
-        jPanel3.add(tf_loanAmount, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 161, 300, 40));
 
         bt_addLoan.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         bt_addLoan.setForeground(new java.awt.Color(255, 255, 255));
@@ -384,7 +390,6 @@ public class Admin_customerManagment extends javax.swing.JPanel {
                 bt_addLoanActionPerformed(evt);
             }
         });
-        jPanel3.add(bt_addLoan, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 546, 300, 40));
 
         cb_selectFunder_customer.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         cb_selectFunder_customer.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "No Funder" }));
@@ -408,12 +413,10 @@ public class Admin_customerManagment extends javax.swing.JPanel {
                 cb_selectFunder_customerKeyReleased(evt);
             }
         });
-        jPanel3.add(cb_selectFunder_customer, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 23, 300, 40));
 
         jLabel17.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel17.setForeground(new java.awt.Color(255, 255, 255));
         jLabel17.setText("Select Funder:");
-        jPanel3.add(jLabel17, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 0, 300, -1));
 
         jPanel1.setBackground(new java.awt.Color(91, 91, 91));
         jPanel1.setForeground(new java.awt.Color(91, 91, 91));
@@ -445,17 +448,14 @@ public class Admin_customerManagment extends javax.swing.JPanel {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addComponent(jLabel12)
-                .addGap(0, 0, Short.MAX_VALUE)
+                .addGap(0, 5, Short.MAX_VALUE)
                 .addComponent(tf_loanNumber, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, 0))
         );
 
-        jPanel3.add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 10, 300, -1));
-
         jLabel19.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel19.setForeground(new java.awt.Color(255, 255, 255));
         jLabel19.setText("Extra Interest :");
-        jPanel3.add(jLabel19, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 207, 300, -1));
 
         tf_extraInterest.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         tf_extraInterest.setPreferredSize(new java.awt.Dimension(300, 40));
@@ -467,17 +467,14 @@ public class Admin_customerManagment extends javax.swing.JPanel {
                 tf_extraInterestKeyTyped(evt);
             }
         });
-        jPanel3.add(tf_extraInterest, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 229, -1, -1));
 
         dc_registrationDate.setDateFormatString("yyyy-MM-dd");
         dc_registrationDate.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         dc_registrationDate.setMinSelectableDate(new java.util.Date(-62135785690000L));
-        jPanel3.add(dc_registrationDate, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 505, 297, 35));
 
         jLabel22.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel22.setForeground(new java.awt.Color(255, 255, 255));
         jLabel22.setText("Select Fund:");
-        jPanel3.add(jLabel22, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 69, 300, -1));
 
         cb_selectFund.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         cb_selectFund.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "No Fund" }));
@@ -491,17 +488,14 @@ public class Admin_customerManagment extends javax.swing.JPanel {
                 cb_selectFundKeyReleased(evt);
             }
         });
-        jPanel3.add(cb_selectFund, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 92, 300, 40));
 
         jLabel20.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel20.setForeground(new java.awt.Color(255, 255, 255));
         jLabel20.setText("Main Installment Period Type:");
-        jPanel3.add(jLabel20, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 275, 300, -1));
 
         jLabel13.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel13.setForeground(new java.awt.Color(255, 255, 255));
         jLabel13.setText("Period Type:");
-        jPanel3.add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 347, 297, -1));
 
         cb_periodType.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         cb_periodType.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "With Out Saturday(Week days)", "With Saturday" }));
@@ -511,7 +505,6 @@ public class Admin_customerManagment extends javax.swing.JPanel {
                 cb_periodTypeItemStateChanged(evt);
             }
         });
-        jPanel3.add(cb_periodType, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 370, 297, 40));
 
         cb_mainInstallmentPeriodType.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         cb_mainInstallmentPeriodType.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Daily", "Weekly", "Monthly" }));
@@ -525,7 +518,112 @@ public class Admin_customerManagment extends javax.swing.JPanel {
                 cb_mainInstallmentPeriodTypeKeyReleased(evt);
             }
         });
-        jPanel3.add(cb_mainInstallmentPeriodType, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 296, 297, 40));
+
+        cb_choseStatus.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Active", "Inactive" }));
+        cb_choseStatus.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                cb_choseStatusItemStateChanged(evt);
+            }
+        });
+
+        jLabel15.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel15.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel15.setText("Customer Status:");
+
+        jLabel2.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel2.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        jLabel2.setText("View Customer  & Loan All Details (Click Record Here)");
+
+        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
+        jPanel3.setLayout(jPanel3Layout);
+        jPanel3Layout.setHorizontalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addGap(10, 10, 10)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel17, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cb_selectFunder_customer, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel22, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cb_selectFund, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel18, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(tf_loanAmount, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel19, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(tf_extraInterest, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel20, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cb_mainInstallmentPeriodType, javax.swing.GroupLayout.PREFERRED_SIZE, 297, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel13, javax.swing.GroupLayout.PREFERRED_SIZE, 297, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cb_periodType, javax.swing.GroupLayout.PREFERRED_SIZE, 297, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel14, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(tf_period, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel16, javax.swing.GroupLayout.PREFERRED_SIZE, 297, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(dc_registrationDate, javax.swing.GroupLayout.PREFERRED_SIZE, 297, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(bt_addLoan, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(pl_viewCustomer, javax.swing.GroupLayout.DEFAULT_SIZE, 616, Short.MAX_VALUE)
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addGap(2, 2, 2)
+                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(cb_choseStatus, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jLabel15, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
+        );
+        jPanel3Layout.setVerticalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addGap(11, 11, 11)
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(jPanel3Layout.createSequentialGroup()
+                                .addComponent(jLabel15)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(cb_choseStatus, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel2)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(pl_viewCustomer, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addComponent(jLabel17)
+                        .addGap(6, 6, 6)
+                        .addComponent(cb_selectFunder_customer, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(6, 6, 6)
+                        .addComponent(jLabel22)
+                        .addGap(6, 6, 6)
+                        .addComponent(cb_selectFund, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(6, 6, 6)
+                        .addComponent(jLabel18)
+                        .addGap(6, 6, 6)
+                        .addComponent(tf_loanAmount, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(6, 6, 6)
+                        .addComponent(jLabel19)
+                        .addGap(5, 5, 5)
+                        .addComponent(tf_extraInterest, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(6, 6, 6)
+                        .addComponent(jLabel20)
+                        .addGap(4, 4, 4)
+                        .addComponent(cb_mainInstallmentPeriodType, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(11, 11, 11)
+                        .addComponent(jLabel13)
+                        .addGap(6, 6, 6)
+                        .addComponent(cb_periodType, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(6, 6, 6)
+                        .addComponent(jLabel14)
+                        .addGap(7, 7, 7)
+                        .addComponent(tf_period, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(2, 2, 2)
+                        .addComponent(jLabel16)
+                        .addGap(6, 6, 6)
+                        .addComponent(dc_registrationDate, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(6, 6, 6)
+                        .addComponent(bt_addLoan, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
 
         jPanel4.setBackground(new java.awt.Color(51, 51, 51));
 
@@ -639,34 +737,16 @@ public class Admin_customerManagment extends javax.swing.JPanel {
                 .addGap(33, 33, 33))
         );
 
-        bt_updateCustomer.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        bt_updateCustomer.setForeground(new java.awt.Color(255, 255, 255));
-        bt_updateCustomer.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/softidea/www/public_access/images/SuneraInvestment_selctButtonNormal.png"))); // NOI18N
-        bt_updateCustomer.setText("Update Customer");
-        bt_updateCustomer.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        bt_updateCustomer.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/com/softidea/www/public_access/images/SuneraInvestment_selctButtonHover.png"))); // NOI18N
-        bt_updateCustomer.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                bt_updateCustomerActionPerformed(evt);
-            }
-        });
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(bt_updateCustomer, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)))
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
         );
@@ -677,11 +757,9 @@ public class Admin_customerManagment extends javax.swing.JPanel {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 395, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(bt_updateCustomer, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 7, Short.MAX_VALUE)
-                        .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, 184, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, 196, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
@@ -774,10 +852,10 @@ public class Admin_customerManagment extends javax.swing.JPanel {
                             fundID + "",
                             md_funderID()
                     );
-                    
-                     String sql_tocash="INSERT INTO `cash_account` (`date`,`amount`,`cash_ac_type`,`cash_ac_discription`,`cash_ac_status`) VALUES ('"+register_date+"','"+md_Calc.stringTodoubleString(tf_loanAmount.getText().trim())+"','Loan','" + "NIC:"+tf_nic.getText().toString()+"-Loan Number:"+tf_loanNumber.getText() + "','Active');";
-                    MC_DB.update_data(sql_tocash);
 
+                    String sql_tocash = "INSERT INTO `cash_account` (`date`,`amount`,`cash_ac_type`,`cash_ac_discription`,`cash_ac_status`) VALUES ('" + register_date + "','" + md_Calc.stringTodoubleString(tf_loanAmount.getText().trim()) + "','Loan','" + "NIC:" + tf_nic.getText().toString() + "-Loan Number:" + tf_loanNumber.getText() + "','Active');";
+                    MC_DB.update_data(sql_tocash);
+                    md_tb_loadCustomer("active");
                     JOptionPane.showMessageDialog(this, fundID);
                     md_loans.minToFunderFund(fundID, lb_v_loanAmount.getText());
 
@@ -1100,29 +1178,50 @@ public class Admin_customerManagment extends javax.swing.JPanel {
 
     private void tb_customerAddViewMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tb_customerAddViewMouseClicked
 
-         new Thread(() -> {
+        new Thread(() -> {
             try {
                 jp_adminMainPanel.removeAll();
-                jp_adminMainPanel.setLayout(new FlowLayout());
+                jp_adminMainPanel.setLayout(new CardLayout());
                 pl_viewCustomer.setVisible(true);
                 jp_adminMainPanel.add(pl_viewCustomer);
                 jp_adminMainPanel.updateUI();
+
+                pl_viewCustomer.setBounds(0, 85, 1300, tb_customerAddView.getHeight());
+                jScrollPane1.setBounds(0, 85, 1300, tb_customerAddView.getHeight());
+                tb_customerAddView.setBounds(0, 85, 1300, tb_customerAddView.getHeight());
+
+                Admin_workArea.lb_wk_option2.setText("BACK");
+                
+                Admin_workArea.lb_wk_option2.setVisible(true);
+                Admin_workArea.lb_wk_option1.setVisible(true);
+                
 
             } catch (Exception e) {
                 e.printStackTrace();
             }
         }).start();
-       
-       
-       
-        
+
+
     }//GEN-LAST:event_tb_customerAddViewMouseClicked
+
+    private void cb_choseStatusItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cb_choseStatusItemStateChanged
+
+        md_tb_loadCustomer(cb_choseStatus.getSelectedItem().toString().toLowerCase());
+
+    }//GEN-LAST:event_cb_choseStatusItemStateChanged
+
+    private void tb_customerAddViewMouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tb_customerAddViewMouseMoved
+
+        tb_customerAddView.setToolTipText("Click Record To ZOOM ++ Table");
+        
+    }//GEN-LAST:event_tb_customerAddViewMouseMoved
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton bt_addLoan;
     private javax.swing.JButton bt_search;
     private javax.swing.JButton bt_updateCustomer;
+    private javax.swing.JComboBox cb_choseStatus;
     private javax.swing.JComboBox cb_mainInstallmentPeriodType;
     private javax.swing.JComboBox cb_periodType;
     public static javax.swing.JComboBox cb_selectFund;
@@ -1135,10 +1234,12 @@ public class Admin_customerManagment extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
+    private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel17;
     private javax.swing.JLabel jLabel18;
     private javax.swing.JLabel jLabel19;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel20;
     private javax.swing.JLabel jLabel21;
     private javax.swing.JLabel jLabel22;
@@ -1431,7 +1532,7 @@ public class Admin_customerManagment extends javax.swing.JPanel {
 
     }
 
-    private void md_tb_loadCustomer() {
+    private void md_tb_loadCustomer(String status) {
         DefaultTableModel dtm;
         try {
 
@@ -1440,7 +1541,7 @@ public class Admin_customerManagment extends javax.swing.JPanel {
             dtm = (DefaultTableModel) tb_customerAddView.getModel();
             dtm.setRowCount(0);
 
-            rs = MC_DB.myConnection().createStatement().executeQuery("SELECT l.`loan_date`,l.`loan_no`,c.`cus_nic`,l.`loan_amount`,l.`loan_period`,l.`loan_installment`,l.`due_loan_amount`,l.`loan_mainperiodtype`,c.`cus_fullname`,c.`cus_address`,c.`cus_contact` FROM `customer` AS c LEFT JOIN `loans` AS l ON l.`idcustomer`=c.`idcustomer` ORDER BY c.`idcustomer` DESC");
+            rs = MC_DB.myConnection().createStatement().executeQuery("SELECT * FROM customer AS c LEFT JOIN loans AS l ON l.idcustomer=c.idcustomer WHERE loan_status='" + status + "' ORDER BY c.idcustomer DESC");
             while (rs.next()) {
                 int cus_id = rs.getRow();
                 String loan_date = rs.getString("l.loan_date");

@@ -48,7 +48,7 @@ public class Admin_workArea extends javax.swing.JFrame {
     }
 
     public Admin_workArea(int i) {
-        
+
         initComponents();
         try {
             UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
@@ -71,6 +71,7 @@ public class Admin_workArea extends javax.swing.JFrame {
             bt_reports.setEnabled(false);
             bt_usermang.setEnabled(true);
         }
+        loadCusFundCount();
 
     }
 
@@ -815,6 +816,11 @@ public class Admin_workArea extends javax.swing.JFrame {
 
     private void lb_wk_option2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lb_wk_option2MouseClicked
 
+        new Thread(() -> {
+            lb_wk_option1.setVisible(true);
+            load_customer_managment();
+        }).start();
+        lb_wk_option2.setVisible(false);
 
     }//GEN-LAST:event_lb_wk_option2MouseClicked
 
@@ -860,7 +866,10 @@ public class Admin_workArea extends javax.swing.JFrame {
 
     private void lb_wk_option1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lb_wk_option1MouseClicked
 
+        loadCusFundCount();
+
         lb_wk_option1.setVisible(false);
+        lb_wk_option2.setVisible(false);
 
         try {
             jp_adminMainPanel.removeAll();
@@ -1153,19 +1162,21 @@ public class Admin_workArea extends javax.swing.JFrame {
             try {
                 ResultSet rs = MC_DB.myConnection().createStatement().executeQuery("SELECT COUNT(DISTINCT idcustomer) AS NumberOfCustomers FROM customer;");
                 //ResultSet r2=MC_DB.myConnection().createStatement().executeQuery("SELECT COUNT(DISTINCT idfunder) AS NumberOfFunders FROM funder;");
-                ResultSet r2 = MC_DB.myConnection().createStatement().executeQuery("SELECT COUNT(idfunder) AS numffunders FROM funder;");
-                while (rs.next()) {
+                if (rs.next()) {
                     String cusCount = rs.getString("NumberOfCustomers");
                     lb_customerCount.setText(cusCount);
 
                 }
-//            while (r2.next()) {                
-//                String funderCount=rs.getString("numffunders");
-//                lb_funderCount.setText(funderCount+"");
-//            }
+
+                ResultSet r2 = MC_DB.myConnection().createStatement().executeQuery("SELECT COUNT(DISTINCT idfunder) AS NumberOfFunders FROM funder;");
+
+                if (r2.next()) {
+                    String funderCount = r2.getString("NumberOfFunders");
+                    lb_funderCount.setText(funderCount);
+                }
 
             } catch (SQLException ex) {
-                Logger.getLogger(Admin_workArea.class.getName()).log(Level.SEVERE, null, ex);
+                ex.printStackTrace();
             }
         }).start();
 
