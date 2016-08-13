@@ -29,32 +29,16 @@ public class Admin_cashManagment extends javax.swing.JPanel {
             String cashType="Withdrawal";
             String cashStatus="Active";
             if(!(withdrawAmount.isEmpty() && withdrawDes.isEmpty())){
-                           
-//               
-               //////////////////////////////////////////////////////////////////////////////
-               
-            ResultSet rs1;
-            String qry_save_withdraw = "INSERT INTO cash_account(`date`,amount,cash_ac_type,`cash_ac_discription`,cash_ac_status) VALUES ('"+withdrawDate+"','"+withdrawAmount+"','"+cashType+"','"+withdrawDes+"','"+cashStatus+"');";
-            //String qry_add_customer = "CALL addCus('" + nic.trim().toUpperCase() + "','" + fullname.trim() + "','" + address.trim() + "','" + phoneNumber.trim() + "','" + gender_o + "');";
-            Connection myConnection = MC_DB.myConnection();
-            Statement createStatement = myConnection.createStatement();
-            createStatement.executeUpdate(qry_save_withdraw);
-            /////////////////////////////////////////////////////////////////
-            long cashId = 0;
-            PreparedStatement getLastInsertId = myConnection.prepareStatement("SELECT LAST_INSERT_ID()");
-            ResultSet rslast = getLastInsertId.executeQuery();
-            if (rslast.next()) {
-                cashId = rslast.getLong("last_insert_id()");
-
+                  
+                
+                
+                
+                
+                
             }
-            
-            
-               
-               ////////////////////////////////////////////////////////////////////////////
-               
                 
                 JOptionPane.showMessageDialog(null, "Cash Withdraw Successfully");
-            }
+            
             
         } catch (Exception e) {
             e.printStackTrace();
