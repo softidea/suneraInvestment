@@ -1,8 +1,8 @@
-
-
 package com.softidea.www.private_access.adminstrator;
 
+import static com.softidea.www.private_access.adminstrator.Admin_installmentManagment.tf_payment;
 import com.softidea.www.public_connection.MC_DB;
+import java.awt.event.KeyEvent;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -11,42 +11,34 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import javax.swing.JOptionPane;
 
-
 public class Admin_cashManagment extends javax.swing.JPanel {
 
-   
     public Admin_cashManagment() {
         initComponents();
         setCurrentDate();
     }
-   
+
     //saving wihdrawal to cash account
-    public void saveWithdrawCash(){
+    public void saveWithdrawCash() {
         try {
             String withdrawDate = new SimpleDateFormat("YYYY-MM-dd").format(new Date());
-            String withdrawAmount=tf_withdrawalAmount.getText();
-            String withdrawDes=ta_withdrawlDescription.getText();
-            String cashType="Withdrawal";
-            String cashStatus="Active";
-            if(!(withdrawAmount.isEmpty() && withdrawDes.isEmpty())){
-                  
-                
-                
-                
-                
-                
-            }
-                
+            String withdrawAmount = tf_withdrawalAmount.getText();
+            String withdrawDes = ta_withdrawlDescription.getText();
+            String cashType = "Withdrawal";
+            String cashStatus = "Active";
+            if (!(withdrawAmount.isEmpty() && withdrawDes.isEmpty())) {
+
+                MC_DB.myConnection().createStatement().executeUpdate("INSERT INTO cash_account (date,amount,cash_ac_type,cash_ac_discription,cash_ac_status) VALUES('" + withdrawDate + "','" + withdrawAmount + "','"+cashType+"','" + withdrawDes + "','"+cashStatus+"')");
                 JOptionPane.showMessageDialog(null, "Cash Withdraw Successfully");
-            
-            
+            }
+
         } catch (Exception e) {
             e.printStackTrace();
         }
-    
+
     }
     //saving withdrawal to cash account
-   
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -167,6 +159,11 @@ public class Admin_cashManagment extends javax.swing.JPanel {
         tf_withdrawalAmount.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         tf_withdrawalAmount.setMaximumSize(new java.awt.Dimension(300, 40));
         tf_withdrawalAmount.setMinimumSize(new java.awt.Dimension(300, 40));
+        tf_withdrawalAmount.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                tf_withdrawalAmountKeyTyped(evt);
+            }
+        });
 
         lb_addRoute4.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         lb_addRoute4.setForeground(new java.awt.Color(255, 255, 255));
@@ -433,21 +430,27 @@ public class Admin_cashManagment extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-       
-        
-        
-        
-        
+
+
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void bt_addFundActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_addFundActionPerformed
 
-     
+
     }//GEN-LAST:event_bt_addFundActionPerformed
 
     private void bt_addFund1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_addFund1ActionPerformed
-       
+
     }//GEN-LAST:event_bt_addFund1ActionPerformed
+
+    private void tf_withdrawalAmountKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tf_withdrawalAmountKeyTyped
+        
+        char c = evt.getKeyChar();
+        if (!(c >= '0' && c <= '9' || c == KeyEvent.VK_PERIOD)) {
+            evt.consume();
+        }
+        
+    }//GEN-LAST:event_tf_withdrawalAmountKeyTyped
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -488,7 +491,7 @@ public class Admin_cashManagment extends javax.swing.JPanel {
     // End of variables declaration//GEN-END:variables
 
     private void setCurrentDate() {
-       dc_startDate.setDate(new Date());
-       dc_endDate.setDate(new Date());
+        dc_startDate.setDate(new Date());
+        dc_endDate.setDate(new Date());
     }
 }

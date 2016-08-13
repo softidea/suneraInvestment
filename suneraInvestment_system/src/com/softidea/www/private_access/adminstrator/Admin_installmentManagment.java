@@ -219,7 +219,7 @@ public class Admin_installmentManagment extends javax.swing.JPanel {
         jLabel16 = new javax.swing.JLabel();
         jLabel17 = new javax.swing.JLabel();
         bt_updateCustomer = new javax.swing.JButton();
-        bt_updateCustomer1 = new javax.swing.JButton();
+        bt_payInstallment = new javax.swing.JButton();
         dc_installment = new com.toedter.calendar.JDateChooser();
         jLabel20 = new javax.swing.JLabel();
         tf_discount = new javax.swing.JTextField();
@@ -557,15 +557,15 @@ public class Admin_installmentManagment extends javax.swing.JPanel {
             }
         });
 
-        bt_updateCustomer1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        bt_updateCustomer1.setForeground(new java.awt.Color(255, 255, 255));
-        bt_updateCustomer1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/softidea/www/public_access/images/SuneraInvestment_selctButtonNormal.png"))); // NOI18N
-        bt_updateCustomer1.setText("Pay Installment");
-        bt_updateCustomer1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        bt_updateCustomer1.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/com/softidea/www/public_access/images/SuneraInvestment_selctButtonHover.png"))); // NOI18N
-        bt_updateCustomer1.addActionListener(new java.awt.event.ActionListener() {
+        bt_payInstallment.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        bt_payInstallment.setForeground(new java.awt.Color(255, 255, 255));
+        bt_payInstallment.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/softidea/www/public_access/images/SuneraInvestment_selctButtonNormal.png"))); // NOI18N
+        bt_payInstallment.setText("Pay Installment");
+        bt_payInstallment.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        bt_payInstallment.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/com/softidea/www/public_access/images/SuneraInvestment_selctButtonHover.png"))); // NOI18N
+        bt_payInstallment.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                bt_updateCustomer1ActionPerformed(evt);
+                bt_payInstallmentActionPerformed(evt);
             }
         });
 
@@ -598,7 +598,7 @@ public class Admin_installmentManagment extends javax.swing.JPanel {
                             .addComponent(jLabel20)
                             .addGap(234, 234, 234)))
                     .addComponent(bt_updateCustomer, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(bt_updateCustomer1, javax.swing.GroupLayout.PREFERRED_SIZE, 298, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(bt_payInstallment, javax.swing.GroupLayout.PREFERRED_SIZE, 298, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel17)
                     .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                         .addComponent(dc_installment, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -623,7 +623,7 @@ public class Admin_installmentManagment extends javax.swing.JPanel {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(tf_discount, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(bt_updateCustomer1, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(bt_payInstallment, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(bt_updateCustomer, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(5, 5, 5))
@@ -691,7 +691,12 @@ public class Admin_installmentManagment extends javax.swing.JPanel {
     }//GEN-LAST:event_tf_paymentKeyReleased
 
     private void tf_paymentKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tf_paymentKeyTyped
-        // TODO add your handling code here:
+
+        char c = evt.getKeyChar();
+        if (!(c >= '0' && c <= '9' || c == KeyEvent.VK_PERIOD)) {
+            evt.consume();
+        }
+
     }//GEN-LAST:event_tf_paymentKeyTyped
 
     private void bt_updateCustomerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_updateCustomerActionPerformed
@@ -699,10 +704,10 @@ public class Admin_installmentManagment extends javax.swing.JPanel {
 
     }//GEN-LAST:event_bt_updateCustomerActionPerformed
 
-    private void bt_updateCustomer1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_updateCustomer1ActionPerformed
+    private void bt_payInstallmentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_payInstallmentActionPerformed
 
         new Thread(this::md_updateCustomer).start();
-    }//GEN-LAST:event_bt_updateCustomer1ActionPerformed
+    }//GEN-LAST:event_bt_payInstallmentActionPerformed
 
     private void tf_nicKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tf_nicKeyReleased
 
@@ -719,19 +724,41 @@ public class Admin_installmentManagment extends javax.swing.JPanel {
                         int cus_id = rs.getInt("idcustomer");
 //                    JOptionPane.showMessageDialog(this, cus_id);
 
-                        ResultSet rs_loadLoan = MC_DB.myConnection().createStatement().executeQuery("SElECT * FROM loans WHERE idcustomer='" + cus_id + "' AND loan_status='active'");
+                        ResultSet rs_loadLoan = MC_DB.myConnection().createStatement().executeQuery("SElECT * FROM loans WHERE idcustomer='" + cus_id + "'");
                         if (rs_loadLoan.next()) {
-                            loanID = rs_loadLoan.getInt("idloans");
-//                        JOptionPane.showMessageDialog(this, "loan id" + loanID);
-                            tf_loanAmount.setText(rs_loadLoan.getString("loan_amount"));
-                            tf_period.setText(rs_loadLoan.getString("loan_period"));
-                            tf_installment.setText(rs_loadLoan.getString("loan_installment"));
-                            tf_regDate.setText(rs_loadLoan.getString("loan_date"));
 
-                            viewInstalments(loanID);
-                            setPaidAmount();
-                            setDueAmount();
-                            setInterestValues();
+                            String loan_status = rs_loadLoan.getString("loan_status");
+
+                            if (loan_status.equals("Active")) {
+                                loanID = rs_loadLoan.getInt("idloans");
+//                        JOptionPane.showMessageDialog(this, "loan id" + loanID);
+                                tf_loanAmount.setText(rs_loadLoan.getString("loan_amount"));
+                                tf_period.setText(rs_loadLoan.getString("loan_period"));
+                                tf_installment.setText(rs_loadLoan.getString("loan_installment"));
+                                tf_regDate.setText(rs_loadLoan.getString("loan_date"));
+
+                                viewInstalments(loanID);
+                                setPaidAmount();
+                                setDueAmount();
+                                setInterestValues();
+                            } else if (loan_status.equals("In-Active")) {
+                                loanID = rs_loadLoan.getInt("idloans");
+//                        JOptionPane.showMessageDialog(this, "loan id" + loanID);
+                                tf_loanAmount.setText(rs_loadLoan.getString("loan_amount"));
+                                tf_period.setText(rs_loadLoan.getString("loan_period"));
+                                tf_installment.setText(rs_loadLoan.getString("loan_installment"));
+                                tf_regDate.setText(rs_loadLoan.getString("loan_date"));
+
+                                viewInstalments(loanID);
+                                setPaidAmount();
+                                setDueAmount();
+                                setInterestValues();
+
+                                tf_payment.setEnabled(false);
+                                tf_discount.setEnabled(false);
+                                bt_payInstallment.setEnabled(false);
+
+                            }
 
                         }
 
@@ -772,7 +799,6 @@ public class Admin_installmentManagment extends javax.swing.JPanel {
             loadCutomerLoanData();
         }
 
-
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void tf_discountKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tf_discountKeyReleased
@@ -780,13 +806,19 @@ public class Admin_installmentManagment extends javax.swing.JPanel {
     }//GEN-LAST:event_tf_discountKeyReleased
 
     private void tf_discountKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tf_discountKeyTyped
-        // TODO add your handling code here:
+
+        char c = evt.getKeyChar();
+        if (!(c >= '0' && c <= '9' || c == KeyEvent.VK_PERIOD)) {
+            evt.consume();
+        }
+
+
     }//GEN-LAST:event_tf_discountKeyTyped
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton bt_payInstallment;
     private javax.swing.JButton bt_updateCustomer;
-    private javax.swing.JButton bt_updateCustomer1;
     private com.toedter.calendar.JDateChooser dc_installment;
     private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel10;
@@ -833,55 +865,71 @@ public class Admin_installmentManagment extends javax.swing.JPanel {
         if (loanID != 0) {
             if (!(dc_installment.getDate() == null && tf_payment.getText() == null && tf_payment.getText().isEmpty())) {
                 if (Double.parseDouble(tf_payment.getText()) <= Double.parseDouble(tf_dueAmount.getText())) {
-                    try {
-                        int PERIOD = 0;
-                        int INSTALLMENT_COUNT = 0;
-                        double LOAN_AMOUNT = 0;
-                        double PAID_AMOUNT = 0;
-                        String installment_date = new SimpleDateFormat("YYYY-MM-dd").format(dc_installment.getDate());
+                    if (Double.parseDouble(tf_discount.getText()) <= Double.parseDouble(tf_dueInterest.getText())) {
+                        try {
+                            int PERIOD = 0;
+                            int INSTALLMENT_COUNT = 0;
+                            double LOAN_AMOUNT = 0;
+                            double PAID_AMOUNT = 0;
+                            String installment_date = new SimpleDateFormat("YYYY-MM-dd").format(dc_installment.getDate());
 
-                        ResultSet rs = MC_DB.myConnection().createStatement().executeQuery("SELECT * FROM loans WHERE idloans='" + loanID + "' AND loan_status='Active'");
-                        if (rs.next()) {
-                            System.out.println("inner rs");
-                            PERIOD = Integer.parseInt(rs.getString("loan_period"));
-                            System.out.println(PERIOD);
-                            INSTALLMENT_COUNT = getInstallmentCount(loanID);
-                            System.out.println(INSTALLMENT_COUNT);
-                            LOAN_AMOUNT = getLoanAmount();
-                            System.out.println(LOAN_AMOUNT);
-                            PAID_AMOUNT = getInstalmentLoanAmount();
-                            System.out.println(PAID_AMOUNT);
+                            ResultSet rs = MC_DB.myConnection().createStatement().executeQuery("SELECT * FROM loans WHERE idloans='" + loanID + "' AND loan_status='Active'");
+                            if (rs.next()) {
+                                System.out.println("inner rs");
+                                PERIOD = Integer.parseInt(rs.getString("loan_period"));
+                                System.out.println(PERIOD);
+                                INSTALLMENT_COUNT = getInstallmentCount(loanID);
+                                System.out.println(INSTALLMENT_COUNT);
+                                LOAN_AMOUNT = getLoanAmount();
+                                System.out.println(LOAN_AMOUNT);
+                                PAID_AMOUNT = getInstalmentLoanAmount();
+                                System.out.println(PAID_AMOUNT);
 //
-                            if (PERIOD >= INSTALLMENT_COUNT) {
-                                System.out.println("inner if PERIOD >= INSTALLMENT_COUNT");
-                                if (INSTALLMENT_COUNT >= 0) {
-                                    System.out.println("inner INSTALLMENT_COUNT <= 0");
-                                    if (LOAN_AMOUNT > PAID_AMOUNT) {
-                                        System.out.println("inner LOAN_AMOUNT > PAID_AMOUNT");
-                                        String qy_saveInstallment = "INSERT INTO installment (payment,payment_date,discount,idloans) VALUES ('" + tf_payment.getText() + "','" + installment_date + "','" + tf_discount.getText() + "','" + loanID + "')";
-                                        MC_DB.update_data(qy_saveInstallment);
-                                        JOptionPane.showMessageDialog(null, "Installment added successfully");
-                                        viewInstalments(loanID);
-                                        loadCutomerLoanData();
-                                        updateDueLoanAmount();
-                                    } else if (LOAN_AMOUNT == PAID_AMOUNT) {
-                                        MC_DB.update_data("UPDATE loans SET loan_status='Deactive' WHERE idloans='" + loanID + "'");
-                                        loadCutomerLoanData();
-                                        JOptionPane.showMessageDialog(null, "Loan already settled");
-                                    }
+                                if (PERIOD >= INSTALLMENT_COUNT) {
+                                    System.out.println("inner if PERIOD >= INSTALLMENT_COUNT");
+                                    if (INSTALLMENT_COUNT >= 0) {
+                                        System.out.println("inner INSTALLMENT_COUNT <= 0");
+                                        if (LOAN_AMOUNT > PAID_AMOUNT) {
+                                            System.out.println("inner LOAN_AMOUNT > PAID_AMOUNT");
+                                            String qy_saveInstallment = "INSERT INTO installment (payment,payment_date,discount,idloans) VALUES ('" + tf_payment.getText().trim() + "','" + installment_date + "','" + tf_discount.getText() + "','" + loanID + "')";
+                                            MC_DB.update_data(qy_saveInstallment);
+                                            JOptionPane.showMessageDialog(null, "Installment added successfully");
 
+                                            viewInstalments(loanID);
+                                            loadCutomerLoanData();
+                                            updateDueLoanAmount();
+
+                                            String cash_des = tf_nic.getText() + " paid for load id=" + loanID;
+                                            MC_DB.myConnection().createStatement().executeUpdate("INSERT INTO cash_account (date,amount,cash_ac_type,cash_ac_discription,cash_ac_status) VALUES('" + installment_date + "','" + tf_payment.getText().trim() + "','Installment','" + cash_des + "','Active')");
+
+                                            ResultSet rs_check_due_amount = MC_DB.search_dataOne("loans", "due_loan_amount", loanID + "");
+                                            if (rs_check_due_amount.next()) {
+                                                double due_loan_amount = Double.parseDouble(rs_check_due_amount.getString("due_loan_amount"));
+                                                if (due_loan_amount == 0) {
+                                                    MC_DB.update_data("UPDATE loans SET loan_status='In-active' WHERE idloans='" + loanID + "'");
+                                                }
+                                            }
+
+                                        } else if (LOAN_AMOUNT == PAID_AMOUNT) {
+                                            MC_DB.update_data("UPDATE loans SET loan_status='In-active' WHERE idloans='" + loanID + "'");
+                                            loadCutomerLoanData();
+                                            JOptionPane.showMessageDialog(null, "Loan already settled");
+                                        }
+
+                                    }
                                 }
+
                             }
 
+                        } catch (Exception e) {
+
+                            e.printStackTrace();
                         }
-
-                    } catch (Exception e) {
-
-                        e.printStackTrace();
+                    } else {
+                        JOptionPane.showMessageDialog(this, "Discount should be lower than or equal to Due Interest", "Warning", JOptionPane.WARNING_MESSAGE);
                     }
-
                 } else {
-                    JOptionPane.showMessageDialog(this, "Payment cannot larger than due Amount");
+                    JOptionPane.showMessageDialog(this, "Payment should be lower than or equal to Due Amount", "Warning", JOptionPane.WARNING_MESSAGE);
                 }
             }
         }
