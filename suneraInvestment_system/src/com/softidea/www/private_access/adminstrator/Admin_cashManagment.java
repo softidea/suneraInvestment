@@ -1,23 +1,48 @@
 package com.softidea.www.private_access.adminstrator;
 
-import static com.softidea.www.private_access.adminstrator.Admin_installmentManagment.tf_payment;
 import com.softidea.www.public_connection.MC_DB;
 import java.awt.event.KeyEvent;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.Statement;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Vector;
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 
 public class Admin_cashManagment extends javax.swing.JPanel {
 
     public Admin_cashManagment() {
         initComponents();
         setCurrentDate();
+        viewCashAccount();
+        viewCapital();
+        viewTotalFunds();
+        viewTotalloans();
     }
 
+    //
+    
+    
+    //view capital
+    public void viewCapital(){
+        double income=getTotalUpdateFunds()+getTotalInstallmentAmounts();
+        double expense=getTotalLoanAmounts()+getTotalWithdrawalAmounts();
+        lb_v_totalCapital.setText((income-expense)+"0");  
+    }
+    //view capital
+    
+    //view funds
+    public void viewTotalFunds(){
+        lb_v_totalFund.setText(getTotalFundAmounts()+"0");
+    }
+    //view funds
+    
+    //view loan amounts
+    public void viewTotalloans(){
+        lb_v_totalLoan.setText(getTotalLoanAmounts()+"0");
+    }
+    //view loan amounts
+    
     //saving wihdrawal to cash account
     public void saveWithdrawCash() {
         try {
@@ -28,7 +53,7 @@ public class Admin_cashManagment extends javax.swing.JPanel {
             String cashStatus = "Active";
             if (!(withdrawAmount.isEmpty() && withdrawDes.isEmpty())) {
 
-                MC_DB.myConnection().createStatement().executeUpdate("INSERT INTO cash_account (date,amount,cash_ac_type,cash_ac_discription,cash_ac_status) VALUES('" + withdrawDate + "','" + withdrawAmount + "','"+cashType+"','" + withdrawDes + "','"+cashStatus+"')");
+                MC_DB.myConnection().createStatement().executeUpdate("INSERT INTO cash_account (date,amount,cash_ac_type,cash_ac_discription,cash_ac_status) VALUES('" + withdrawDate + "','" + withdrawAmount + "','" + cashType + "','" + withdrawDes + "','" + cashStatus + "')");
                 JOptionPane.showMessageDialog(null, "Cash Withdraw Successfully");
             }
 
@@ -39,6 +64,146 @@ public class Admin_cashManagment extends javax.swing.JPanel {
     }
     //saving withdrawal to cash account
 
+    //view cash account
+    public void viewCashAccount() {
+        ResultSet rs = null;
+        DefaultTableModel dtm = (DefaultTableModel) tb_cashAccount.getModel();
+        dtm.setRowCount(0);
+        try {
+            String sDate = new SimpleDateFormat("YYYY-MM-dd").format(dc_startDate.getDate());
+            String eDate = new SimpleDateFormat("YYYY-MM-dd").format(dc_endDate.getDate());
+            String cashType = cb_cashType.getSelectedItem().toString();
+
+            if (!(sDate.isEmpty() && eDate.isEmpty() && cashType.isEmpty())) {
+                if (cashType.equals("All")) {
+                    rs = MC_DB.myConnection().createStatement().executeQuery("SELECT * FROM cash_account WHERE date BETWEEN '" + sDate + "' AND '" + eDate + "'");
+                    while (rs.next()) {
+                        Vector v = new Vector();
+                        v.add(rs.getString("idcash_account"));
+                        v.add(rs.getString("amount"));
+                        v.add(rs.getString("cash_ac_type"));
+                        v.add(rs.getString("cash_ac_discription"));
+                        v.add(rs.getString("date"));
+                        dtm.addRow(v);
+
+                    }
+                } else {
+                    rs = MC_DB.myConnection().createStatement().executeQuery("SELECT * FROM cash_account WHERE date BETWEEN '" + sDate + "' AND '" + eDate + "' AND cash_ac_type='" + cashType + "'");
+                    while (rs.next()) {
+                        Vector v = new Vector();
+                        v.add(rs.getString("idcash_account"));
+                        v.add(rs.getString("amount"));
+                        v.add(rs.getString("cash_ac_type"));
+                        v.add(rs.getString("cash_ac_discription"));
+                        v.add(rs.getString("date"));
+                        dtm.addRow(v);
+
+                    }
+                }
+
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+    }
+    //view cash account
+    
+    //view totfunds
+    public double getTotalUpdateFunds(){
+        try {
+            ResultSet rs = MC_DB.myConnection().createStatement().executeQuery("SELECT SUM(fund_update) AS countFound FROM fund");
+            if(rs.next()){
+                double totFund=rs.getInt("countFound");
+                return totFund;
+            }else{
+                return -1;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            return -1;
+        }
+    }
+    //view tot funds
+    
+    //view total loan amounts
+    public double getTotalLoanAmounts(){
+    
+        try {
+            ResultSet rs = MC_DB.myConnection().createStatement().executeQuery("SELECT SUM(amount) AS loanSUM FROM cash_account WHERE cash_ac_type='Loan'");
+            if(rs.next()){
+                int loan=rs.getInt("loanSUM");
+                return loan;
+            }
+            else{
+                return -1;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            return -1;
+        }
+    }
+    //view total loan amounts
+    
+    //view total installment cash
+    public double getTotalInstallmentAmounts(){
+        try {
+             ResultSet rs = MC_DB.myConnection().createStatement().executeQuery("SELECT SUM(amount) AS InstallmentSUM FROM cash_account WHERE cash_ac_type='Installment'");
+            if(rs.next()){
+                int installment=rs.getInt("InstallmentSUM");
+                return installment;
+            }
+            else{
+                return -1;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            return -1;
+        }
+    
+    }
+    //view total installment cash
+    
+    //view total withdrawal amounts
+    public double getTotalWithdrawalAmounts(){
+        try {
+             ResultSet rs = MC_DB.myConnection().createStatement().executeQuery("SELECT SUM(amount) AS WithdrawalSUM FROM cash_account WHERE cash_ac_type='Withdrawal'");
+            if(rs.next()){
+                int with=rs.getInt("WithdrawalSUM");
+                return with;
+            }
+            else{
+                return -1;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            return -1;
+        }
+    }
+     //view total withdrawal amounts
+    
+    
+    //view total fund amounts
+    public double getTotalFundAmounts(){
+             try {
+             ResultSet rs = MC_DB.myConnection().createStatement().executeQuery("SELECT SUM(amount) AS FundSUM FROM cash_account WHERE cash_ac_type='Fund'");
+            if(rs.next()){
+                return Double.parseDouble(rs.getString("FundSUM"));
+            }
+            else{
+                return -1;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            return -1;
+        }
+    }
+    //view total fund amounts
+    
+    
+    
+    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -109,7 +274,12 @@ public class Admin_cashManagment extends javax.swing.JPanel {
         jLabel6.setText("Select Cash Type :");
 
         cb_cashType.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        cb_cashType.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "All", "Funds", "Loans", "Withdrawals" }));
+        cb_cashType.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "All", "Fund", "Loan", "Withdrawal", "Installment" }));
+        cb_cashType.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                cb_cashTypeItemStateChanged(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -223,11 +393,11 @@ public class Admin_cashManagment extends javax.swing.JPanel {
 
             },
             new String [] {
-                "Cash Id", "Cash Amount", "Cash Type", "Credit Date"
+                "Cash Id", "Cash Amount", "Cash Type", "Description", "Credit Date"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false
+                false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -436,6 +606,7 @@ public class Admin_cashManagment extends javax.swing.JPanel {
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
 
+        viewCashAccount();
 
     }//GEN-LAST:event_jButton2ActionPerformed
 
@@ -449,13 +620,19 @@ public class Admin_cashManagment extends javax.swing.JPanel {
     }//GEN-LAST:event_bt_addFund1ActionPerformed
 
     private void tf_withdrawalAmountKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tf_withdrawalAmountKeyTyped
-        
+
         char c = evt.getKeyChar();
         if (!(c >= '0' && c <= '9' || c == KeyEvent.VK_PERIOD)) {
             evt.consume();
         }
-        
+
     }//GEN-LAST:event_tf_withdrawalAmountKeyTyped
+
+    private void cb_cashTypeItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cb_cashTypeItemStateChanged
+       
+        viewCashAccount();
+        
+    }//GEN-LAST:event_cb_cashTypeItemStateChanged
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
