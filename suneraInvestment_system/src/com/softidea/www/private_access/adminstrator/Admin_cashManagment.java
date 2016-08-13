@@ -86,6 +86,10 @@ public class Admin_cashManagment extends javax.swing.JPanel {
         jLabel4.setForeground(new java.awt.Color(255, 255, 255));
         jLabel4.setText("Start Date :");
 
+        dc_startDate.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+
+        dc_endDate.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+
         jLabel5.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel5.setForeground(new java.awt.Color(255, 255, 255));
         jLabel5.setText("End Date :");
@@ -213,6 +217,7 @@ public class Admin_cashManagment extends javax.swing.JPanel {
                 .addContainerGap())
         );
 
+        tb_cashAccount.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         tb_cashAccount.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
