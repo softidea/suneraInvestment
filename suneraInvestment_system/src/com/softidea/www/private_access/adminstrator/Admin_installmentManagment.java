@@ -1,5 +1,7 @@
 package com.softidea.www.private_access.adminstrator;
 
+import com.softidea.www.private_access.methods.md_Calc;
+import com.softidea.www.public_access.pmd;
 import com.softidea.www.public_connection.MC_DB;
 import java.awt.event.KeyEvent;
 import java.sql.ResultSet;
@@ -74,14 +76,22 @@ public class Admin_installmentManagment extends javax.swing.JPanel {
 
     public void setInterestValues() {
 
+        double paid_discount = calPaidDiscount();
         double loanAmount = Double.parseDouble(tf_loanAmount.getText());
         double period = Double.parseDouble(tf_period.getText());
         double installment = Double.parseDouble(tf_installment.getText());
         double payable_amount = period * installment;
         double payable_interest = (payable_amount - loanAmount);
         double paidAmount = Double.parseDouble(tf_paidAmount.getText());
+        
+        
         double paid_interest = (payable_interest / loanAmount) * paidAmount;
-        double due_interest = (payable_interest - paid_interest);
+        paid_interest=Math.round(paid_interest);
+        System.out.println(paid_interest+"inttttttttttttttttttttttttttttttttttttttttttttt");
+        
+        double due_interest = (payable_interest - (paid_interest)-paid_discount);
+        due_interest=Math.round(due_interest);
+        
         tf_paidInterest.setText(paid_interest + "0");
         tf_payableInterest.setText(payable_interest + "0");
         tf_dueInterest.setText(due_interest + "0");
@@ -180,6 +190,24 @@ public class Admin_installmentManagment extends javax.swing.JPanel {
     }
 
     //view installment to the table
+    //cal paid discount
+    public int calPaidDiscount() {
+        try {
+            ResultSet rs = MC_DB.myConnection().createStatement().executeQuery("SELECT SUM(discount) AS disCount FROM installment WHERE idloans='" + loanID + "'");
+            if (rs.next()) {
+
+                return rs.getInt("disCount");
+
+            } else {
+                return -1;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            return -1;
+        }
+    }
+
+    //call paid discount
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -576,6 +604,7 @@ public class Admin_installmentManagment extends javax.swing.JPanel {
         jLabel20.setText("Discount :");
 
         tf_discount.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        tf_discount.setText("00.00");
         tf_discount.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
                 tf_discountKeyReleased(evt);
@@ -629,6 +658,7 @@ public class Admin_installmentManagment extends javax.swing.JPanel {
                 .addGap(5, 5, 5))
         );
 
+        tb_loanInstallment.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         tb_loanInstallment.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
@@ -863,7 +893,7 @@ public class Admin_installmentManagment extends javax.swing.JPanel {
     private void md_updateCustomer() {
 
         if (loanID != 0) {
-            if (!(dc_installment.getDate() == null && tf_payment.getText() == null && tf_payment.getText().isEmpty())) {
+            if (pmd.EmtyisTextFiled(tf_payment) && md_Calc.stringTodouble(tf_payment.getText()) > 0.0) {
                 if (Double.parseDouble(tf_payment.getText()) <= Double.parseDouble(tf_dueAmount.getText())) {
                     if (Double.parseDouble(tf_discount.getText()) <= Double.parseDouble(tf_dueInterest.getText())) {
                         try {
@@ -871,6 +901,8 @@ public class Admin_installmentManagment extends javax.swing.JPanel {
                             int INSTALLMENT_COUNT = 0;
                             double LOAN_AMOUNT = 0;
                             double PAID_AMOUNT = 0;
+                            double PAID_DISCOUNT = 0;
+                            double PAYABLE_DISCOUNT = 0;
                             String installment_date = new SimpleDateFormat("YYYY-MM-dd").format(dc_installment.getDate());
 
                             ResultSet rs = MC_DB.myConnection().createStatement().executeQuery("SELECT * FROM loans WHERE idloans='" + loanID + "' AND loan_status='Active'");
@@ -884,36 +916,45 @@ public class Admin_installmentManagment extends javax.swing.JPanel {
                                 System.out.println(LOAN_AMOUNT);
                                 PAID_AMOUNT = getInstalmentLoanAmount();
                                 System.out.println(PAID_AMOUNT);
-//
+                                
+
                                 if (PERIOD >= INSTALLMENT_COUNT) {
-                                    System.out.println("inner if PERIOD >= INSTALLMENT_COUNT");
+
                                     if (INSTALLMENT_COUNT >= 0) {
-                                        System.out.println("inner INSTALLMENT_COUNT <= 0");
+
                                         if (LOAN_AMOUNT > PAID_AMOUNT) {
-                                            System.out.println("inner LOAN_AMOUNT > PAID_AMOUNT");
-                                            String qy_saveInstallment = "INSERT INTO installment (payment,payment_date,discount,idloans) VALUES ('" + tf_payment.getText().trim() + "','" + installment_date + "','" + tf_discount.getText() + "','" + loanID + "')";
-                                            MC_DB.update_data(qy_saveInstallment);
-                                            JOptionPane.showMessageDialog(null, "Installment added successfully");
+                                            
+                                            
+                                            int response = JOptionPane.showConfirmDialog(null, "Do you want to add this Payment?", "Confirm",
+                                                    JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+                                            if (response == JOptionPane.NO_OPTION) {
+                                                System.out.println("No button clicked");
+                                            } else if (response == JOptionPane.YES_OPTION) {
 
-                                            viewInstalments(loanID);
-                                            loadCutomerLoanData();
-                                            updateDueLoanAmount();
+                                                String qy_saveInstallment = "INSERT INTO installment (payment,payment_date,discount,idloans) VALUES ('" + tf_payment.getText().trim() + "','" + installment_date + "','" + tf_discount.getText() + "','" + loanID + "')";
+                                                MC_DB.update_data(qy_saveInstallment);
+                                                JOptionPane.showMessageDialog(null, "Installment added successfully");
 
-                                            String cash_des = tf_nic.getText() + " paid for load id=" + loanID;
-                                            MC_DB.myConnection().createStatement().executeUpdate("INSERT INTO cash_account (date,amount,cash_ac_type,cash_ac_discription,cash_ac_status) VALUES('" + installment_date + "','" + tf_payment.getText().trim() + "','Installment','" + cash_des + "','Active')");
+                                                viewInstalments(loanID);
+                                                loadCutomerLoanData();
+                                                updateDueLoanAmount();
 
-                                            ResultSet rs_check_due_amount = MC_DB.search_dataOne("loans", "due_loan_amount", loanID + "");
-                                            if (rs_check_due_amount.next()) {
-                                                double due_loan_amount = Double.parseDouble(rs_check_due_amount.getString("due_loan_amount"));
-                                                if (due_loan_amount == 0) {
-                                                    MC_DB.update_data("UPDATE loans SET loan_status='In-active' WHERE idloans='" + loanID + "'");
+                                                String cash_des = tf_nic.getText() + " paid for load id=" + loanID;
+                                                MC_DB.myConnection().createStatement().executeUpdate("INSERT INTO cash_account (date,amount,cash_ac_type,cash_ac_discription,cash_ac_status) VALUES('" + installment_date + "','" + tf_payment.getText().trim() + "','Installment','" + cash_des + "','Active')");
+
+                                                ResultSet rs_check_due_amount = MC_DB.search_dataOne("loans", "due_loan_amount", loanID + "");
+                                                if (rs_check_due_amount.next()) {
+                                                    double due_loan_amount = Double.parseDouble(rs_check_due_amount.getString("due_loan_amount"));
+                                                    if (due_loan_amount == 0) {
+                                                        MC_DB.update_data("UPDATE loans SET loan_status='In-active' WHERE idloans='" + loanID + "'");
+                                                    }
                                                 }
-                                            }
 
-                                        } else if (LOAN_AMOUNT == PAID_AMOUNT) {
-                                            MC_DB.update_data("UPDATE loans SET loan_status='In-active' WHERE idloans='" + loanID + "'");
-                                            loadCutomerLoanData();
-                                            JOptionPane.showMessageDialog(null, "Loan already settled");
+                                            } else if (LOAN_AMOUNT == PAID_AMOUNT) {
+                                                MC_DB.update_data("UPDATE loans SET loan_status='In-active' WHERE idloans='" + loanID + "'");
+                                                loadCutomerLoanData();
+                                                JOptionPane.showMessageDialog(null, "Loan already settled");
+                                            }
                                         }
 
                                     }
@@ -931,6 +972,9 @@ public class Admin_installmentManagment extends javax.swing.JPanel {
                 } else {
                     JOptionPane.showMessageDialog(this, "Payment should be lower than or equal to Due Amount", "Warning", JOptionPane.WARNING_MESSAGE);
                 }
+            } else {
+
+                JOptionPane.showMessageDialog(this, "Please enter valid amount", "Error", JOptionPane.ERROR_MESSAGE);
             }
         }
 
