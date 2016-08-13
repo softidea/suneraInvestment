@@ -651,6 +651,10 @@ public class Admin_fundManagment extends javax.swing.JPanel {
                     String sql_qury = "INSERT INTO fund (fund,fund_update,fund_date,descriptin,fund_status,funder_idfunder) VALUES ('" + fundAmount_text + "','" + fundAmount_text + "','" + date + "','" + ta_FundDiscription.getText().trim() + "','Active','" + idfunder + "')";
                     MC_DB.update_data(sql_qury);
 
+                    String sql_tocash="INSERT INTO `cash_account` (`date`,`amount`,`cash_ac_type`,`cash_ac_discription`,`cash_ac_status`) VALUES ('"+date+"','"+fundAmount_text+"','Fund','" + ta_FundDiscription.getText().trim() + "','Active');";
+                    MC_DB.update_data(sql_tocash);
+                    
+                    System.out.println("OTO cash Account");
                 } catch (SQLException e) {
 
                     e.printStackTrace();

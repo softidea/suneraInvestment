@@ -6,17 +6,19 @@
 package com.softidea.www.private_access.adminstrator;
 
 import com.fsczone.www.lookAndFeel.pro_lookandfeel;
+import static com.softidea.www.private_access.adminstrator.Admin_workArea.jp_adminMainPanel;
+import com.softidea.www.private_access.methods.md_Calc;
 import com.softidea.www.private_access.methods.md_cus;
 import com.softidea.www.private_access.methods.md_loans;
 import com.softidea.www.public_access.pmd;
 import com.softidea.www.public_connection.MC_DB;
+import java.awt.FlowLayout;
 import java.awt.HeadlessException;
 import java.awt.Toolkit;
 import java.awt.event.KeyEvent;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Vector;
@@ -48,7 +50,8 @@ public class Admin_customerManagment extends javax.swing.JPanel {
         //get current date time with Date()
         Date date = new Date();
         dc_registrationDate.setDate(date);
-        md_genLoadId();
+        String periodType = cb_mainInstallmentPeriodType.getSelectedItem().toString().substring(0, 1).toUpperCase();
+        md_genLoadId(periodType);
     }
 
     /**
@@ -75,6 +78,9 @@ public class Admin_customerManagment extends javax.swing.JPanel {
         tf_nic = new javax.swing.JTextField();
         bt_search = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
+        pl_viewCustomer = new javax.swing.JPanel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        tb_customerAddView = new javax.swing.JTable();
         jLabel16 = new javax.swing.JLabel();
         jLabel18 = new javax.swing.JLabel();
         jLabel14 = new javax.swing.JLabel();
@@ -83,8 +89,6 @@ public class Admin_customerManagment extends javax.swing.JPanel {
         bt_addLoan = new javax.swing.JButton();
         cb_selectFunder_customer = new javax.swing.JComboBox();
         jLabel17 = new javax.swing.JLabel();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        tb_customerAddView = new javax.swing.JTable();
         jPanel1 = new javax.swing.JPanel();
         jLabel12 = new javax.swing.JLabel();
         tf_loanNumber = new javax.swing.JTextField();
@@ -277,18 +281,67 @@ public class Admin_customerManagment extends javax.swing.JPanel {
         );
 
         jPanel3.setBackground(new java.awt.Color(66, 66, 66));
+        jPanel3.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        tb_customerAddView.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "No", "Customer Name", "Regidtation Date", "Loan Amount", "Due Amount", "Due Period", "Title 7", "Title 8", "Title 9", "Title 10", "Title 11", "Title 12"
+            }
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, true, false, false, true, true, true, true, true, true, true
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        tb_customerAddView.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tb_customerAddViewMouseClicked(evt);
+            }
+        });
+        jScrollPane1.setViewportView(tb_customerAddView);
+        if (tb_customerAddView.getColumnModel().getColumnCount() > 0) {
+            tb_customerAddView.getColumnModel().getColumn(0).setResizable(false);
+            tb_customerAddView.getColumnModel().getColumn(0).setPreferredWidth(4);
+        }
+
+        javax.swing.GroupLayout pl_viewCustomerLayout = new javax.swing.GroupLayout(pl_viewCustomer);
+        pl_viewCustomer.setLayout(pl_viewCustomerLayout);
+        pl_viewCustomerLayout.setHorizontalGroup(
+            pl_viewCustomerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pl_viewCustomerLayout.createSequentialGroup()
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 630, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        pl_viewCustomerLayout.setVerticalGroup(
+            pl_viewCustomerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pl_viewCustomerLayout.createSequentialGroup()
+                .addGap(0, 0, 0)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 490, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, 0))
+        );
+
+        jPanel3.add(pl_viewCustomer, new org.netbeans.lib.awtextra.AbsoluteConstraints(328, 85, -1, -1));
 
         jLabel16.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel16.setForeground(new java.awt.Color(255, 255, 255));
         jLabel16.setText("Registration Date:");
+        jPanel3.add(jLabel16, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 482, 297, -1));
 
         jLabel18.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel18.setForeground(new java.awt.Color(255, 255, 255));
         jLabel18.setText("Loan Amount :");
+        jPanel3.add(jLabel18, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 138, 300, -1));
 
         jLabel14.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel14.setForeground(new java.awt.Color(255, 255, 255));
         jLabel14.setText("Period :(Hit Enter)");
+        jPanel3.add(jLabel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 416, 300, -1));
 
         tf_period.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         tf_period.addActionListener(new java.awt.event.ActionListener() {
@@ -304,6 +357,7 @@ public class Admin_customerManagment extends javax.swing.JPanel {
                 tf_periodKeyTyped(evt);
             }
         });
+        jPanel3.add(tf_period, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 440, 300, 40));
 
         tf_loanAmount.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         tf_loanAmount.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -317,6 +371,7 @@ public class Admin_customerManagment extends javax.swing.JPanel {
                 tf_loanAmountKeyTyped(evt);
             }
         });
+        jPanel3.add(tf_loanAmount, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 161, 300, 40));
 
         bt_addLoan.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         bt_addLoan.setForeground(new java.awt.Color(255, 255, 255));
@@ -329,6 +384,7 @@ public class Admin_customerManagment extends javax.swing.JPanel {
                 bt_addLoanActionPerformed(evt);
             }
         });
+        jPanel3.add(bt_addLoan, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 546, 300, 40));
 
         cb_selectFunder_customer.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         cb_selectFunder_customer.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "No Funder" }));
@@ -352,32 +408,12 @@ public class Admin_customerManagment extends javax.swing.JPanel {
                 cb_selectFunder_customerKeyReleased(evt);
             }
         });
+        jPanel3.add(cb_selectFunder_customer, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 23, 300, 40));
 
         jLabel17.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel17.setForeground(new java.awt.Color(255, 255, 255));
         jLabel17.setText("Select Funder:");
-
-        tb_customerAddView.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-
-            },
-            new String [] {
-                "No", "Customer Name", "Regidtation Date", "Loan Amount", "Due Amount", "Due Period"
-            }
-        ) {
-            boolean[] canEdit = new boolean [] {
-                false, false, true, false, false, true
-            };
-
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit [columnIndex];
-            }
-        });
-        jScrollPane1.setViewportView(tb_customerAddView);
-        if (tb_customerAddView.getColumnModel().getColumnCount() > 0) {
-            tb_customerAddView.getColumnModel().getColumn(0).setResizable(false);
-            tb_customerAddView.getColumnModel().getColumn(0).setPreferredWidth(4);
-        }
+        jPanel3.add(jLabel17, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 0, 300, -1));
 
         jPanel1.setBackground(new java.awt.Color(91, 91, 91));
         jPanel1.setForeground(new java.awt.Color(91, 91, 91));
@@ -400,23 +436,26 @@ public class Admin_customerManagment extends javax.swing.JPanel {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(0, 0, 0)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(tf_loanNumber, javax.swing.GroupLayout.DEFAULT_SIZE, 300, Short.MAX_VALUE)
-                    .addComponent(jLabel12, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(tf_loanNumber, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(0, 0, 0))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addComponent(jLabel12)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(0, 0, Short.MAX_VALUE)
                 .addComponent(tf_loanNumber, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, 0))
         );
 
+        jPanel3.add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 10, 300, -1));
+
         jLabel19.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel19.setForeground(new java.awt.Color(255, 255, 255));
         jLabel19.setText("Extra Interest :");
+        jPanel3.add(jLabel19, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 207, 300, -1));
 
         tf_extraInterest.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         tf_extraInterest.setPreferredSize(new java.awt.Dimension(300, 40));
@@ -428,14 +467,17 @@ public class Admin_customerManagment extends javax.swing.JPanel {
                 tf_extraInterestKeyTyped(evt);
             }
         });
+        jPanel3.add(tf_extraInterest, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 229, -1, -1));
 
         dc_registrationDate.setDateFormatString("yyyy-MM-dd");
         dc_registrationDate.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         dc_registrationDate.setMinSelectableDate(new java.util.Date(-62135785690000L));
+        jPanel3.add(dc_registrationDate, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 505, 297, 35));
 
         jLabel22.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel22.setForeground(new java.awt.Color(255, 255, 255));
         jLabel22.setText("Select Fund:");
+        jPanel3.add(jLabel22, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 69, 300, -1));
 
         cb_selectFund.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         cb_selectFund.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "No Fund" }));
@@ -449,14 +491,17 @@ public class Admin_customerManagment extends javax.swing.JPanel {
                 cb_selectFundKeyReleased(evt);
             }
         });
+        jPanel3.add(cb_selectFund, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 92, 300, 40));
 
         jLabel20.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel20.setForeground(new java.awt.Color(255, 255, 255));
         jLabel20.setText("Main Installment Period Type:");
+        jPanel3.add(jLabel20, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 275, 300, -1));
 
         jLabel13.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel13.setForeground(new java.awt.Color(255, 255, 255));
         jLabel13.setText("Period Type:");
+        jPanel3.add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 347, 297, -1));
 
         cb_periodType.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         cb_periodType.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "With Out Saturday(Week days)", "With Saturday" }));
@@ -466,6 +511,7 @@ public class Admin_customerManagment extends javax.swing.JPanel {
                 cb_periodTypeItemStateChanged(evt);
             }
         });
+        jPanel3.add(cb_periodType, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 370, 297, 40));
 
         cb_mainInstallmentPeriodType.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         cb_mainInstallmentPeriodType.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Daily", "Weekly", "Monthly" }));
@@ -479,83 +525,7 @@ public class Admin_customerManagment extends javax.swing.JPanel {
                 cb_mainInstallmentPeriodTypeKeyReleased(evt);
             }
         });
-
-        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
-        jPanel3.setLayout(jPanel3Layout);
-        jPanel3Layout.setHorizontalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel3Layout.createSequentialGroup()
-                .addGap(10, 10, 10)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel17, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(cb_selectFunder_customer, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(6, 6, 6)
-                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel22, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(cb_selectFund, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel18, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(tf_loanAmount, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel19, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(tf_extraInterest, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(cb_periodType, javax.swing.GroupLayout.PREFERRED_SIZE, 297, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(tf_period, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel16, javax.swing.GroupLayout.PREFERRED_SIZE, 297, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(dc_registrationDate, javax.swing.GroupLayout.PREFERRED_SIZE, 297, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(bt_addLoan, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel13, javax.swing.GroupLayout.PREFERRED_SIZE, 297, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel20, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel14, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(cb_mainInstallmentPeriodType, javax.swing.GroupLayout.PREFERRED_SIZE, 297, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(6, 6, 6)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 649, javax.swing.GroupLayout.PREFERRED_SIZE))))
-        );
-        jPanel3Layout.setVerticalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel3Layout.createSequentialGroup()
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addComponent(jLabel17)
-                        .addGap(6, 6, 6)
-                        .addComponent(cb_selectFunder_customer, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(6, 6, 6)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addComponent(jLabel22)
-                        .addGap(6, 6, 6)
-                        .addComponent(cb_selectFund, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(6, 6, 6)
-                        .addComponent(jLabel18)
-                        .addGap(6, 6, 6)
-                        .addComponent(tf_loanAmount, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(6, 6, 6)
-                        .addComponent(jLabel19)
-                        .addGap(5, 5, 5)
-                        .addComponent(tf_extraInterest, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel20)
-                        .addGap(4, 4, 4)
-                        .addComponent(cb_mainInstallmentPeriodType, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jLabel13)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(cb_periodType, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel14)
-                        .addGap(7, 7, 7)
-                        .addComponent(tf_period, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(2, 2, 2)
-                        .addComponent(jLabel16)
-                        .addGap(6, 6, 6)
-                        .addComponent(dc_registrationDate, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(6, 6, 6)
-                        .addComponent(bt_addLoan, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 517, javax.swing.GroupLayout.PREFERRED_SIZE)))
-        );
+        jPanel3.add(cb_mainInstallmentPeriodType, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 296, 297, 40));
 
         jPanel4.setBackground(new java.awt.Color(51, 51, 51));
 
@@ -804,13 +774,17 @@ public class Admin_customerManagment extends javax.swing.JPanel {
                             fundID + "",
                             md_funderID()
                     );
+                    
+                     String sql_tocash="INSERT INTO `cash_account` (`date`,`amount`,`cash_ac_type`,`cash_ac_discription`,`cash_ac_status`) VALUES ('"+register_date+"','"+md_Calc.stringTodoubleString(tf_loanAmount.getText().trim())+"','Loan','" + "NIC:"+tf_nic.getText().toString()+"-Loan Number:"+tf_loanNumber.getText() + "','Active');";
+                    MC_DB.update_data(sql_tocash);
 
                     JOptionPane.showMessageDialog(this, fundID);
                     md_loans.minToFunderFund(fundID, lb_v_loanAmount.getText());
 
                     if (isture == true) {
                         JOptionPane.showMessageDialog(this, "Customer And Loan Successfully \n Saved!");
-                        md_genLoadId();
+                        String periodType = cb_mainInstallmentPeriodType.getSelectedItem().toString().substring(0, 1).toUpperCase();
+                        md_genLoadId(periodType);
                     } else {
                         JOptionPane.showMessageDialog(this, "Customer And Loan  \n Not Saved!");
                     }
@@ -926,7 +900,10 @@ public class Admin_customerManagment extends javax.swing.JPanel {
 
     private void cb_periodTypeItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cb_periodTypeItemStateChanged
 
-        md_genLoadId();
+        String periodType = cb_mainInstallmentPeriodType.getSelectedItem().toString().substring(0, 1).toUpperCase();
+        md_genLoadId(periodType);
+
+        //md_genLoadId();
 
     }//GEN-LAST:event_cb_periodTypeItemStateChanged
 
@@ -1082,19 +1059,64 @@ public class Admin_customerManagment extends javax.swing.JPanel {
             evt.consume();
         }
 
+
     }//GEN-LAST:event_tf_nicKeyTyped
 
     private void cb_mainInstallmentPeriodTypeItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cb_mainInstallmentPeriodTypeItemStateChanged
 
-        md_genLoadId();
+        String periodType = cb_mainInstallmentPeriodType.getSelectedItem().toString().substring(0, 1).toUpperCase();
+        md_genLoadId(periodType);
+//        String periodType = "D";
+//
+//        if (cb_mainInstallmentPeriodType.getSelectedIndex() == 0) {
+//            periodType = "D";
+//        } else if (cb_periodType.getSelectedIndex() == 1) {
+//            periodType = "W";
+//
+//        } else if (cb_periodType.getSelectedIndex() == 2) {
+//            periodType = "M";
+//        }
+//
+//        md_genLoadId(periodType);
 
     }//GEN-LAST:event_cb_mainInstallmentPeriodTypeItemStateChanged
 
     private void cb_selectFundItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cb_selectFundItemStateChanged
+        String periodType = cb_mainInstallmentPeriodType.getSelectedItem().toString().substring(0, 1).toUpperCase();
+        md_genLoadId(periodType);
 
-        md_genLoadId();
+//        if (cb_mainInstallmentPeriodType.getSelectedIndex() == 0) {
+//                periodType = "D";
+//            } else if (cb_periodType.getSelectedIndex() == 1) {
+//                periodType = "W";
+//
+//            } else if (cb_periodType.getSelectedIndex() == 2) {
+//                periodType = "M";
+//            }
+//        
+//        md_genLoadId(periodType);
 
     }//GEN-LAST:event_cb_selectFundItemStateChanged
+
+    private void tb_customerAddViewMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tb_customerAddViewMouseClicked
+
+         new Thread(() -> {
+            try {
+                jp_adminMainPanel.removeAll();
+                jp_adminMainPanel.setLayout(new FlowLayout());
+                pl_viewCustomer.setVisible(true);
+                jp_adminMainPanel.add(pl_viewCustomer);
+                jp_adminMainPanel.updateUI();
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }).start();
+       
+       
+       
+        
+    }//GEN-LAST:event_tb_customerAddViewMouseClicked
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -1138,6 +1160,7 @@ public class Admin_customerManagment extends javax.swing.JPanel {
     private javax.swing.JLabel lb_v_period;
     private javax.swing.JLabel lb_v_profit;
     private javax.swing.JLabel lb_v_totalAmount;
+    private javax.swing.JPanel pl_viewCustomer;
     public static javax.swing.JRadioButton rb_female;
     public static javax.swing.JRadioButton rb_male;
     private javax.swing.JTable tb_customerAddView;
@@ -1201,68 +1224,55 @@ public class Admin_customerManagment extends javax.swing.JPanel {
 
     }
 
-    private void md_genLoadId() {
-        
-        new Thread(() -> {
+    private void md_genLoadId(String periodType) {
 
-        
-//        Date datet = new Date();
-//        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-//
-//        String today_date = sdf.format(datet);
-        int cus_id = 0;
-        int loan_id = 0;
-        try {
-            //String genidType = "LON-W-20160808-00001";
-            String perFix = "LO";
-            String periodType = "";
-            
-            if (cb_mainInstallmentPeriodType.getSelectedIndex() == 0) {
-                periodType = "D";
-            } else if (cb_periodType.getSelectedIndex() == 1) {
-                periodType = "W";
+        new Thread(new Runnable() {
 
-            } else if (cb_periodType.getSelectedIndex() == 2) {
-                periodType = "M";
-            }
+            @Override
+            public void run() {
+                int cus_id = 0;
+                int loan_id = 0;
+                try {
+                    //String genidType = "LON-W-20160808-00001";
+                    String perFix = "LO";
+                    SimpleDateFormat sdff = new SimpleDateFormat("yyyy-MM-dd");
+                    String registration_date;
+                    try {
+                        dc_registrationDate.setDate(new Date());
+                        Date date = dc_registrationDate.getDate();
+                        sdff = new SimpleDateFormat("yyyy-MM-dd");
+                        registration_date = sdff.format(date);
 
-            dc_registrationDate.setDate(new Date());
-            Date date = dc_registrationDate.getDate();
-            SimpleDateFormat sdff = new SimpleDateFormat("yyyy-MM-dd");
-            String registration_date= sdff.format(date);
-            try {
-                sdff = new SimpleDateFormat("yyyy-MM-dd");
-            registration_date = sdff.format(date);
-            } catch (Exception e) {
-                 registration_date = sdff.format(new Date());
-            }
-            
-            
+                        registration_date = sdff.format(date);
+                    } catch (Exception e) {
+                        registration_date = sdff.format(new Date());
+                    }
+
 //            JOptionPane.showMessageDialog(this, "Innnnnnnnnnnnneeeeee" + registration_date + "-" + periodType);
-            ResultSet rs = MC_DB.myConnection().createStatement().executeQuery("SELECT MAX(idcustomer) AS HighestID FROM customer;");
-            while (rs.next()) {
-                cus_id = rs.getInt("HighestID");
+                    ResultSet rs = MC_DB.myConnection().createStatement().executeQuery("SELECT MAX(idcustomer) AS HighestID FROM customer;");
+                    while (rs.next()) {
+                        cus_id = rs.getInt("HighestID");
+                    }
+
+                    ResultSet rsloanid = MC_DB.myConnection().createStatement().executeQuery("SELECT MAX(idloans) AS HighestID FROM loans;");
+                    while (rsloanid.next()) {
+                        loan_id = rsloanid.getInt("HighestID");
+                    }
+
+                    cus_id = cus_id + 1;
+                    loan_id = loan_id + 1;
+
+                    String newDateRegistarion = registration_date.replaceAll("-", "");
+                    //JOptionPane.showMessageDialog(this, "ID is Max :" + cus_id + "----" + perFix + "-" + periodType + "-" + newDateRegistarion + cus_id);
+
+                    tf_loanNumber.setText(perFix + "-" + newDateRegistarion + "-" + cus_id + "" + periodType + "-" + loan_id);
+
+                } catch (SQLException ex) {
+                    cus_id = 0;
+                    loan_id = 0;
+                    //Logger.getLogger(jp_customer_add.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
-
-            ResultSet rsloanid = MC_DB.myConnection().createStatement().executeQuery("SELECT MAX(idloans) AS HighestID FROM loans;");
-            while (rsloanid.next()) {
-                loan_id = rsloanid.getInt("HighestID");
-            }
-
-            cus_id = cus_id + 1;
-            loan_id = loan_id + 1;
-
-            String newDateRegistarion = registration_date.replaceAll("-", "");
-            //JOptionPane.showMessageDialog(this, "ID is Max :" + cus_id + "----" + perFix + "-" + periodType + "-" + newDateRegistarion + cus_id);
-
-            tf_loanNumber.setText(perFix + "-" + newDateRegistarion + "-" + cus_id + "" + periodType + "-" + loan_id);
-
-        } catch (SQLException ex) {
-            cus_id = 0;
-            loan_id = 0;
-            //Logger.getLogger(jp_customer_add.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        
         }).start();
     }
 
@@ -1430,22 +1440,35 @@ public class Admin_customerManagment extends javax.swing.JPanel {
             dtm = (DefaultTableModel) tb_customerAddView.getModel();
             dtm.setRowCount(0);
 
-            rs = MC_DB.myConnection().createStatement().executeQuery("SELECT * FROM customer ORDER BY idcustomer DESC");
+            rs = MC_DB.myConnection().createStatement().executeQuery("SELECT l.`loan_date`,l.`loan_no`,c.`cus_nic`,l.`loan_amount`,l.`loan_period`,l.`loan_installment`,l.`due_loan_amount`,l.`loan_mainperiodtype`,c.`cus_fullname`,c.`cus_address`,c.`cus_contact` FROM `customer` AS c LEFT JOIN `loans` AS l ON l.`idcustomer`=c.`idcustomer` ORDER BY c.`idcustomer` DESC");
             while (rs.next()) {
                 int cus_id = rs.getRow();
-                String cus_nic = rs.getString("cus_nic");
-                String cus_name = rs.getString("cus_fullname");
-                String cus_address = rs.getString("cus_address");
-                String cus_contact = rs.getString("cus_contact");
-                String cus_gender = rs.getString("cus_gender");
+                String loan_date = rs.getString("l.loan_date");
+                String loan_no = rs.getString("l.loan_no");
+                String cus_nic = rs.getString("c.cus_nic");
+                String loan_amount = rs.getString("l.loan_amount");
+                String loan_period = rs.getString("l.loan_period");
+                String loan_installment = rs.getString("l.loan_installment");
+                String due_loan_amount = rs.getString("l.due_loan_amount");
+                String loan_mainperiodtype = rs.getString("l.loan_mainperiodtype");
+                String cus_fullname = rs.getString("c.cus_fullname");
+                String cus_address = rs.getString("c.cus_address");
+                String cus_contact = rs.getString("c.cus_contact");
 
                 Vector v = new Vector();
                 v.add(rs.getRow());
-                v.add(rs.getString("cus_nic"));
-                v.add(rs.getString("cus_fullname"));
-                v.add(rs.getString("cus_address"));
-                v.add(rs.getString("cus_contact"));
-                v.add(rs.getString("cus_gender"));
+                v.add(loan_date);
+                v.add(loan_no);
+                v.add(cus_nic);
+                v.add(loan_amount);
+                v.add(loan_period);
+                v.add(loan_installment);
+                v.add(due_loan_amount);
+                v.add(loan_mainperiodtype);
+                v.add(cus_fullname);
+                v.add(cus_address);
+                v.add(cus_contact);
+
                 dtm.addRow(v);
             }
 
