@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.softidea.www.private_access.adminstrator;
 
 import com.fsczone.www.lookAndFeel.pro_lookandfeel;
@@ -29,33 +24,33 @@ import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.border.Border;
 
-/**
- *
- * @author deepalsuranga
- */
 public class Admin_workArea extends javax.swing.JFrame {
 
-    /**
-     * Creates new form admin_index
-     */
     public Admin_workArea() {
         initComponents();
+        new Thread(() -> {
+            try {
 
-        try {
-            UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
-        } catch (ClassNotFoundException | IllegalAccessException | InstantiationException | UnsupportedLookAndFeelException ex) {
-        }
-        showDate();
-        showTime();
-        md_HomeMenuVisibleLabel(false);
+                try {
+                    UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
+                } catch (ClassNotFoundException | IllegalAccessException | InstantiationException | UnsupportedLookAndFeelException ex) {
+                }
+                showDate();
+                showTime();
+                md_HomeMenuVisibleLabel(false);
 
-        try {
-            AWTUtilities.setWindowOpaque(this, false);
-        } catch (Exception e) {
-        }
-        pro_lookandfeel.Set();
-        
-        loadCusFundCount();
+                try {
+                    AWTUtilities.setWindowOpaque(this, false);
+                } catch (Exception e) {
+                }
+                pro_lookandfeel.Set();
+
+                loadCusFundCount();
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }).start();
 
     }
 
@@ -84,7 +79,6 @@ public class Admin_workArea extends javax.swing.JFrame {
             bt_usermang.setEnabled(true);
         }
         loadCusFundCount();
-        
 
     }
 
@@ -106,11 +100,6 @@ public class Admin_workArea extends javax.swing.JFrame {
         bt_Oloan = new javax.swing.JButton();
         bt_Oadministrator = new javax.swing.JButton();
         bt_Oreports = new javax.swing.JButton();
-        jPanel4 = new javax.swing.JPanel();
-        lb_customerCount2 = new javax.swing.JLabel();
-        jLabel11 = new javax.swing.JLabel();
-        jLabel12 = new javax.swing.JLabel();
-        lb_funderCount2 = new javax.swing.JLabel();
         jPanel5 = new javax.swing.JPanel();
         lb_customerCount3 = new javax.swing.JLabel();
         jLabel13 = new javax.swing.JLabel();
@@ -118,6 +107,7 @@ public class Admin_workArea extends javax.swing.JFrame {
         lb_funderCount3 = new javax.swing.JLabel();
         jLabel15 = new javax.swing.JLabel();
         jLabel16 = new javax.swing.JLabel();
+        bt_installmentmang2 = new javax.swing.JButton();
         pl_systemExit = new javax.swing.JPanel();
         jl_systemExit = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
@@ -286,63 +276,6 @@ public class Admin_workArea extends javax.swing.JFrame {
         });
         jp_OmainMenu.add(bt_Oreports, new org.netbeans.lib.awtextra.AbsoluteConstraints(758, 333, 200, 200));
 
-        jPanel4.setBackground(new java.awt.Color(0, 200, 83));
-        jPanel4.setMaximumSize(new java.awt.Dimension(200, 200));
-        jPanel4.setMinimumSize(new java.awt.Dimension(200, 200));
-
-        lb_customerCount2.setBackground(new java.awt.Color(255, 255, 255));
-        lb_customerCount2.setFont(new java.awt.Font("Tahoma", 0, 36)); // NOI18N
-        lb_customerCount2.setForeground(new java.awt.Color(255, 255, 255));
-        lb_customerCount2.setText("FOP");
-
-        jLabel11.setBackground(new java.awt.Color(255, 255, 255));
-        jLabel11.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jLabel11.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel11.setText("Time");
-
-        jLabel12.setBackground(new java.awt.Color(255, 255, 255));
-        jLabel12.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jLabel12.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel12.setText("Date");
-
-        lb_funderCount2.setBackground(new java.awt.Color(255, 255, 255));
-        lb_funderCount2.setFont(new java.awt.Font("Tahoma", 0, 36)); // NOI18N
-        lb_funderCount2.setForeground(new java.awt.Color(255, 255, 255));
-        lb_funderCount2.setText("CIP");
-
-        javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
-        jPanel4.setLayout(jPanel4Layout);
-        jPanel4Layout.setHorizontalGroup(
-            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jLabel11, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel4Layout.createSequentialGroup()
-                        .addComponent(lb_funderCount2, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel4Layout.createSequentialGroup()
-                        .addComponent(lb_customerCount2, javax.swing.GroupLayout.DEFAULT_SIZE, 107, Short.MAX_VALUE)
-                        .addGap(93, 93, 93))
-                    .addComponent(jLabel12, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap())
-        );
-        jPanel4Layout.setVerticalGroup(
-            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel4Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(lb_customerCount2)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(lb_funderCount2)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLabel11)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel12)
-                .addContainerGap())
-        );
-
-        jp_OmainMenu.add(jPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(976, 115, -1, 200));
-
         jPanel5.setBackground(new java.awt.Color(0, 200, 83));
         jPanel5.setMaximumSize(new java.awt.Dimension(200, 200));
         jPanel5.setMinimumSize(new java.awt.Dimension(200, 200));
@@ -406,6 +339,25 @@ public class Admin_workArea extends javax.swing.JFrame {
         jLabel16.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel16.setIcon(new javax.swing.ImageIcon(getClass().getResource("/admin/home/images/vt.png"))); // NOI18N
         jp_OmainMenu.add(jLabel16, new org.netbeans.lib.awtextra.AbsoluteConstraints(904, 94, 390, 510));
+
+        bt_installmentmang2.setBackground(new java.awt.Color(0, 153, 102));
+        bt_installmentmang2.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
+        bt_installmentmang2.setForeground(new java.awt.Color(255, 255, 255));
+        bt_installmentmang2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/admin/home/images/btn_installment.png"))); // NOI18N
+        bt_installmentmang2.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        bt_installmentmang2.setMaximumSize(new java.awt.Dimension(200, 200));
+        bt_installmentmang2.setMinimumSize(new java.awt.Dimension(200, 200));
+        bt_installmentmang2.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
+            public void mouseMoved(java.awt.event.MouseEvent evt) {
+                bt_installmentmang2MouseMoved(evt);
+            }
+        });
+        bt_installmentmang2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bt_installmentmang2ActionPerformed(evt);
+            }
+        });
+        jp_OmainMenu.add(bt_installmentmang2, new org.netbeans.lib.awtextra.AbsoluteConstraints(980, 110, 200, 200));
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setMinimumSize(new java.awt.Dimension(1300, 700));
@@ -624,7 +576,7 @@ public class Admin_workArea extends javax.swing.JFrame {
                 bt_installmentmangActionPerformed(evt);
             }
         });
-        jp_adminMainPanel.add(bt_installmentmang, new org.netbeans.lib.awtextra.AbsoluteConstraints(980, 110, 200, 200));
+        jp_adminMainPanel.add(bt_installmentmang, new org.netbeans.lib.awtextra.AbsoluteConstraints(980, 115, 200, 200));
 
         bt_cashmang.setBackground(new java.awt.Color(0, 153, 102));
         bt_cashmang.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
@@ -740,7 +692,7 @@ public class Admin_workArea extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(0, 8, Short.MAX_VALUE)
+                                .addGap(0, 0, Short.MAX_VALUE)
                                 .addComponent(lb_funderCount, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addComponent(jLabel18, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                     .addComponent(jLabel19, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -766,7 +718,7 @@ public class Admin_workArea extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
-        jp_adminMainPanel.add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(976, 333, -1, 200));
+        jp_adminMainPanel.add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(976, 333, 220, 200));
 
         jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/admin/home/images/Vector-PNG-Pictureright.png"))); // NOI18N
@@ -833,17 +785,17 @@ Border borderC = BorderFactory.createLineBorder(new Color(255, 255, 255), 1);
 
     private void lb_wk_option8MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lb_wk_option8MouseClicked
 
-        try {
-            jp_adminMainPanel.removeAll();
-            jp_adminMainPanel.setLayout(new FlowLayout());
-            Admin_customerSettings settings = new Admin_customerSettings();
-            settings.setVisible(true);
-            jp_adminMainPanel.add(settings);
-            jp_adminMainPanel.updateUI();
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+//        try {
+//            jp_adminMainPanel.removeAll();
+//            jp_adminMainPanel.setLayout(new FlowLayout());
+//            Admin_customerSettings settings = new Admin_customerSettings();
+//            settings.setVisible(true);
+//            jp_adminMainPanel.add(settings);
+//            jp_adminMainPanel.updateUI();
+//
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
 
     }//GEN-LAST:event_lb_wk_option8MouseClicked
 
@@ -957,7 +909,7 @@ Border borderC = BorderFactory.createLineBorder(new Color(255, 255, 255), 1);
     private void bt_installmentmangActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_installmentmangActionPerformed
         new Thread(() -> {
             lb_wk_option1.setVisible(true);
-            load_installmentManagment();
+            load_Addditonal_Loans();
         }).start();
 
 
@@ -1062,30 +1014,28 @@ Border borderC = BorderFactory.createLineBorder(new Color(255, 255, 255), 1);
         }).start();
 
     }//GEN-LAST:event_bt_OreportsActionPerformed
-    
+
     private void bt_usermangMouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_bt_usermangMouseMoved
 
-        
         bt_usermang.setBorder(borderC);
 
     }//GEN-LAST:event_bt_usermangMouseMoved
 
     private void bt_cusmangMouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_bt_cusmangMouseMoved
-        
+
         bt_cusmang.setBorder(borderC);
-        
+
     }//GEN-LAST:event_bt_cusmangMouseMoved
 
     private void bt_fungmangMouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_bt_fungmangMouseMoved
 
         bt_fungmang.setBorder(borderC);
-        
+
     }//GEN-LAST:event_bt_fungmangMouseMoved
 
     private void bt_installmentmangMouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_bt_installmentmangMouseMoved
 
-        
-        
+
     }//GEN-LAST:event_bt_installmentmangMouseMoved
 
     private void bt_installmentmang1MouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_bt_installmentmang1MouseMoved
@@ -1093,8 +1043,22 @@ Border borderC = BorderFactory.createLineBorder(new Color(255, 255, 255), 1);
     }//GEN-LAST:event_bt_installmentmang1MouseMoved
 
     private void bt_installmentmang1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_installmentmang1ActionPerformed
-        // TODO add your handling code here:
+
+        new Thread(() -> {
+            lb_wk_option1.setVisible(true);
+            load_installmentManagment();
+        }).start();
+
+
     }//GEN-LAST:event_bt_installmentmang1ActionPerformed
+
+    private void bt_installmentmang2MouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_bt_installmentmang2MouseMoved
+        // TODO add your handling code here:
+    }//GEN-LAST:event_bt_installmentmang2MouseMoved
+
+    private void bt_installmentmang2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_installmentmang2ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_bt_installmentmang2ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -1144,13 +1108,12 @@ Border borderC = BorderFactory.createLineBorder(new Color(255, 255, 255), 1);
     private javax.swing.JButton bt_fungmang;
     private javax.swing.JButton bt_installmentmang;
     private javax.swing.JButton bt_installmentmang1;
+    private javax.swing.JButton bt_installmentmang2;
     private javax.swing.JButton bt_loanmang;
     private javax.swing.JButton bt_reports;
     private javax.swing.JButton bt_usermang;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
-    private javax.swing.JLabel jLabel11;
-    private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel15;
@@ -1163,17 +1126,14 @@ Border borderC = BorderFactory.createLineBorder(new Color(255, 255, 255), 1);
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JLabel jl_systemExit;
     public javax.swing.JPanel jp_OmainMenu;
     public static javax.swing.JPanel jp_adminMainPanel;
     private javax.swing.JLabel lb_customerCount;
-    private javax.swing.JLabel lb_customerCount2;
     private javax.swing.JLabel lb_customerCount3;
     private javax.swing.JLabel lb_date;
     private javax.swing.JLabel lb_funderCount;
-    private javax.swing.JLabel lb_funderCount2;
     private javax.swing.JLabel lb_funderCount3;
     private javax.swing.JLabel lb_time;
     public static javax.swing.JLabel lb_wk_option1;
@@ -1224,6 +1184,24 @@ Border borderC = BorderFactory.createLineBorder(new Color(255, 255, 255), 1);
     }
 
     private void load_installmentManagment() {
+
+        new Thread(() -> {
+            try {
+                jp_adminMainPanel.removeAll();
+                jp_adminMainPanel.setLayout(new FlowLayout());
+                Admin_installmentManagment am = new Admin_installmentManagment();
+                am.setVisible(true);
+                jp_adminMainPanel.add(am);
+                jp_adminMainPanel.updateUI();
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }).start();
+
+    }
+
+    private void load_Addditonal_Loans() {
 
         new Thread(() -> {
             try {

@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.softidea.www.private_access.adminstrator;
 
 import com.fsczone.www.lookAndFeel.pro_lookandfeel;
@@ -39,19 +34,28 @@ public class Admin_customerManagment extends javax.swing.JPanel {
     public Admin_customerManagment() {
 
         initComponents();
-        pro_lookandfeel.Set();
-        bt_updateCustomer.setEnabled(false);
-        tf_nic.grabFocus();
+        new Thread(() -> {
+            try {
 
-        md_loadFunder();
-        md_tb_loadCustomer("active");
+                pro_lookandfeel.Set();
+                bt_updateCustomer.setEnabled(false);
+                tf_nic.grabFocus();
 
-        //DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-        //get current date time with Date()
-        Date date = new Date();
-        dc_registrationDate.setDate(date);
-        String periodType = cb_mainInstallmentPeriodType.getSelectedItem().toString().substring(0, 1).toUpperCase();
-        md_genLoadId(periodType);
+                md_loadFunder();
+                md_tb_loadCustomer("active");
+
+                 //DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+                //get current date time with Date()
+                Date date = new Date();
+                dc_registrationDate.setDate(date);
+                String periodType = cb_mainInstallmentPeriodType.getSelectedItem().toString().substring(0, 1).toUpperCase();
+                md_genLoadId(periodType);
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }).start();
+
     }
 
     /**
@@ -831,13 +835,13 @@ public class Admin_customerManagment extends javax.swing.JPanel {
                 if (pmd.EmtyisTextFiled(tf_nic) && pmd.EmtyisTextFiled(tf_name) && pmd.EmtyisTextFiled(tf_address) && pmd.EmtyisTextFiled(tf_contact) && pmd.EmtyisTextFiled(tf_loanAmount) && pmd.EmtyisTextFiled(tf_period)) {
                     SimpleDateFormat sdfc = new SimpleDateFormat("yyyy-MM-dd");
                     String register_date = sdf.format(d);
-                    String subType="withSaturday";
-                    if (cb_periodType.getSelectedIndex()==0) {
-                        subType="withOutSaturday";
+                    String subType = "withSaturday";
+                    if (cb_periodType.getSelectedIndex() == 0) {
+                        subType = "withOutSaturday";
                     } else {
-                        subType="withSaturday";
+                        subType = "withSaturday";
                     }
-                    
+
                     boolean isture = md_cus.saveCustomer(
                             tf_nic.getText().toLowerCase(),
                             tf_name.getText().toLowerCase(),
@@ -847,7 +851,7 @@ public class Admin_customerManagment extends javax.swing.JPanel {
                             gen_loan_id,
                             register_date,
                             tf_loanAmount.getText().trim(),
-                            cb_mainInstallmentPeriodType.getSelectedItem().toString()+"-"+subType,
+                            cb_mainInstallmentPeriodType.getSelectedItem().toString() + "-" + subType,
                             tf_period.getText(),
                             lb_v_installment.getText(),
                             tf_extraInterest.getText(),
@@ -861,7 +865,6 @@ public class Admin_customerManagment extends javax.swing.JPanel {
                     String sql_tocash = "INSERT INTO `cash_account` (`date`,`amount`,`cash_ac_type`,`cash_ac_discription`,`cash_ac_status`) VALUES ('" + register_date + "','" + md_Calc.stringTodoubleString(tf_loanAmount.getText().trim()) + "','Loan','" + "NIC:" + tf_nic.getText().toString() + "-Loan Number:" + tf_loanNumber.getText() + "','Active');";
                     MC_DB.update_data(sql_tocash);
                     md_tb_loadCustomer("active");
-                    JOptionPane.showMessageDialog(this, fundID);
                     md_loans.minToFunderFund(fundID, lb_v_loanAmount.getText());
 
                     if (isture == true) {
@@ -1197,10 +1200,9 @@ public class Admin_customerManagment extends javax.swing.JPanel {
                 tb_customerAddView.setBounds(0, 85, 1300, tb_customerAddView.getHeight());
 
                 Admin_workArea.lb_wk_option2.setText("BACK");
-                
+
                 Admin_workArea.lb_wk_option2.setVisible(true);
                 Admin_workArea.lb_wk_option1.setVisible(true);
-                
 
             } catch (Exception e) {
                 e.printStackTrace();
@@ -1219,7 +1221,7 @@ public class Admin_customerManagment extends javax.swing.JPanel {
     private void tb_customerAddViewMouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tb_customerAddViewMouseMoved
 
         tb_customerAddView.setToolTipText("Click Record To ZOOM ++ Table");
-        
+
     }//GEN-LAST:event_tb_customerAddViewMouseMoved
 
 
@@ -1319,7 +1321,7 @@ public class Admin_customerManagment extends javax.swing.JPanel {
 
             while (rs.next()) {
 
-                String fund = rs.getString("fund");
+                double fund = rs.getDouble("fund_update");
                 String funddate = rs.getString("fund_date");
                 int fundid = rs.getInt("idfund");
 
@@ -1553,10 +1555,10 @@ public class Admin_customerManagment extends javax.swing.JPanel {
                 String loan_date = rs.getString("l.loan_date");
                 String loan_no = rs.getString("l.loan_no");
                 String cus_nic = rs.getString("c.cus_nic");
-                String loan_amount = rs.getString("l.loan_amount");
+                double loan_amount = rs.getDouble("l.loan_amount");
                 String loan_period = rs.getString("l.loan_period");
-                String loan_installment = rs.getString("l.loan_installment");
-                String due_loan_amount = rs.getString("l.due_loan_amount");
+                double loan_installment = rs.getDouble("l.loan_installment");
+                double due_loan_amount = rs.getDouble("l.due_loan_amount");
                 String loan_mainperiodtype = rs.getString("l.loan_mainperiodtype");
                 String cus_fullname = rs.getString("c.cus_fullname");
                 String cus_address = rs.getString("c.cus_address");

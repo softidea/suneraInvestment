@@ -5,7 +5,9 @@
  */
 package com.softidea.www.private_access.adminstrator;
 
+import static com.softidea.www.private_access.adminstrator.Admin_workArea.jp_adminMainPanel;
 import com.softidea.www.public_connection.MC_DB;
+import java.awt.FlowLayout;
 import java.awt.HeadlessException;
 import java.sql.ResultSet;
 import java.util.Vector;
@@ -28,10 +30,15 @@ public class Admin_adminManagment extends javax.swing.JPanel {
 
     public Admin_adminManagment() {
         initComponents();
-        
-        md_tb_loadAdmin();
-        
-        
+
+        new Thread(() -> {
+            try {
+                md_tb_loadAdmin();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }).start();
+
     }
 
     @SuppressWarnings("unchecked")
@@ -310,9 +317,9 @@ public class Admin_adminManagment extends javax.swing.JPanel {
                 String qu_up_adminPassword = "UPDATE user_account SET us_password = '" + tf_newPassword.getText().trim() + "' WHERE `us_username` = '" + lb_loadusernameToPasswordChange.getText() + "' ;";
 
                 MC_DB.update_data(qu_up_adminPassword);
-                
+
                 md_tb_loadAdmin();
-                
+
                 JOptionPane.showMessageDialog(this, dtb + " :Password is successfully updated!");
                 tf_newPassword.setText("");
                 lb_loadusernameToPasswordChange.setText("Select Table Row First");
@@ -333,12 +340,12 @@ public class Admin_adminManagment extends javax.swing.JPanel {
 
             try {
                 if (password.equals(conpass)) {
-                    MC_DB.update_data("INSERT INTO user_account (us_fullname,us_username,us_password,us_type,us_status) VALUES ('" +fullname+ "','" +username+ "','" +conpass+ "','admin','11')");
+                    MC_DB.update_data("INSERT INTO user_account (us_fullname,us_username,us_password,us_type,us_status) VALUES ('" + fullname + "','" + username + "','" + conpass + "','admin','11')");
                     // MC_JavaDataBaseConnection.myConnection().createStatement().executeUpdate("");
                     JOptionPane.showMessageDialog(this, "Administrator Successfully Added");
                     md_tb_loadAdmin();
-                }else{
-                JOptionPane.showMessageDialog(this, "Password is not matched!");
+                } else {
+                    JOptionPane.showMessageDialog(this, "Password is not matched!");
                 }
 
             } catch (HeadlessException ex) {

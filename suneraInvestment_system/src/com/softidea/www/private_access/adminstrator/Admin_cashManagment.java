@@ -10,19 +10,28 @@ import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 public class Admin_cashManagment extends javax.swing.JPanel {
-double RI = 0;
+
+    double RI = 0;
+
     public Admin_cashManagment() {
         initComponents();
-        setCurrentDate();
-        viewCashAccount();
-        viewCapital();
-        viewLoanDueAmounts();
-        viewTotalloans();
-        getOUtstandingInterest();
-        getReceivedInterest();
-        setDueTotalInterest();
-        viewCashTableData();
-        viewTotalAssets();
+        new Thread(() -> {
+            try {
+                setCurrentDate();
+                viewCashAccount();
+                viewCapital();
+                viewLoanDueAmounts();
+                viewTotalloans();
+                getOUtstandingInterest();
+                getReceivedInterest();
+                setDueTotalInterest();
+                viewCashTableData();
+                viewTotalAssets();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }).start();
+
     }
 
     //view table date
@@ -43,52 +52,52 @@ double RI = 0;
                 TW += Double.parseDouble(tb_cashAccount.getValueAt(i, 1).toString());
             }
         }
-       lblfunds.setText(TF+"0");
-       lblloans.setText(TL+"0");
-       lblinstallments.setText(TI+"0");
-       lblwithdrawals.setText(TW+"0");
+        lblfunds.setText(TF + "0");
+        lblloans.setText(TL + "0");
+        lblinstallments.setText(TI + "0");
+        lblwithdrawals.setText(TW + "0");
        //lblprofit.setText((TF+TI)-(TL+TW)+"0");
 //       lblnetprofit.setText((TF+TI)-(TL+TW)-(TF-TL)+"0");
-       //lblnetprofit.setText((TI-TW)+"0");
+        //lblnetprofit.setText((TI-TW)+"0");
 
     }
 
     //view table date
-
     //set due ineterest
     public void setDueTotalInterest() {
         double OI = Double.parseDouble(lb_v_outstandingCapital.getText());
-        double RI =0;
-        if(this.RI!=0){
-            RI= this.RI;
+        double RI = 0;
+        if (this.RI != 0) {
+            RI = this.RI;
         }
-        System.out.println("OI======"+OI);
-        System.out.println("RI======"+RI);
-        lb_v_outstandingInterest.setText(OI-RI+"0");
+        System.out.println("OI======" + OI);
+        System.out.println("RI======" + RI);
+        lb_v_outstandingInterest.setText(OI - RI + "0");
     }
     //set due ineterest
 
     //view total assets
-    public void viewTotalAssets(){
-        double OC=Double.parseDouble(lb_v_outstandingCapital.getText());
-        double OI=Double.parseDouble(lb_v_outstandingInterest.getText());
-        System.out.println("OC+++++++++++++++++++"+OC);
-        System.out.println("OI+++++++++++++++++++++++"+OI);
-        lb_v_totalAsset.setText((OC+OI)+"0");
-        
-        
+    public void viewTotalAssets() {
+        double OC = Double.parseDouble(lb_v_outstandingCapital.getText());
+        double OI = Double.parseDouble(lb_v_outstandingInterest.getText());
+        System.out.println("OC+++++++++++++++++++" + OC);
+        System.out.println("OI+++++++++++++++++++++++" + OI);
+        lb_v_totalAsset.setText((OC + OI) + "0");
+
     }
+
     //view total assets
     //get received interest
+
     public void getReceivedInterest() {
-        
+
         try {
             ResultSet rs = MC_DB.myConnection().createStatement().executeQuery("SELECT * FROM loans");
             while (rs.next()) {
                 int idloan = rs.getInt("idloans");
                 int period = Integer.parseInt(rs.getString("loan_period"));
-                double installment = Double.parseDouble(rs.getString("loan_installment"));
-                double loanAmount = Double.parseDouble(rs.getString("loan_amount"));
+                double installment = rs.getDouble("loan_installment");
+                double loanAmount = rs.getDouble("loan_amount");
 
                 double payable_interest = (period * installment) - loanAmount;
                 System.out.println(payable_interest + " payable_interest");
@@ -114,12 +123,12 @@ double RI = 0;
             ResultSet rs = MC_DB.myConnection().createStatement().executeQuery("SELECT * FROM loans");
             while (rs.next()) {
                 int period = Integer.parseInt(rs.getString("loan_period"));
-                double installment = Double.parseDouble(rs.getString("loan_installment"));
-                double loanAmount = Double.parseDouble(rs.getString("loan_amount"));
+                double installment = rs.getDouble("loan_installment");
+                double loanAmount = rs.getDouble("loan_amount");
                 OI += ((period * installment) - loanAmount);
 
             }
-            System.out.println("getOUtstandingInterest "+OI);
+            System.out.println("getOUtstandingInterest " + OI);
             return OI;
         } catch (Exception e) {
             e.printStackTrace();
@@ -130,43 +139,43 @@ double RI = 0;
     //get outstading ineterest
 
     //view capital
-    public void viewCapital() {
-        
+    public final void viewCapital() {
+
         //total capital=funds+interest
-        double TL=getTotalFundAmounts();
-        System.out.println("TL-"+TL);
-        double TI=getOUtstandingInterest();
-        System.out.println("TI-"+TI);
-        double TCapital=TL+TI;
-        System.out.println("total capital"+TL+TI);
-        lb_v_totalCapital.setText(TCapital+"0");    
-       
+        double TL = getTotalFundAmounts();
+        System.out.println("TL-" + TL);
+        double TI = getOUtstandingInterest();
+        System.out.println("TI-" + TI);
+        double TCapital = TL + TI;
+        System.out.println("total capital" + TL + TI);
+        lb_v_totalCapital.setText(TCapital + "0");
+
     }
     //view capital
 
     //view due loan amount
-    public void viewLoanDueAmounts(){
+    public final void viewLoanDueAmounts() {
         try {
             ResultSet rs = MC_DB.myConnection().createStatement().executeQuery("SELECT SUM(due_loan_amount) AS sumDueLoan FROM loans");
-            if(rs.next()){
-                lb_v_outstandingCapital.setText(Double.parseDouble(rs.getInt("sumDueLoan")+"")+"0");
+            if (rs.next()) {
+                lb_v_outstandingCapital.setText(Double.parseDouble(rs.getInt("sumDueLoan") + "") + "0");
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
-    
+
     }
     //view due loan amount
-    
+
     //view loan amounts
-    public void viewTotalloans() {
+    public final void viewTotalloans() {
         lb_v_totalLoan.setText(getTotalLoanAmounts() + "0");
     }
     //view loan amounts
 
-   // saving wihdrawal to cash account
+    // saving wihdrawal to cash account
     public void saveWithdrawCash() {
-        double RI=0;
+        double RI = 0;
         try {
             String withdrawDate = new SimpleDateFormat("YYYY-MM-dd").format(new Date());
             String withdrawAmount = tf_withdrawalAmount.getText();
@@ -174,30 +183,24 @@ double RI = 0;
             String cashType = "Withdrawal";
             String cashStatus = "Active";
             if (!(withdrawAmount.isEmpty() && withdrawDes.isEmpty())) {
-               
+
                 ResultSet rs = MC_DB.myConnection().createStatement().executeQuery("SELECT * FROM loans");
-                while(rs.next()){
+                while (rs.next()) {
                     int period = Integer.parseInt(rs.getString("loan_period"));
-                    double loanAmount = Double.parseDouble(rs.getString("loan_amount"));
-                    double installment = Double.parseDouble(rs.getString("loan_installment"));
+                    double loanAmount = rs.getDouble("loan_amount");
+                    double installment = rs.getDouble("loan_installment");
                     int idloan = rs.getInt("idloans");
-                    System.out.println("idloan================"+idloan);
-                    double paidAmount=0;
-                    ResultSet rs2 = MC_DB.myConnection().createStatement().executeQuery("SELECT SUM(payment) AS calPayment FROM installment WHERE idloans='"+idloan+"'");
-                    if(rs2.next()){
-                        paidAmount=Double.parseDouble(rs2.getInt("calPayment")+"");
+                    System.out.println("idloan================" + idloan);
+                    double paidAmount = 0;
+                    ResultSet rs2 = MC_DB.myConnection().createStatement().executeQuery("SELECT SUM(payment) AS calPayment FROM installment WHERE idloans='" + idloan + "'");
+                    if (rs2.next()) {
+                        paidAmount = Double.parseDouble(rs2.getInt("calPayment") + "");
                     }
-                    
-                    RI += ((period*installment)-loanAmount)/(period*installment)*paidAmount; 
-                    
+
+                    RI += ((period * installment) - loanAmount) / (period * installment) * paidAmount;
+
                 }
-                
-                
-                
-                
-                
-                
-                
+
             } else {
                 JOptionPane.showMessageDialog(null, "Can not save empty values", "Error", JOptionPane.ERROR_MESSAGE);
             }
@@ -210,7 +213,7 @@ double RI = 0;
     //saving withdrawal to cash account
 
     //view cash account
-    public void viewCashAccount() {
+    public final void viewCashAccount() {
         ResultSet rs = null;
         DefaultTableModel dtm = (DefaultTableModel) tb_cashAccount.getModel();
         dtm.setRowCount(0);
@@ -330,7 +333,7 @@ double RI = 0;
         try {
             ResultSet rs = MC_DB.myConnection().createStatement().executeQuery("SELECT SUM(amount) AS FundSUM FROM cash_account WHERE cash_ac_type='Fund'");
             if (rs.next()) {
-                return Double.parseDouble(rs.getString("FundSUM"));
+                return Double.parseDouble(rs.getInt("FundSUM") + "");
             } else {
                 return -1;
             }
@@ -840,7 +843,7 @@ double RI = 0;
     }//GEN-LAST:event_bt_addFundActionPerformed
 
     private void bt_addFund1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_addFund1ActionPerformed
-      saveWithdrawCash();
+        saveWithdrawCash();
     }//GEN-LAST:event_bt_addFund1ActionPerformed
 
     private void tf_withdrawalAmountKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tf_withdrawalAmountKeyTyped
@@ -855,7 +858,7 @@ double RI = 0;
     private void cb_cashTypeItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cb_cashTypeItemStateChanged
 
         viewCashAccount();
-        
+
 
     }//GEN-LAST:event_cb_cashTypeItemStateChanged
 
@@ -864,9 +867,8 @@ double RI = 0;
     }//GEN-LAST:event_bt_addFund2ActionPerformed
 
     private void cb_cashTypeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cb_cashTypeActionPerformed
-        
-        
-        
+
+
     }//GEN-LAST:event_cb_cashTypeActionPerformed
 
 

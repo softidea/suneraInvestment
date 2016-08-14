@@ -4,7 +4,6 @@ import com.fsczone.www.lookAndFeel.pro_lookandfeel;
 import com.softidea.www.public_connection.MC_DB;
 import java.sql.ResultSet;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.Vector;
 import javax.swing.table.DefaultTableModel;
@@ -13,11 +12,20 @@ public class Admin_loanManagment extends javax.swing.JPanel {
 
     public Admin_loanManagment() {
         initComponents();
-        pro_lookandfeel.Set();
-        setCurrentDate();
-        viewLoans();
-        viewLoanCounts();
-        viewTotalLoanAmount();
+
+        new Thread(() -> {
+            try {
+
+                pro_lookandfeel.Set();
+                setCurrentDate();
+                viewLoans();
+                viewLoanCounts();
+                viewTotalLoanAmount();
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }).start();
 
     }
 
@@ -83,19 +91,19 @@ public class Admin_loanManagment extends javax.swing.JPanel {
                         v.add(rs.getString("idloans"));
                         v.add(rs.getString("loan_no"));
                         v.add(rs.getString("loan_date"));
-                        v.add(rs.getString("loan_amount"));
+                        v.add(rs.getDouble("loan_amount"));
                         v.add(rs.getString("loan_mainperiodtype"));
                         v.add(rs.getString("loan_period"));
                         dtm.addRow(v);
                     }
                 } else {
-                    rs = MC_DB.myConnection().createStatement().executeQuery("SELECT * FROM loans WHERE loan_date BETWEEN '" + startDate + "' AND '" + endDate + "' AND loan_mainperiodtype='"+loanType+"'");
+                    rs = MC_DB.myConnection().createStatement().executeQuery("SELECT * FROM loans WHERE loan_date BETWEEN '" + startDate + "' AND '" + endDate + "' AND loan_mainperiodtype='" + loanType + "'");
                     while (rs.next()) {
                         Vector v = new Vector();
                         v.add(rs.getString("idloans"));
                         v.add(rs.getString("loan_no"));
                         v.add(rs.getString("loan_date"));
-                        v.add(rs.getString("loan_amount"));
+                        v.add(rs.getDouble("loan_amount"));
                         v.add(rs.getString("loan_mainperiodtype"));
                         v.add(rs.getString("loan_period"));
                         dtm.addRow(v);

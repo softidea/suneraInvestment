@@ -19,23 +19,25 @@ import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
-/**
- *
- * @author deepalsuranga
- */
 public class Admin_fundManagment extends javax.swing.JPanel {
 
-    /**
-     * Creates new form Admin_funderInformation
-     */
     public Admin_fundManagment() {
         initComponents();
-        pro_lookandfeel.Set();
-        tf_funderName.grabFocus();
-        md_tb_load_Funder();
-        md_tb_load_Fund();
-        md_loadFunder();
-        dc_backDate.setDate(new Date());
+
+        new Thread(() -> {
+            try {
+
+                pro_lookandfeel.Set();
+                tf_funderName.grabFocus();
+                md_tb_load_Funder();
+                md_tb_load_Fund();
+                md_loadFunder();
+                dc_backDate.setDate(new Date());
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }).start();
 
     }
 
@@ -126,11 +128,11 @@ public class Admin_fundManagment extends javax.swing.JPanel {
 
             },
             new String [] {
-                "No", "Funder", "Fund Amount", "Date", "Discription", "Status"
+                "No", "Funder", "Fund Amount", "Date", "Back Date", "Discription", "Status"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false
+                false, false, false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -383,6 +385,8 @@ public class Admin_fundManagment extends javax.swing.JPanel {
         lb_addRoute6.setForeground(new java.awt.Color(255, 255, 255));
         lb_addRoute6.setText("Back Date :");
 
+        dc_backDate.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
@@ -391,17 +395,15 @@ public class Admin_fundManagment extends javax.swing.JPanel {
                 .addContainerGap()
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(lb_addRoute5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(cb_selectFunder, javax.swing.GroupLayout.Alignment.TRAILING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(lb_addRoute3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(lb_addRoute4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(tf_fundAmount, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(bt_addFund, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(ta_FundDiscription)
-                            .addComponent(lb_addRoute6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(dc_backDate, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addGap(0, 0, 0)))
+                    .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addComponent(cb_selectFunder, javax.swing.GroupLayout.Alignment.TRAILING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(lb_addRoute3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(lb_addRoute4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(tf_fundAmount, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(bt_addFund, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(ta_FundDiscription)
+                        .addComponent(lb_addRoute6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(dc_backDate, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addGap(5, 5, 5))
         );
         jPanel3Layout.setVerticalGroup(
@@ -642,7 +644,7 @@ public class Admin_fundManagment extends javax.swing.JPanel {
                         JOptionPane.showMessageDialog(this, "Name Filed is empty!");
                     }
                 }
-            }else{
+            } else {
                 JOptionPane.showMessageDialog(this, "Please fill the fileds", "Empty Fields Found", JOptionPane.ERROR_MESSAGE);
             }
 
@@ -655,7 +657,7 @@ public class Admin_fundManagment extends javax.swing.JPanel {
     private void bt_addFundActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_addFundActionPerformed
 
         if (cb_selectFunder.getItemCount() > 0) {
-            if (tf_fundAmount.getText().isEmpty() && dc_backDate.getDate() == null && ta_FundDiscription.getText().isEmpty()) {
+            if (!(tf_fundAmount.getText().isEmpty() && dc_backDate.getDate() == null && ta_FundDiscription.getText().isEmpty())) {
                 int i = JOptionPane.showConfirmDialog(this, "Are You Sure? ", "Save Fund?", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
                 if (i == JOptionPane.YES_OPTION) {
                     md_addFund();
@@ -866,8 +868,9 @@ public class Admin_fundManagment extends javax.swing.JPanel {
                     v.add(yu.getString("funder_name"));
                 }
 
-                v.add(rs_fund.getString("fund"));
+                v.add(rs_fund.getDouble("fund"));
                 v.add(rs_fund.getString("fund_date"));
+                v.add(rs_fund.getString("fund_enddate"));
                 v.add(rs_fund.getString("descriptin"));
                 v.add(rs_fund.getString("fund_status"));
 
@@ -928,8 +931,8 @@ public class Admin_fundManagment extends javax.swing.JPanel {
                     Date d = new Date();
                     SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
                     String date = sdf.format(d);
-                    
-                    String backDate= new SimpleDateFormat("YYYY-MM-dd").format(dc_backDate.getDate());
+
+                    String backDate = new SimpleDateFormat("YYYY-MM-dd").format(dc_backDate.getDate());
 
                     //ResultSet rss = MC_JavaDataBaseConnection.myConnection().createStatement().executeQuery("SELECT idfunder FROM funder WHERE funder_name='" + cb_selectFunder.getSelectedItem().toString() + "'");
                     rss = MC_DB.myConnection().createStatement().executeQuery("SELECT idfunder FROM funder WHERE funder_name='" + cb_selectFunder.getSelectedItem() + "'");
@@ -938,7 +941,7 @@ public class Admin_fundManagment extends javax.swing.JPanel {
                         idfunder = rss.getInt("idfunder");
                     }
 
-                    String sql_qury = "INSERT INTO fund (fund,fund_update,fund_date,descriptin,fund_status,funder_idfunder) VALUES ('" + fundAmount_text + "','" + fundAmount_text + "','" + date + "','" + ta_FundDiscription.getText().trim() + "','Active','" + idfunder + "')";
+                    String sql_qury = "INSERT INTO fund (fund,fund_update,fund_date,fund_enddate,descriptin,fund_status,funder_idfunder) VALUES ('" + fundAmount_text + "','" + fundAmount_text + "','" + date + "','" + backDate + "','" + ta_FundDiscription.getText().trim() + "','Active','" + idfunder + "')";
                     MC_DB.update_data(sql_qury);
 
                     String sql_tocash = "INSERT INTO `cash_account` (`date`,`amount`,`cash_ac_type`,`cash_ac_discription`,`cash_ac_status`) VALUES ('" + date + "','" + fundAmount_text + "','Fund','" + ta_FundDiscription.getText().trim() + "','Active');";

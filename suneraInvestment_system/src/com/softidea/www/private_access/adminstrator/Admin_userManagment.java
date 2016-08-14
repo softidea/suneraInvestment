@@ -1,12 +1,6 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package com.softidea.www.private_access.adminstrator;
 
-import com.javav.fsc.zone.PasswordValidator;
-import com.javav.fsc.zone.UsernameValidator;
 import com.softidea.www.public_connection.MC_DB;
 import java.awt.HeadlessException;
 import java.sql.ResultSet;
@@ -17,21 +11,26 @@ import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
-/**
- *
- * @author deepalsuranga
- */
+
 public class Admin_userManagment extends javax.swing.JPanel {
 
-    /**
-     * Creates new form Admin_userManagment
-     */
+   
     DefaultTableModel dtm;
 
     public Admin_userManagment() {
         initComponents();
+        
+        new Thread(() -> {
+            try {
 
-        md_tb_load_users();
+              md_tb_load_users();
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }).start();
+        
+        
 
     }
 
