@@ -303,27 +303,28 @@ public class Admin_userManagment extends javax.swing.JPanel {
 
     private void bt_AddAdminOrUserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_AddAdminOrUserActionPerformed
 
-        int w = JOptionPane.showConfirmDialog(this, "Are You Sure?", "Add Access", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+        if (!(tf_FullName.getText().isEmpty() && tf_Username.getText().isEmpty() && tf_Password.getText().isEmpty() && tf_Conpassword.getText().isEmpty())) {
+            int w = JOptionPane.showConfirmDialog(this, "Are You Sure?", "Add Access", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+            if (w == JOptionPane.YES_OPTION) {
+                try {
 
-        if (w == JOptionPane.YES_OPTION) {
+                    String fullname = tf_FullName.getText().trim();
+                    String username = tf_Username.getText().trim().toLowerCase();
+                    String password = tf_Password.getText().trim().toLowerCase();
+                    String conpass = tf_Conpassword.getText().trim().toLowerCase();
+                    if (password.equals(conpass)) {
 
-            try {
-
-                String fullname = tf_FullName.getText().trim();
-                String username = tf_Username.getText().trim().toLowerCase();
-                String password = tf_Password.getText().trim().toLowerCase();
-                String conpass = tf_Conpassword.getText().trim().toLowerCase();
-                if (password.equals(conpass)) {
-
-                    MC_DB.update_data("INSERT INTO user_account (us_fullname,us_username,us_password,us_type,us_status) VALUES ('" + fullname + "','" + username + "','" + conpass + "','user','01')");
-                    // MC_JavaDataBaseConnection.myConnection().createStatement().executeUpdate("");
-                    JOptionPane.showMessageDialog(this, "User Successfully Added");
-                    md_tb_load_users();
+                        MC_DB.update_data("INSERT INTO user_account (us_fullname,us_username,us_password,us_type,us_status) VALUES ('" + fullname + "','" + username + "','" + conpass + "','user','01')");
+                        // MC_JavaDataBaseConnection.myConnection().createStatement().executeUpdate("");
+                        JOptionPane.showMessageDialog(this, "User Successfully Added");
+                        md_tb_load_users();
+                    }
+                } catch (HeadlessException ex) {
+                    Logger.getLogger(Admin_userManagment.class.getName()).log(Level.SEVERE, null, ex);
                 }
-            } catch (HeadlessException ex) {
-                Logger.getLogger(Admin_userManagment.class.getName()).log(Level.SEVERE, null, ex);
             }
-
+        }else{
+            JOptionPane.showMessageDialog(this, "Please fill the user fields","Empty Fields Found",JOptionPane.ERROR_MESSAGE);
         }
 
     }//GEN-LAST:event_bt_AddAdminOrUserActionPerformed
@@ -358,7 +359,7 @@ public class Admin_userManagment extends javax.swing.JPanel {
                 } else {
                     userstaus = 00;
                 }
-                String qu_up_adminPassword = "UPDATE user_account SET us_password = '" + tf_usernewPassword.getText().trim() + "',us_status = '" + userstaus+ "' WHERE `us_username` = '" + lb_loadusernameToPasswordChange.getText() + "' ;";
+                String qu_up_adminPassword = "UPDATE user_account SET us_password = '" + tf_usernewPassword.getText().trim() + "',us_status = '" + userstaus + "' WHERE `us_username` = '" + lb_loadusernameToPasswordChange.getText() + "' ;";
 
                 MC_DB.update_data(qu_up_adminPassword);
                 JOptionPane.showMessageDialog(this, dtb + " :Password is successfully updated!");
@@ -380,14 +381,14 @@ public class Admin_userManagment extends javax.swing.JPanel {
 
     private void tb_viewUsersMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tb_viewUsersMouseClicked
 
-         try {
+        try {
             dtb = (String) dtm.getValueAt(tb_viewUsers.getSelectedRow(), 2);
             lb_loadusernameToPasswordChange.setText(dtb);
 
         } catch (HeadlessException e) {
             e.printStackTrace();
         }
-        
+
     }//GEN-LAST:event_tb_viewUsersMouseClicked
 
 
