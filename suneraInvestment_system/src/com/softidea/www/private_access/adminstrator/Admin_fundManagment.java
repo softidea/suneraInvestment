@@ -61,6 +61,14 @@ public class Admin_fundManagment extends javax.swing.JPanel {
         bt_funder = new javax.swing.JButton();
         tf_contactNumber = new javax.swing.JTextField();
         lb_addRoute2 = new javax.swing.JLabel();
+        vp_funderactiveinactive = new javax.swing.JPanel();
+        lb_addRoute8 = new javax.swing.JLabel();
+        bt_funder1 = new javax.swing.JButton();
+        cb_selectInactiveFunder = new javax.swing.JComboBox();
+        lb_addRoute7 = new javax.swing.JLabel();
+        cb_selectFunder2 = new javax.swing.JComboBox();
+        lb_addRoute9 = new javax.swing.JLabel();
+        cb_selectFunder3 = new javax.swing.JComboBox();
         jPanel3 = new javax.swing.JPanel();
         tf_fundAmount = new javax.swing.JTextField();
         lb_addRoute3 = new javax.swing.JLabel();
@@ -71,6 +79,14 @@ public class Admin_fundManagment extends javax.swing.JPanel {
         lb_addRoute5 = new javax.swing.JLabel();
         lb_addRoute6 = new javax.swing.JLabel();
         dc_backDate = new com.toedter.calendar.JDateChooser();
+        jLabel1 = new javax.swing.JLabel();
+        vp_funderactiveinactive1 = new javax.swing.JPanel();
+        bt_funder2 = new javax.swing.JButton();
+        cb_selectInactiveFunder1 = new javax.swing.JComboBox();
+        lb_addRoute11 = new javax.swing.JLabel();
+        lb_addRoute12 = new javax.swing.JLabel();
+        cb_selectFunder5 = new javax.swing.JComboBox();
+        bt_funder3 = new javax.swing.JButton();
 
         setBackground(new java.awt.Color(102, 102, 102));
 
@@ -129,6 +145,7 @@ public class Admin_fundManagment extends javax.swing.JPanel {
         jScrollPane2.setViewportView(tb_fund);
 
         jPanel2.setBackground(new java.awt.Color(66, 66, 66));
+        jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Add Funder", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 14), new java.awt.Color(255, 255, 255))); // NOI18N
 
         tf_address.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         tf_address.setMaximumSize(new java.awt.Dimension(300, 40));
@@ -196,12 +213,9 @@ public class Admin_fundManagment extends javax.swing.JPanel {
                         .addComponent(tf_address, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                         .addComponent(lb_addRoute2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(tf_contactNumber, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(bt_funder, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                        .addComponent(tf_contactNumber, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(bt_funder, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(10, 10, 10))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -220,10 +234,94 @@ public class Admin_fundManagment extends javax.swing.JPanel {
                 .addComponent(tf_contactNumber, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(bt_funder, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(84, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        vp_funderactiveinactive.setBackground(new java.awt.Color(66, 66, 66));
+        vp_funderactiveinactive.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Funder Active/Inactive", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 14), new java.awt.Color(255, 255, 255))); // NOI18N
+
+        lb_addRoute8.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        lb_addRoute8.setForeground(new java.awt.Color(255, 255, 255));
+        lb_addRoute8.setText("Select Fund:");
+
+        bt_funder1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        bt_funder1.setForeground(new java.awt.Color(255, 255, 255));
+        bt_funder1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/softidea/www/public_access/images/SuneraInvestment_selctButtonNormal.png"))); // NOI18N
+        bt_funder1.setText("Add Funder");
+        bt_funder1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        bt_funder1.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/com/softidea/www/public_access/images/SuneraInvestment_selctButtonHover.png"))); // NOI18N
+        bt_funder1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bt_funder1ActionPerformed(evt);
+            }
+        });
+
+        cb_selectInactiveFunder.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        cb_selectInactiveFunder.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cb_selectInactiveFunderActionPerformed(evt);
+            }
+        });
+
+        lb_addRoute7.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        lb_addRoute7.setForeground(new java.awt.Color(255, 255, 255));
+        lb_addRoute7.setText("Select Funder");
+
+        cb_selectFunder2.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        cb_selectFunder2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cb_selectFunder2ActionPerformed(evt);
+            }
+        });
+
+        lb_addRoute9.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        lb_addRoute9.setForeground(new java.awt.Color(255, 255, 255));
+        lb_addRoute9.setText("Status:");
+
+        cb_selectFunder3.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        cb_selectFunder3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cb_selectFunder3ActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout vp_funderactiveinactiveLayout = new javax.swing.GroupLayout(vp_funderactiveinactive);
+        vp_funderactiveinactive.setLayout(vp_funderactiveinactiveLayout);
+        vp_funderactiveinactiveLayout.setHorizontalGroup(
+            vp_funderactiveinactiveLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, vp_funderactiveinactiveLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(vp_funderactiveinactiveLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(bt_funder1, javax.swing.GroupLayout.PREFERRED_SIZE, 273, Short.MAX_VALUE)
+                    .addComponent(cb_selectFunder3, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(lb_addRoute9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(cb_selectFunder2, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(lb_addRoute8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(cb_selectInactiveFunder, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(lb_addRoute7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
+        );
+        vp_funderactiveinactiveLayout.setVerticalGroup(
+            vp_funderactiveinactiveLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(vp_funderactiveinactiveLayout.createSequentialGroup()
+                .addComponent(lb_addRoute7)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(cb_selectInactiveFunder, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(lb_addRoute8)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(cb_selectFunder2, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(lb_addRoute9)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(cb_selectFunder3, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(bt_funder1, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(5, 5, 5))
         );
 
         jPanel3.setBackground(new java.awt.Color(66, 66, 66));
+        jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Add Fund", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 14), new java.awt.Color(255, 255, 255))); // NOI18N
 
         tf_fundAmount.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         tf_fundAmount.setMaximumSize(new java.awt.Dimension(300, 40));
@@ -303,8 +401,8 @@ public class Admin_fundManagment extends javax.swing.JPanel {
                             .addComponent(ta_FundDiscription)
                             .addComponent(lb_addRoute6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(dc_backDate, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addGap(0, 10, Short.MAX_VALUE)))
-                .addContainerGap())
+                        .addGap(0, 0, 0)))
+                .addGap(5, 5, 5))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -327,8 +425,90 @@ public class Admin_fundManagment extends javax.swing.JPanel {
                 .addComponent(ta_FundDiscription, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(bt_addFund, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(5, 5, 5))
+        );
+
+        jLabel1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel1.setText("Funder View:");
+
+        vp_funderactiveinactive1.setBackground(new java.awt.Color(66, 66, 66));
+        vp_funderactiveinactive1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Funder Active/Inactive", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 14), new java.awt.Color(255, 255, 255))); // NOI18N
+
+        bt_funder2.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        bt_funder2.setForeground(new java.awt.Color(255, 255, 255));
+        bt_funder2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/softidea/www/public_access/images/SuneraInvestment_selctButtonNormal.png"))); // NOI18N
+        bt_funder2.setText("Status Change");
+        bt_funder2.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        bt_funder2.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/com/softidea/www/public_access/images/SuneraInvestment_selctButtonHover.png"))); // NOI18N
+        bt_funder2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bt_funder2ActionPerformed(evt);
+            }
+        });
+
+        cb_selectInactiveFunder1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        cb_selectInactiveFunder1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cb_selectInactiveFunder1ActionPerformed(evt);
+            }
+        });
+
+        lb_addRoute11.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        lb_addRoute11.setForeground(new java.awt.Color(255, 255, 255));
+        lb_addRoute11.setText("Select Funder");
+
+        lb_addRoute12.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        lb_addRoute12.setForeground(new java.awt.Color(255, 255, 255));
+        lb_addRoute12.setText("Status:");
+
+        cb_selectFunder5.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        cb_selectFunder5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cb_selectFunder5ActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout vp_funderactiveinactive1Layout = new javax.swing.GroupLayout(vp_funderactiveinactive1);
+        vp_funderactiveinactive1.setLayout(vp_funderactiveinactive1Layout);
+        vp_funderactiveinactive1Layout.setHorizontalGroup(
+            vp_funderactiveinactive1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(vp_funderactiveinactive1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(vp_funderactiveinactive1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(bt_funder2, javax.swing.GroupLayout.PREFERRED_SIZE, 277, Short.MAX_VALUE)
+                    .addComponent(cb_selectFunder5, javax.swing.GroupLayout.Alignment.TRAILING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(lb_addRoute12, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(cb_selectInactiveFunder1, javax.swing.GroupLayout.Alignment.TRAILING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(lb_addRoute11, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
+        vp_funderactiveinactive1Layout.setVerticalGroup(
+            vp_funderactiveinactive1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(vp_funderactiveinactive1Layout.createSequentialGroup()
+                .addComponent(lb_addRoute11)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(cb_selectInactiveFunder1, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(lb_addRoute12)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(cb_selectFunder5, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(bt_funder2, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        bt_funder3.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        bt_funder3.setForeground(new java.awt.Color(255, 255, 255));
+        bt_funder3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/softidea/www/public_access/images/SuneraInvestment_selctButtonNormal.png"))); // NOI18N
+        bt_funder3.setText("View Inactive Funders");
+        bt_funder3.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        bt_funder3.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/com/softidea/www/public_access/images/SuneraInvestment_selctButtonHover.png"))); // NOI18N
+        bt_funder3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bt_funder3ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -338,26 +518,53 @@ public class Admin_fundManagment extends javax.swing.JPanel {
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(15, 15, 15)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(5, 5, 5)
                         .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jScrollPane1))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 605, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jScrollPane2)
+                        .addGap(5, 5, 5))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(0, 3, Short.MAX_VALUE)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(vp_funderactiveinactive1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGap(10, 10, 10)
+                                .addComponent(bt_funder3, javax.swing.GroupLayout.PREFERRED_SIZE, 283, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(10, 10, 10)
+                        .addComponent(vp_funderactiveinactive, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap())))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
             .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jScrollPane2)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 307, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(vp_funderactiveinactive, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(vp_funderactiveinactive1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(bt_funder3, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 231, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(19, Short.MAX_VALUE))
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)))
+                .addGap(0, 0, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
@@ -367,7 +574,7 @@ public class Admin_fundManagment extends javax.swing.JPanel {
             .addGroup(layout.createSequentialGroup()
                 .addGap(0, 0, 0)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(5, 5, 5))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -535,12 +742,53 @@ public class Admin_fundManagment extends javax.swing.JPanel {
         ta_FundDiscription.selectAll();
     }//GEN-LAST:event_ta_FundDiscriptionMouseClicked
 
+    private void bt_funder1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_funder1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_bt_funder1ActionPerformed
+
+    private void cb_selectInactiveFunderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cb_selectInactiveFunderActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cb_selectInactiveFunderActionPerformed
+
+    private void cb_selectFunder2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cb_selectFunder2ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cb_selectFunder2ActionPerformed
+
+    private void cb_selectFunder3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cb_selectFunder3ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cb_selectFunder3ActionPerformed
+
+    private void bt_funder2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_funder2ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_bt_funder2ActionPerformed
+
+    private void cb_selectInactiveFunder1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cb_selectInactiveFunder1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cb_selectInactiveFunder1ActionPerformed
+
+    private void cb_selectFunder5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cb_selectFunder5ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cb_selectFunder5ActionPerformed
+
+    private void bt_funder3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_funder3ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_bt_funder3ActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton bt_addFund;
     private javax.swing.JButton bt_funder;
+    private javax.swing.JButton bt_funder1;
+    private javax.swing.JButton bt_funder2;
+    private javax.swing.JButton bt_funder3;
     private javax.swing.JComboBox cb_selectFunder;
+    private javax.swing.JComboBox cb_selectFunder2;
+    private javax.swing.JComboBox cb_selectFunder3;
+    private javax.swing.JComboBox cb_selectFunder5;
+    private javax.swing.JComboBox cb_selectInactiveFunder;
+    private javax.swing.JComboBox cb_selectInactiveFunder1;
     private com.toedter.calendar.JDateChooser dc_backDate;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
@@ -548,11 +796,16 @@ public class Admin_fundManagment extends javax.swing.JPanel {
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JLabel lb_addRoute;
     private javax.swing.JLabel lb_addRoute1;
+    private javax.swing.JLabel lb_addRoute11;
+    private javax.swing.JLabel lb_addRoute12;
     private javax.swing.JLabel lb_addRoute2;
     private javax.swing.JLabel lb_addRoute3;
     private javax.swing.JLabel lb_addRoute4;
     private javax.swing.JLabel lb_addRoute5;
     private javax.swing.JLabel lb_addRoute6;
+    private javax.swing.JLabel lb_addRoute7;
+    private javax.swing.JLabel lb_addRoute8;
+    private javax.swing.JLabel lb_addRoute9;
     private javax.swing.JTextField ta_FundDiscription;
     private javax.swing.JTable tb_fund;
     private javax.swing.JTable tb_funder;
@@ -560,6 +813,8 @@ public class Admin_fundManagment extends javax.swing.JPanel {
     private javax.swing.JTextField tf_contactNumber;
     private javax.swing.JTextField tf_fundAmount;
     private javax.swing.JTextField tf_funderName;
+    private javax.swing.JPanel vp_funderactiveinactive;
+    private javax.swing.JPanel vp_funderactiveinactive1;
     // End of variables declaration//GEN-END:variables
 
     private void md_tb_load_Funder() {

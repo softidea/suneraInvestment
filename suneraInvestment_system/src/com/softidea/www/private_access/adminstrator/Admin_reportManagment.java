@@ -278,6 +278,8 @@ public class Admin_reportManagment extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
+    
+    
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
 
         lb_reportChange.setText("");

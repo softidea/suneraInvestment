@@ -576,11 +576,6 @@ public class Admin_workArea extends javax.swing.JFrame {
         bt_cusmang.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         bt_cusmang.setMaximumSize(new java.awt.Dimension(200, 200));
         bt_cusmang.setMinimumSize(new java.awt.Dimension(200, 200));
-        bt_cusmang.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
-            public void mouseMoved(java.awt.event.MouseEvent evt) {
-                bt_cusmangMouseMoved(evt);
-            }
-        });
         bt_cusmang.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 bt_cusmangActionPerformed(evt);
@@ -595,11 +590,6 @@ public class Admin_workArea extends javax.swing.JFrame {
         bt_fungmang.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         bt_fungmang.setMaximumSize(new java.awt.Dimension(200, 200));
         bt_fungmang.setMinimumSize(new java.awt.Dimension(200, 200));
-        bt_fungmang.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
-            public void mouseMoved(java.awt.event.MouseEvent evt) {
-                bt_fungmangMouseMoved(evt);
-            }
-        });
         bt_fungmang.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 bt_fungmangActionPerformed(evt);
@@ -614,11 +604,6 @@ public class Admin_workArea extends javax.swing.JFrame {
         bt_installmentmang.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         bt_installmentmang.setMaximumSize(new java.awt.Dimension(200, 200));
         bt_installmentmang.setMinimumSize(new java.awt.Dimension(200, 200));
-        bt_installmentmang.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
-            public void mouseMoved(java.awt.event.MouseEvent evt) {
-                bt_installmentmangMouseMoved(evt);
-            }
-        });
         bt_installmentmang.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 bt_installmentmangActionPerformed(evt);
@@ -784,11 +769,6 @@ public class Admin_workArea extends javax.swing.JFrame {
         bt_installmentmang1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         bt_installmentmang1.setMaximumSize(new java.awt.Dimension(200, 200));
         bt_installmentmang1.setMinimumSize(new java.awt.Dimension(200, 200));
-        bt_installmentmang1.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
-            public void mouseMoved(java.awt.event.MouseEvent evt) {
-                bt_installmentmang1MouseMoved(evt);
-            }
-        });
         bt_installmentmang1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 bt_installmentmang1ActionPerformed(evt);
@@ -1069,28 +1049,6 @@ Border borderC = BorderFactory.createLineBorder(new Color(255, 255, 255), 1);
         bt_usermang.setBorder(borderC);
 
     }//GEN-LAST:event_bt_usermangMouseMoved
-
-    private void bt_cusmangMouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_bt_cusmangMouseMoved
-        
-        bt_cusmang.setBorder(borderC);
-        
-    }//GEN-LAST:event_bt_cusmangMouseMoved
-
-    private void bt_fungmangMouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_bt_fungmangMouseMoved
-
-        bt_fungmang.setBorder(borderC);
-        
-    }//GEN-LAST:event_bt_fungmangMouseMoved
-
-    private void bt_installmentmangMouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_bt_installmentmangMouseMoved
-
-        
-        
-    }//GEN-LAST:event_bt_installmentmangMouseMoved
-
-    private void bt_installmentmang1MouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_bt_installmentmang1MouseMoved
-        // TODO add your handling code here:
-    }//GEN-LAST:event_bt_installmentmang1MouseMoved
 
     private void bt_installmentmang1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_installmentmang1ActionPerformed
         // TODO add your handling code here:
