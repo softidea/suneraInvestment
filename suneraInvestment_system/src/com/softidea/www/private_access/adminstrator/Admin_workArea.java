@@ -13,6 +13,8 @@ import java.awt.Desktop;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -920,6 +922,46 @@ public class Admin_workArea extends javax.swing.JFrame {
     private void bt_fungmangActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_fungmangActionPerformed
         new Thread(() -> {
             lb_wk_option1.setVisible(true);
+
+            lb_wk_option1.setText("Hello");
+            lb_wk_option1.addMouseListener(new MouseListener() {
+
+                @Override
+                public void mouseClicked(MouseEvent me) {
+                    
+                   lb_wk_option2.setVisible(true);
+                    
+                }
+
+                @Override
+                public void mousePressed(MouseEvent me) {
+                    
+                    
+                    
+                }
+
+                @Override
+                public void mouseReleased(MouseEvent me) {
+                    
+                    
+                    
+                }
+
+                @Override
+                public void mouseEntered(MouseEvent me) {
+                    
+                    
+                    
+                }
+
+                @Override
+                public void mouseExited(MouseEvent me) {
+                    
+                    
+                    
+                }
+            });
+
             load_fundManagment();
         }).start();
 

@@ -296,7 +296,7 @@ public class Admin_reportManagment extends javax.swing.JPanel {
         String startDate = new SimpleDateFormat("YYYY-MM-dd").format(jc_start.getDate());
         String endDate = new SimpleDateFormat("YYYY-MM-dd").format(jc_end.getDate());
 
-        if (lb_reportChange.getText() == "Customers Report") {
+        if (lb_reportChange.getText() == "Customer  Reports") {
             String path = "src//Reports//customer//report_customerandloandetalsHistory.jrxml";
             //E:\Project_SE\suneraInvestment\suneraInvestment_system\src\Reports\customer\report_customerandloandetalsHistory.jrxml
 
