@@ -74,45 +74,53 @@ public class Admin_loanManagment extends javax.swing.JPanel {
 
     //view loans
     public void viewLoans() {
-        System.out.println("inner view loans");
-        String startDate = new SimpleDateFormat("YYYY-MM-dd").format(dc_startDate.getDate());
-        String endDate = new SimpleDateFormat("YYYY-MM-dd").format(dc_endDate.getDate());
-        String loanType = cb_cashType.getSelectedItem().toString();
-        ResultSet rs = null;
-        DefaultTableModel dtm = (DefaultTableModel) tb_loans.getModel();
-        dtm.setRowCount(0);
-        try {
-            if (!(startDate == null && endDate == null && loanType.isEmpty())) {
-                System.out.println("inner validation");
-                if (loanType.equals("All")) {
-                    rs = MC_DB.myConnection().createStatement().executeQuery("SELECT * FROM loans WHERE loan_date BETWEEN '" + startDate + "' AND '" + endDate + "'");
-                    while (rs.next()) {
-                        Vector v = new Vector();
-                        v.add(rs.getString("idloans"));
-                        v.add(rs.getString("loan_no"));
-                        v.add(rs.getString("loan_date"));
-                        v.add(rs.getDouble("loan_amount"));
-                        v.add(rs.getString("loan_mainperiodtype"));
-                        v.add(rs.getString("loan_period"));
-                        dtm.addRow(v);
+
+        new Thread(() -> {
+            try {
+                System.out.println("inner view loans");
+                String startDate = new SimpleDateFormat("YYYY-MM-dd").format(dc_startDate.getDate());
+                String endDate = new SimpleDateFormat("YYYY-MM-dd").format(dc_endDate.getDate());
+                String loanType = cb_cashType.getSelectedItem().toString();
+                ResultSet rs = null;
+                DefaultTableModel dtm = (DefaultTableModel) tb_loans.getModel();
+                dtm.setRowCount(0);
+                try {
+                    if (!(startDate == null && endDate == null && loanType.isEmpty())) {
+                        System.out.println("inner validation");
+                        if (loanType.equals("All")) {
+                            rs = MC_DB.myConnection().createStatement().executeQuery("SELECT * FROM loans WHERE loan_date BETWEEN '" + startDate + "' AND '" + endDate + "'");
+                            while (rs.next()) {
+                                Vector v = new Vector();
+                                v.add(rs.getString("idloans"));
+                                v.add(rs.getString("loan_no"));
+                                v.add(rs.getString("loan_date"));
+                                v.add(rs.getDouble("loan_amount"));
+                                v.add(rs.getString("loan_mainperiodtype"));
+                                v.add(rs.getString("loan_period"));
+                                dtm.addRow(v);
+                            }
+                        } else {
+                            rs = MC_DB.myConnection().createStatement().executeQuery("SELECT * FROM loans WHERE loan_date BETWEEN '" + startDate + "' AND '" + endDate + "' AND loan_mainperiodtype='" + loanType + "'");
+                            while (rs.next()) {
+                                Vector v = new Vector();
+                                v.add(rs.getString("idloans"));
+                                v.add(rs.getString("loan_no"));
+                                v.add(rs.getString("loan_date"));
+                                v.add(rs.getDouble("loan_amount"));
+                                v.add(rs.getString("loan_mainperiodtype"));
+                                v.add(rs.getString("loan_period"));
+                                dtm.addRow(v);
+                            }
+                        }
                     }
-                } else {
-                    rs = MC_DB.myConnection().createStatement().executeQuery("SELECT * FROM loans WHERE loan_date BETWEEN '" + startDate + "' AND '" + endDate + "' AND loan_mainperiodtype='" + loanType + "'");
-                    while (rs.next()) {
-                        Vector v = new Vector();
-                        v.add(rs.getString("idloans"));
-                        v.add(rs.getString("loan_no"));
-                        v.add(rs.getString("loan_date"));
-                        v.add(rs.getDouble("loan_amount"));
-                        v.add(rs.getString("loan_mainperiodtype"));
-                        v.add(rs.getString("loan_period"));
-                        dtm.addRow(v);
-                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
                 }
+            } catch (Exception e) {
+                e.printStackTrace();
             }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        }).start();
+
     }
     //view loans
 

@@ -44,7 +44,7 @@ public class Admin_customerManagment extends javax.swing.JPanel {
                 md_loadFunder();
                 md_tb_loadCustomer("active");
 
-                 //DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+                //DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
                 //get current date time with Date()
                 Date date = new Date();
                 dc_registrationDate.setDate(date);
@@ -1541,49 +1541,56 @@ public class Admin_customerManagment extends javax.swing.JPanel {
     }
 
     private void md_tb_loadCustomer(String status) {
-        DefaultTableModel dtm;
-        try {
 
-            ResultSet rs;
-            //rs = MC_JavaDataBaseConnection.search_AlluseTable("funder");
-            dtm = (DefaultTableModel) tb_customerAddView.getModel();
-            dtm.setRowCount(0);
+        new Thread(() -> {
+            try {
+                DefaultTableModel dtm;
+                try {
 
-            rs = MC_DB.myConnection().createStatement().executeQuery("SELECT * FROM customer AS c LEFT JOIN loans AS l ON l.idcustomer=c.idcustomer WHERE loan_status='" + status + "' ORDER BY c.idcustomer DESC");
-            while (rs.next()) {
-                int cus_id = rs.getRow();
-                String loan_date = rs.getString("l.loan_date");
-                String loan_no = rs.getString("l.loan_no");
-                String cus_nic = rs.getString("c.cus_nic");
-                double loan_amount = rs.getDouble("l.loan_amount");
-                String loan_period = rs.getString("l.loan_period");
-                double loan_installment = rs.getDouble("l.loan_installment");
-                double due_loan_amount = rs.getDouble("l.due_loan_amount");
-                String loan_mainperiodtype = rs.getString("l.loan_mainperiodtype");
-                String cus_fullname = rs.getString("c.cus_fullname");
-                String cus_address = rs.getString("c.cus_address");
-                String cus_contact = rs.getString("c.cus_contact");
+                    ResultSet rs;
+                    //rs = MC_JavaDataBaseConnection.search_AlluseTable("funder");
+                    dtm = (DefaultTableModel) tb_customerAddView.getModel();
+                    dtm.setRowCount(0);
 
-                Vector v = new Vector();
-                v.add(rs.getRow());
-                v.add(loan_date);
-                v.add(loan_no);
-                v.add(cus_nic);
-                v.add(loan_amount);
-                v.add(loan_period);
-                v.add(loan_installment);
-                v.add(due_loan_amount);
-                v.add(loan_mainperiodtype);
-                v.add(cus_fullname);
-                v.add(cus_address);
-                v.add(cus_contact);
+                    rs = MC_DB.myConnection().createStatement().executeQuery("SELECT * FROM customer AS c LEFT JOIN loans AS l ON l.idcustomer=c.idcustomer WHERE loan_status='" + status + "' ORDER BY c.idcustomer DESC");
+                    while (rs.next()) {
+                        int cus_id = rs.getRow();
+                        String loan_date = rs.getString("l.loan_date");
+                        String loan_no = rs.getString("l.loan_no");
+                        String cus_nic = rs.getString("c.cus_nic");
+                        double loan_amount = rs.getDouble("l.loan_amount");
+                        String loan_period = rs.getString("l.loan_period");
+                        double loan_installment = rs.getDouble("l.loan_installment");
+                        double due_loan_amount = rs.getDouble("l.due_loan_amount");
+                        String loan_mainperiodtype = rs.getString("l.loan_mainperiodtype");
+                        String cus_fullname = rs.getString("c.cus_fullname");
+                        String cus_address = rs.getString("c.cus_address");
+                        String cus_contact = rs.getString("c.cus_contact");
 
-                dtm.addRow(v);
+                        Vector v = new Vector();
+                        v.add(rs.getRow());
+                        v.add(loan_date);
+                        v.add(loan_no);
+                        v.add(cus_nic);
+                        v.add(loan_amount);
+                        v.add(loan_period);
+                        v.add(loan_installment);
+                        v.add(due_loan_amount);
+                        v.add(loan_mainperiodtype);
+                        v.add(cus_fullname);
+                        v.add(cus_address);
+                        v.add(cus_contact);
+
+                        dtm.addRow(v);
+                    }
+
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
             }
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+        }).start();
 
     }
 

@@ -56,7 +56,7 @@ public class Admin_cashManagment extends javax.swing.JPanel {
         lblloans.setText(TL + "0");
         lblinstallments.setText(TI + "0");
         lblwithdrawals.setText(TW + "0");
-       //lblprofit.setText((TF+TI)-(TL+TW)+"0");
+        //lblprofit.setText((TF+TI)-(TL+TW)+"0");
 //       lblnetprofit.setText((TF+TI)-(TL+TW)-(TF-TL)+"0");
         //lblnetprofit.setText((TI-TW)+"0");
 
@@ -88,7 +88,6 @@ public class Admin_cashManagment extends javax.swing.JPanel {
 
     //view total assets
     //get received interest
-
     public void getReceivedInterest() {
 
         try {
@@ -214,46 +213,53 @@ public class Admin_cashManagment extends javax.swing.JPanel {
 
     //view cash account
     public final void viewCashAccount() {
-        ResultSet rs = null;
-        DefaultTableModel dtm = (DefaultTableModel) tb_cashAccount.getModel();
-        dtm.setRowCount(0);
-        try {
-            String sDate = new SimpleDateFormat("YYYY-MM-dd").format(dc_startDate.getDate());
-            String eDate = new SimpleDateFormat("YYYY-MM-dd").format(dc_endDate.getDate());
-            String cashType = cb_cashType.getSelectedItem().toString();
 
-            if (!(sDate.isEmpty() && eDate.isEmpty() && cashType.isEmpty())) {
-                if (cashType.equals("All")) {
-                    rs = MC_DB.myConnection().createStatement().executeQuery("SELECT * FROM cash_account WHERE date BETWEEN '" + sDate + "' AND '" + eDate + "'");
-                    while (rs.next()) {
-                        Vector v = new Vector();
-                        v.add(rs.getString("idcash_account"));
-                        v.add(rs.getString("amount"));
-                        v.add(rs.getString("cash_ac_type"));
-                        v.add(rs.getString("cash_ac_discription"));
-                        v.add(rs.getString("date"));
-                        dtm.addRow(v);
+        new Thread(() -> {
+            try {
+                ResultSet rs = null;
+                DefaultTableModel dtm = (DefaultTableModel) tb_cashAccount.getModel();
+                dtm.setRowCount(0);
+                try {
+                    String sDate = new SimpleDateFormat("YYYY-MM-dd").format(dc_startDate.getDate());
+                    String eDate = new SimpleDateFormat("YYYY-MM-dd").format(dc_endDate.getDate());
+                    String cashType = cb_cashType.getSelectedItem().toString();
 
+                    if (!(sDate.isEmpty() && eDate.isEmpty() && cashType.isEmpty())) {
+                        if (cashType.equals("All")) {
+                            rs = MC_DB.myConnection().createStatement().executeQuery("SELECT * FROM cash_account WHERE date BETWEEN '" + sDate + "' AND '" + eDate + "'");
+                            while (rs.next()) {
+                                Vector v = new Vector();
+                                v.add(rs.getString("idcash_account"));
+                                v.add(rs.getString("amount"));
+                                v.add(rs.getString("cash_ac_type"));
+                                v.add(rs.getString("cash_ac_discription"));
+                                v.add(rs.getString("date"));
+                                dtm.addRow(v);
+
+                            }
+                        } else {
+                            rs = MC_DB.myConnection().createStatement().executeQuery("SELECT * FROM cash_account WHERE date BETWEEN '" + sDate + "' AND '" + eDate + "' AND cash_ac_type='" + cashType + "'");
+                            while (rs.next()) {
+                                Vector v = new Vector();
+                                v.add(rs.getString("idcash_account"));
+                                v.add(rs.getString("amount"));
+                                v.add(rs.getString("cash_ac_type"));
+                                v.add(rs.getString("cash_ac_discription"));
+                                v.add(rs.getString("date"));
+                                dtm.addRow(v);
+
+                            }
+                        }
+                        viewCashTableData();
                     }
-                } else {
-                    rs = MC_DB.myConnection().createStatement().executeQuery("SELECT * FROM cash_account WHERE date BETWEEN '" + sDate + "' AND '" + eDate + "' AND cash_ac_type='" + cashType + "'");
-                    while (rs.next()) {
-                        Vector v = new Vector();
-                        v.add(rs.getString("idcash_account"));
-                        v.add(rs.getString("amount"));
-                        v.add(rs.getString("cash_ac_type"));
-                        v.add(rs.getString("cash_ac_discription"));
-                        v.add(rs.getString("date"));
-                        dtm.addRow(v);
 
-                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
                 }
-                viewCashTableData();
+            } catch (Exception e) {
+                e.printStackTrace();
             }
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        }).start();
 
     }
     //view cash account

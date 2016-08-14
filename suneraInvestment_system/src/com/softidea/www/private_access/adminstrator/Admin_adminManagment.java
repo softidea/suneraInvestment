@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.softidea.www.private_access.adminstrator;
 
 import static com.softidea.www.private_access.adminstrator.Admin_workArea.jp_adminMainPanel;
@@ -16,10 +11,6 @@ import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
-/**
- *
- * @author deepalsuranga
- */
 public class Admin_adminManagment extends javax.swing.JPanel {
 
     /**
@@ -405,37 +396,44 @@ public class Admin_adminManagment extends javax.swing.JPanel {
     // End of variables declaration//GEN-END:variables
 
     private void md_tb_loadAdmin() {
-        try {
-            ResultSet rs;
-            rs = MC_DB.search_dataOne("user_account", "us_type", "admin");
 
-            dtm = (DefaultTableModel) tb_viewAdmins.getModel();
-            dtm.setRowCount(0);
+        new Thread(() -> {
+            try {
+                try {
+                    ResultSet rs;
+                    rs = MC_DB.search_dataOne("user_account", "us_type", "admin");
 
-            while (rs.next()) {
-                Vector v = new Vector();
-                v.add(rs.getRow());
-                v.add(rs.getString("us_fullname"));
-                v.add(rs.getString("us_username"));
-                v.add(rs.getString("us_password"));
-                int status = rs.getInt("us_status");
+                    dtm = (DefaultTableModel) tb_viewAdmins.getModel();
+                    dtm.setRowCount(0);
 
-                if (status == 11) {
-                    v.add("Active Administrator");
-                } else if (status == 10) {
-                    v.add("In-Active Administrator");
-                }
+                    while (rs.next()) {
+                        Vector v = new Vector();
+                        v.add(rs.getRow());
+                        v.add(rs.getString("us_fullname"));
+                        v.add(rs.getString("us_username"));
+                        v.add(rs.getString("us_password"));
+                        int status = rs.getInt("us_status");
+
+                        if (status == 11) {
+                            v.add("Active Administrator");
+                        } else if (status == 10) {
+                            v.add("In-Active Administrator");
+                        }
 //                    if (status.equals("01")) {
 //                    v.add("Active User");
 //                }else if (status.equals("00")) {
 //                    v.add("In-Active User");
 //                }
-                dtm.addRow(v);
-            }
+                        dtm.addRow(v);
+                    }
 
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }).start();
 
     }
 
