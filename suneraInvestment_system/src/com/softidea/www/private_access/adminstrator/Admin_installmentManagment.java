@@ -1046,7 +1046,9 @@ public class Admin_installmentManagment extends javax.swing.JPanel {
                                                 viewInstalments(loanID);
                                                 loadCutomerLoanData();
                                                 updateDueLoanAmount();
-
+                                                calArrius();
+                                                
+                                                
                                                 String cash_des = tf_nic.getText() + " paid for load id=" + loanID;
                                                 MC_DB.myConnection().createStatement().executeUpdate("INSERT INTO cash_account (date,amount,cash_ac_type,cash_ac_discription,cash_ac_status) VALUES('" + installment_date + "','" + tf_payment.getText().trim() + "','Installment','" + cash_des + "','Active')");
 
