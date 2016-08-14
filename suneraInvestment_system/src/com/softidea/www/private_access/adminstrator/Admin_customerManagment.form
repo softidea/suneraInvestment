@@ -846,7 +846,6 @@
                 <StringItem index="1" value="With Saturday"/>
               </StringArray>
             </Property>
-            <Property name="enabled" type="boolean" value="false"/>
           </Properties>
           <Events>
             <EventHandler event="itemStateChanged" listener="java.awt.event.ItemListener" parameters="java.awt.event.ItemEvent" handler="cb_periodTypeItemStateChanged"/>

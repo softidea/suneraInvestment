@@ -9,6 +9,7 @@ import com.fsczone.www.lookAndFeel.pro_lookandfeel;
 import com.softidea.www.public_access.login_user.user_login;
 import com.softidea.www.public_connection.MC_DB;
 import com.sun.awt.AWTUtilities;
+import java.awt.Color;
 import java.awt.Desktop;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
@@ -22,9 +23,11 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import javax.swing.BorderFactory;
 import javax.swing.Timer;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
+import javax.swing.border.Border;
 
 /**
  *
@@ -37,19 +40,21 @@ public class Admin_workArea extends javax.swing.JFrame {
      */
     public Admin_workArea() {
         initComponents();
+
         try {
             UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
-        } catch (Exception ex) {
+        } catch (ClassNotFoundException | IllegalAccessException | InstantiationException | UnsupportedLookAndFeelException ex) {
         }
         showDate();
         showTime();
         md_HomeMenuVisibleLabel(false);
+
         try {
             AWTUtilities.setWindowOpaque(this, false);
         } catch (Exception e) {
         }
         pro_lookandfeel.Set();
-
+        
         loadCusFundCount();
 
     }
@@ -79,6 +84,7 @@ public class Admin_workArea extends javax.swing.JFrame {
             bt_usermang.setEnabled(true);
         }
         loadCusFundCount();
+        
 
     }
 
@@ -144,6 +150,7 @@ public class Admin_workArea extends javax.swing.JFrame {
         lb_funderCount = new javax.swing.JLabel();
         jLabel17 = new javax.swing.JLabel();
         jLabel18 = new javax.swing.JLabel();
+        jLabel19 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
@@ -549,12 +556,15 @@ public class Admin_workArea extends javax.swing.JFrame {
         bt_usermang.setBackground(new java.awt.Color(0, 153, 102));
         bt_usermang.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         bt_usermang.setForeground(new java.awt.Color(255, 255, 255));
-        bt_usermang.setIcon(new javax.swing.ImageIcon(getClass().getResource("/admin/home/images/admin_buttonMenu_in.png"))); // NOI18N
-        bt_usermang.setText("User Managment");
+        bt_usermang.setIcon(new javax.swing.ImageIcon(getClass().getResource("/admin/home/images/btn_user.png"))); // NOI18N
         bt_usermang.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         bt_usermang.setMaximumSize(new java.awt.Dimension(200, 200));
         bt_usermang.setMinimumSize(new java.awt.Dimension(200, 200));
-        bt_usermang.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/admin/home/images/admin_buttonMenu.png"))); // NOI18N
+        bt_usermang.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
+            public void mouseMoved(java.awt.event.MouseEvent evt) {
+                bt_usermangMouseMoved(evt);
+            }
+        });
         bt_usermang.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 bt_usermangActionPerformed(evt);
@@ -564,12 +574,15 @@ public class Admin_workArea extends javax.swing.JFrame {
 
         bt_cusmang.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         bt_cusmang.setForeground(new java.awt.Color(255, 255, 255));
-        bt_cusmang.setIcon(new javax.swing.ImageIcon(getClass().getResource("/admin/home/images/admin_buttonMenu_in.png"))); // NOI18N
-        bt_cusmang.setText("Customer Managment");
+        bt_cusmang.setIcon(new javax.swing.ImageIcon(getClass().getResource("/admin/home/images/btn_customer.png"))); // NOI18N
         bt_cusmang.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         bt_cusmang.setMaximumSize(new java.awt.Dimension(200, 200));
         bt_cusmang.setMinimumSize(new java.awt.Dimension(200, 200));
-        bt_cusmang.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/admin/home/images/admin_buttonMenu.png"))); // NOI18N
+        bt_cusmang.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
+            public void mouseMoved(java.awt.event.MouseEvent evt) {
+                bt_cusmangMouseMoved(evt);
+            }
+        });
         bt_cusmang.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 bt_cusmangActionPerformed(evt);
@@ -580,12 +593,15 @@ public class Admin_workArea extends javax.swing.JFrame {
         bt_fungmang.setBackground(new java.awt.Color(0, 153, 102));
         bt_fungmang.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         bt_fungmang.setForeground(new java.awt.Color(255, 255, 255));
-        bt_fungmang.setIcon(new javax.swing.ImageIcon(getClass().getResource("/admin/home/images/admin_buttonMenu_in.png"))); // NOI18N
-        bt_fungmang.setText("Fund Managment");
+        bt_fungmang.setIcon(new javax.swing.ImageIcon(getClass().getResource("/admin/home/images/btn_fund.png"))); // NOI18N
         bt_fungmang.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         bt_fungmang.setMaximumSize(new java.awt.Dimension(200, 200));
         bt_fungmang.setMinimumSize(new java.awt.Dimension(200, 200));
-        bt_fungmang.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/admin/home/images/admin_buttonMenu.png"))); // NOI18N
+        bt_fungmang.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
+            public void mouseMoved(java.awt.event.MouseEvent evt) {
+                bt_fungmangMouseMoved(evt);
+            }
+        });
         bt_fungmang.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 bt_fungmangActionPerformed(evt);
@@ -596,12 +612,15 @@ public class Admin_workArea extends javax.swing.JFrame {
         bt_installmentmang.setBackground(new java.awt.Color(0, 153, 102));
         bt_installmentmang.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
         bt_installmentmang.setForeground(new java.awt.Color(255, 255, 255));
-        bt_installmentmang.setIcon(new javax.swing.ImageIcon(getClass().getResource("/admin/home/images/admin_buttonMenu_in.png"))); // NOI18N
-        bt_installmentmang.setText("Installment Management");
+        bt_installmentmang.setIcon(new javax.swing.ImageIcon(getClass().getResource("/admin/home/images/btn_installment.png"))); // NOI18N
         bt_installmentmang.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         bt_installmentmang.setMaximumSize(new java.awt.Dimension(200, 200));
         bt_installmentmang.setMinimumSize(new java.awt.Dimension(200, 200));
-        bt_installmentmang.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/admin/home/images/admin_buttonMenu.png"))); // NOI18N
+        bt_installmentmang.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
+            public void mouseMoved(java.awt.event.MouseEvent evt) {
+                bt_installmentmangMouseMoved(evt);
+            }
+        });
         bt_installmentmang.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 bt_installmentmangActionPerformed(evt);
@@ -612,12 +631,10 @@ public class Admin_workArea extends javax.swing.JFrame {
         bt_cashmang.setBackground(new java.awt.Color(0, 153, 102));
         bt_cashmang.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         bt_cashmang.setForeground(new java.awt.Color(255, 255, 255));
-        bt_cashmang.setIcon(new javax.swing.ImageIcon(getClass().getResource("/admin/home/images/admin_buttonMenu_in.png"))); // NOI18N
-        bt_cashmang.setText("Cash Management");
+        bt_cashmang.setIcon(new javax.swing.ImageIcon(getClass().getResource("/admin/home/images/btn_cash.png"))); // NOI18N
         bt_cashmang.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         bt_cashmang.setMaximumSize(new java.awt.Dimension(200, 200));
         bt_cashmang.setMinimumSize(new java.awt.Dimension(200, 200));
-        bt_cashmang.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/admin/home/images/admin_buttonMenu.png"))); // NOI18N
         bt_cashmang.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 bt_cashmangActionPerformed(evt);
@@ -628,12 +645,10 @@ public class Admin_workArea extends javax.swing.JFrame {
         bt_loanmang.setBackground(new java.awt.Color(0, 153, 102));
         bt_loanmang.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         bt_loanmang.setForeground(new java.awt.Color(255, 255, 255));
-        bt_loanmang.setIcon(new javax.swing.ImageIcon(getClass().getResource("/admin/home/images/admin_buttonMenu_in.png"))); // NOI18N
-        bt_loanmang.setText("Loan Managment");
+        bt_loanmang.setIcon(new javax.swing.ImageIcon(getClass().getResource("/admin/home/images/btn_loan.png"))); // NOI18N
         bt_loanmang.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         bt_loanmang.setMaximumSize(new java.awt.Dimension(200, 200));
         bt_loanmang.setMinimumSize(new java.awt.Dimension(200, 200));
-        bt_loanmang.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/admin/home/images/admin_buttonMenu.png"))); // NOI18N
         bt_loanmang.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 bt_loanmangActionPerformed(evt);
@@ -644,12 +659,10 @@ public class Admin_workArea extends javax.swing.JFrame {
         bt_administratormang.setBackground(new java.awt.Color(0, 153, 102));
         bt_administratormang.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         bt_administratormang.setForeground(new java.awt.Color(255, 255, 255));
-        bt_administratormang.setIcon(new javax.swing.ImageIcon(getClass().getResource("/admin/home/images/admin_buttonMenu_in.png"))); // NOI18N
-        bt_administratormang.setText("Administrator Managment");
+        bt_administratormang.setIcon(new javax.swing.ImageIcon(getClass().getResource("/admin/home/images/btn_administrator.png"))); // NOI18N
         bt_administratormang.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         bt_administratormang.setMaximumSize(new java.awt.Dimension(200, 200));
         bt_administratormang.setMinimumSize(new java.awt.Dimension(200, 200));
-        bt_administratormang.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/admin/home/images/admin_buttonMenu.png"))); // NOI18N
         bt_administratormang.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 bt_administratormangActionPerformed(evt);
@@ -660,12 +673,10 @@ public class Admin_workArea extends javax.swing.JFrame {
         bt_reports.setBackground(new java.awt.Color(0, 153, 102));
         bt_reports.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         bt_reports.setForeground(new java.awt.Color(255, 255, 255));
-        bt_reports.setIcon(new javax.swing.ImageIcon(getClass().getResource("/admin/home/images/admin_buttonMenu_in.png"))); // NOI18N
-        bt_reports.setText("Reports Managment");
+        bt_reports.setIcon(new javax.swing.ImageIcon(getClass().getResource("/admin/home/images/btn_reports.png"))); // NOI18N
         bt_reports.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         bt_reports.setMaximumSize(new java.awt.Dimension(200, 200));
         bt_reports.setMinimumSize(new java.awt.Dimension(200, 200));
-        bt_reports.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/admin/home/images/admin_buttonMenu.png"))); // NOI18N
         bt_reports.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 bt_reportsActionPerformed(evt);
@@ -744,12 +755,17 @@ public class Admin_workArea extends javax.swing.JFrame {
         jLabel17.setBackground(new java.awt.Color(255, 255, 255));
         jLabel17.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel17.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel17.setText("Time");
+        jLabel17.setText("Customer Count");
 
         jLabel18.setBackground(new java.awt.Color(255, 255, 255));
         jLabel18.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel18.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel18.setText("Time");
+        jLabel18.setText("Funder Count");
+
+        jLabel19.setBackground(new java.awt.Color(255, 255, 255));
+        jLabel19.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel19.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel19.setText("Time");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -762,14 +778,15 @@ public class Admin_workArea extends javax.swing.JFrame {
                     .addComponent(lb_time, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(lb_customerCount, javax.swing.GroupLayout.DEFAULT_SIZE, 95, Short.MAX_VALUE)
+                            .addComponent(lb_customerCount, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jLabel17, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGap(0, 8, Short.MAX_VALUE)
                                 .addComponent(lb_funderCount, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(jLabel18, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                            .addComponent(jLabel18, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                    .addComponent(jLabel19, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -783,7 +800,9 @@ public class Admin_workArea extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lb_customerCount)
                     .addComponent(lb_funderCount))
-                .addGap(27, 27, 27)
+                .addGap(4, 4, 4)
+                .addComponent(jLabel19)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(lb_time)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(lb_date, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -810,10 +829,10 @@ public class Admin_workArea extends javax.swing.JFrame {
         setSize(new java.awt.Dimension(1300, 700));
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
-
+Border borderC = BorderFactory.createLineBorder(new Color(255, 255, 255), 1);
     private void jl_systemExitMouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jl_systemExitMouseMoved
 
-        pl_systemExit.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255), 2));
+        pl_systemExit.setBorder(borderC);
 
     }//GEN-LAST:event_jl_systemExitMouseMoved
 
@@ -928,37 +947,29 @@ public class Admin_workArea extends javax.swing.JFrame {
 
                 @Override
                 public void mouseClicked(MouseEvent me) {
-                    
-                   lb_wk_option2.setVisible(true);
-                    
+
+                    lb_wk_option2.setVisible(true);
+
                 }
 
                 @Override
                 public void mousePressed(MouseEvent me) {
-                    
-                    
-                    
+
                 }
 
                 @Override
                 public void mouseReleased(MouseEvent me) {
-                    
-                    
-                    
+
                 }
 
                 @Override
                 public void mouseEntered(MouseEvent me) {
-                    
-                    
-                    
+
                 }
 
                 @Override
                 public void mouseExited(MouseEvent me) {
-                    
-                    
-                    
+
                 }
             });
 
@@ -1075,6 +1086,31 @@ public class Admin_workArea extends javax.swing.JFrame {
         }).start();
 
     }//GEN-LAST:event_bt_OreportsActionPerformed
+    
+    private void bt_usermangMouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_bt_usermangMouseMoved
+
+        
+        bt_usermang.setBorder(borderC);
+
+    }//GEN-LAST:event_bt_usermangMouseMoved
+
+    private void bt_cusmangMouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_bt_cusmangMouseMoved
+        
+        bt_cusmang.setBorder(borderC);
+        
+    }//GEN-LAST:event_bt_cusmangMouseMoved
+
+    private void bt_fungmangMouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_bt_fungmangMouseMoved
+
+        bt_fungmang.setBorder(borderC);
+        
+    }//GEN-LAST:event_bt_fungmangMouseMoved
+
+    private void bt_installmentmangMouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_bt_installmentmangMouseMoved
+
+        
+        
+    }//GEN-LAST:event_bt_installmentmangMouseMoved
 
     /**
      * @param args the command line arguments
@@ -1136,6 +1172,7 @@ public class Admin_workArea extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel17;
     private javax.swing.JLabel jLabel18;
+    private javax.swing.JLabel jLabel19;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -1349,7 +1386,7 @@ public class Admin_workArea extends javax.swing.JFrame {
     }
 
     ///////////// load date and time
-    void showTime() {
+    final void showTime() {
         new Timer(0, new ActionListener() {
 
             @Override
@@ -1364,7 +1401,7 @@ public class Admin_workArea extends javax.swing.JFrame {
         }).start();
     }
 
-    void showDate() {
+    final void showDate() {
         Date d = new Date();
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         String s = sdf.format(d);

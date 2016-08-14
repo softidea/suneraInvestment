@@ -499,7 +499,6 @@ public class Admin_customerManagment extends javax.swing.JPanel {
 
         cb_periodType.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         cb_periodType.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "With Out Saturday(Week days)", "With Saturday" }));
-        cb_periodType.setEnabled(false);
         cb_periodType.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
                 cb_periodTypeItemStateChanged(evt);
@@ -832,7 +831,13 @@ public class Admin_customerManagment extends javax.swing.JPanel {
                 if (pmd.EmtyisTextFiled(tf_nic) && pmd.EmtyisTextFiled(tf_name) && pmd.EmtyisTextFiled(tf_address) && pmd.EmtyisTextFiled(tf_contact) && pmd.EmtyisTextFiled(tf_loanAmount) && pmd.EmtyisTextFiled(tf_period)) {
                     SimpleDateFormat sdfc = new SimpleDateFormat("yyyy-MM-dd");
                     String register_date = sdf.format(d);
-
+                    String subType="withSaturday";
+                    if (cb_periodType.getSelectedIndex()==0) {
+                        subType="withOutSaturday";
+                    } else {
+                        subType="withSaturday";
+                    }
+                    
                     boolean isture = md_cus.saveCustomer(
                             tf_nic.getText().toLowerCase(),
                             tf_name.getText().toLowerCase(),
@@ -842,7 +847,7 @@ public class Admin_customerManagment extends javax.swing.JPanel {
                             gen_loan_id,
                             register_date,
                             tf_loanAmount.getText().trim(),
-                            cb_mainInstallmentPeriodType.getSelectedItem().toString(),
+                            cb_mainInstallmentPeriodType.getSelectedItem().toString()+"-"+subType,
                             tf_period.getText(),
                             lb_v_installment.getText(),
                             tf_extraInterest.getText(),
