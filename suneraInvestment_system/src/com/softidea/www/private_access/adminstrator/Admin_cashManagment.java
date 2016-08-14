@@ -10,21 +10,19 @@ import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 public class Admin_cashManagment extends javax.swing.JPanel {
-
+double RI = 0;
     public Admin_cashManagment() {
         initComponents();
         setCurrentDate();
         viewCashAccount();
         viewCapital();
-        viewTotalFunds();
+        viewLoanDueAmounts();
         viewTotalloans();
         getOUtstandingInterest();
         getReceivedInterest();
         setDueTotalInterest();
-        setTotalDiscounts();
-        setTotalWithdrawals();
-        viewTotalProfit();
         viewCashTableData();
+        viewTotalAssets();
     }
 
     //view table date
@@ -49,79 +47,41 @@ public class Admin_cashManagment extends javax.swing.JPanel {
        lblloans.setText(TL+"0");
        lblinstallments.setText(TI+"0");
        lblwithdrawals.setText(TW+"0");
-       lblprofit.setText((TF+TI)-(TL+TW)+"0");
+       //lblprofit.setText((TF+TI)-(TL+TW)+"0");
 //       lblnetprofit.setText((TF+TI)-(TL+TW)-(TF-TL)+"0");
-       lblnetprofit.setText((TI-TW)+"0");
+       //lblnetprofit.setText((TI-TW)+"0");
 
     }
 
     //view table date
-    //view total profit
-    public void viewTotalProfit() {
-        double TF = Double.parseDouble(lb_v_totalFund.getText());
-        double TL = Double.parseDouble(lb_v_totalLoan.getText());
-        double TW = Double.parseDouble(lb_v_totWithdrawals.getText());
-        double TI = 0;
-        try {
-            ResultSet rs = MC_DB.myConnection().createStatement().executeQuery("SELECT SUM(amount) AS sumIns FROM cash_account WHERE cash_ac_type='Installment'");
-            if (rs.next()) {
-                TI = Double.parseDouble(rs.getInt("sumIns") + "");
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        lb_v_profit.setText((TF + TI) - (TL + TW) + "0");
-        lb_v_netprofit.setText((TF + TI) - (TL + TW)-(TF-TL)+"0");
-    }
-    //view total profit
-
-    //set total withdrawals
-    public void setTotalWithdrawals() {
-        try {
-            ResultSet rs = MC_DB.myConnection().createStatement().executeQuery("SELECT SUM(amount) AS sumWithdraw FROM cash_account WHERE cash_ac_type='Withdrawal'");
-            if (rs.next()) {
-                double totwith = Double.parseDouble(rs.getInt("sumWithdraw") + "");
-                lb_v_totWithdrawals.setText(totwith + "0");
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    //set total withdrawals
-    //set total discounts
-    public void setTotalDiscounts() {
-        double TD = 0;
-        try {
-            ResultSet rs = MC_DB.myConnection().createStatement().executeQuery("SELECT * FROM loans");
-            while (rs.next()) {
-                int idloans = rs.getInt("idloans");
-                ResultSet rs2 = MC_DB.myConnection().createStatement().executeQuery("SELECT SUM(discount) AS sumDiscount FROM installment WHERE idloans='" + idloans + "'");
-                if (rs2.next()) {
-                    TD += Double.parseDouble(rs2.getInt("sumDiscount") + "");
-                }
-            }
-            System.out.println("Total Discounts " + TD);
-            lb_v_totalDiscount.setText(TD + "0");
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-    }
-    //set total discounts
 
     //set due ineterest
     public void setDueTotalInterest() {
-        double OI = Double.parseDouble(lb_v_outstandingInterest.getText());
-        double PI = Double.parseDouble(lb_v_receivedInterest.getText());
-        lb_v_dueInterest.setText(OI - PI + "0");
+        double OI = Double.parseDouble(lb_v_outstandingCapital.getText());
+        double RI =0;
+        if(this.RI!=0){
+            RI= this.RI;
+        }
+        System.out.println("OI======"+OI);
+        System.out.println("RI======"+RI);
+        lb_v_outstandingInterest.setText(OI-RI+"0");
     }
     //set due ineterest
 
+    //view total assets
+    public void viewTotalAssets(){
+        double OC=Double.parseDouble(lb_v_outstandingCapital.getText());
+        double OI=Double.parseDouble(lb_v_outstandingInterest.getText());
+        System.out.println("OC+++++++++++++++++++"+OC);
+        System.out.println("OI+++++++++++++++++++++++"+OI);
+        lb_v_totalAsset.setText((OC+OI)+"0");
+        
+        
+    }
+    //view total assets
     //get received interest
     public void getReceivedInterest() {
-        double RI = 0;
+        
         try {
             ResultSet rs = MC_DB.myConnection().createStatement().executeQuery("SELECT * FROM loans");
             while (rs.next()) {
@@ -141,7 +101,6 @@ public class Admin_cashManagment extends javax.swing.JPanel {
                 }
 
             }
-            lb_v_receivedInterest.setText(Math.round(RI) + ".00");
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -149,7 +108,7 @@ public class Admin_cashManagment extends javax.swing.JPanel {
     //get received interest
 
     //get outstading ineterest
-    public void getOUtstandingInterest() {
+    public double getOUtstandingInterest() {
         double OI = 0;
         try {
             ResultSet rs = MC_DB.myConnection().createStatement().executeQuery("SELECT * FROM loans");
@@ -160,9 +119,11 @@ public class Admin_cashManagment extends javax.swing.JPanel {
                 OI += ((period * installment) - loanAmount);
 
             }
-            lb_v_outstandingInterest.setText(OI + "0");
+            System.out.println("getOUtstandingInterest "+OI);
+            return OI;
         } catch (Exception e) {
             e.printStackTrace();
+            return -1;
         }
 
     }
@@ -170,26 +131,42 @@ public class Admin_cashManagment extends javax.swing.JPanel {
 
     //view capital
     public void viewCapital() {
-        double income = getTotalUpdateFunds() + getTotalInstallmentAmounts();
-        double expense = getTotalLoanAmounts() + getTotalWithdrawalAmounts();
-        lb_v_totalCapital.setText((income - expense) + "0");
+        
+        //total capital=funds+interest
+        double TL=getTotalFundAmounts();
+        System.out.println("TL-"+TL);
+        double TI=getOUtstandingInterest();
+        System.out.println("TI-"+TI);
+        double TCapital=TL+TI;
+        System.out.println("total capital"+TL+TI);
+        lb_v_totalCapital.setText(TCapital+"0");    
+       
     }
     //view capital
 
-    //view funds
-    public void viewTotalFunds() {
-        lb_v_totalFund.setText(getTotalFundAmounts() + "0");
+    //view due loan amount
+    public void viewLoanDueAmounts(){
+        try {
+            ResultSet rs = MC_DB.myConnection().createStatement().executeQuery("SELECT SUM(due_loan_amount) AS sumDueLoan FROM loans");
+            if(rs.next()){
+                lb_v_outstandingCapital.setText(Double.parseDouble(rs.getInt("sumDueLoan")+"")+"0");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    
     }
-    //view funds
-
+    //view due loan amount
+    
     //view loan amounts
     public void viewTotalloans() {
         lb_v_totalLoan.setText(getTotalLoanAmounts() + "0");
     }
     //view loan amounts
 
-    //saving wihdrawal to cash account
+   // saving wihdrawal to cash account
     public void saveWithdrawCash() {
+        double RI=0;
         try {
             String withdrawDate = new SimpleDateFormat("YYYY-MM-dd").format(new Date());
             String withdrawAmount = tf_withdrawalAmount.getText();
@@ -197,16 +174,30 @@ public class Admin_cashManagment extends javax.swing.JPanel {
             String cashType = "Withdrawal";
             String cashStatus = "Active";
             if (!(withdrawAmount.isEmpty() && withdrawDes.isEmpty())) {
-                if (Double.parseDouble(lb_v_receivedInterest.getText()) >= Double.parseDouble(withdrawAmount)) {
-                    MC_DB.myConnection().createStatement().executeUpdate("INSERT INTO cash_account (date,amount,cash_ac_type,cash_ac_discription,cash_ac_status) VALUES('" + withdrawDate + "','" + withdrawAmount + "','" + cashType + "','" + withdrawDes + "','" + cashStatus + "')");
-                    JOptionPane.showMessageDialog(null, "Cash Withdraw Successfully");
-                    tf_withdrawalAmount.setText("");
-                    ta_withdrawlDescription.setText("");
-                    viewCashAccount();
-
-                } else {
-                    JOptionPane.showMessageDialog(null, "Withdrawal Amount shpuld be less than or equal to Received Interest", "Error", JOptionPane.ERROR_MESSAGE);
+               
+                ResultSet rs = MC_DB.myConnection().createStatement().executeQuery("SELECT * FROM loans");
+                while(rs.next()){
+                    int period = Integer.parseInt(rs.getString("loan_period"));
+                    double loanAmount = Double.parseDouble(rs.getString("loan_amount"));
+                    double installment = Double.parseDouble(rs.getString("loan_installment"));
+                    int idloan = rs.getInt("idloans");
+                    System.out.println("idloan================"+idloan);
+                    double paidAmount=0;
+                    ResultSet rs2 = MC_DB.myConnection().createStatement().executeQuery("SELECT SUM(payment) AS calPayment FROM installment WHERE idloans='"+idloan+"'");
+                    if(rs2.next()){
+                        paidAmount=Double.parseDouble(rs2.getInt("calPayment")+"");
+                    }
+                    
+                    RI += ((period*installment)-loanAmount)/(period*installment)*paidAmount; 
+                    
                 }
+                
+                
+                
+                
+                
+                
+                
             } else {
                 JOptionPane.showMessageDialog(null, "Can not save empty values", "Error", JOptionPane.ERROR_MESSAGE);
             }
@@ -372,26 +363,17 @@ public class Admin_cashManagment extends javax.swing.JPanel {
         tb_cashAccount = new javax.swing.JTable();
         jPanel2 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        jLabel21 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
-        jLabel23 = new javax.swing.JLabel();
-        jLabel24 = new javax.swing.JLabel();
         lb_v_totalCapital = new javax.swing.JLabel();
-        lb_v_totalFund = new javax.swing.JLabel();
         lb_v_totalLoan = new javax.swing.JLabel();
-        lb_v_outstandingInterest = new javax.swing.JLabel();
-        lb_v_totWithdrawals = new javax.swing.JLabel();
-        lb_v_netprofit = new javax.swing.JLabel();
+        lb_v_outstandingCapital = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
-        lb_v_receivedInterest = new javax.swing.JLabel();
         jLabel11 = new javax.swing.JLabel();
-        lb_v_dueInterest = new javax.swing.JLabel();
+        lb_v_outstandingInterest = new javax.swing.JLabel();
         bt_addFund = new javax.swing.JButton();
         jLabel12 = new javax.swing.JLabel();
-        lb_v_totalDiscount = new javax.swing.JLabel();
-        jLabel25 = new javax.swing.JLabel();
-        lb_v_profit = new javax.swing.JLabel();
+        lb_v_totalAsset = new javax.swing.JLabel();
         jPanel4 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         lblfunds = new javax.swing.JLabel();
@@ -401,11 +383,7 @@ public class Admin_cashManagment extends javax.swing.JPanel {
         lblinstallments = new javax.swing.JLabel();
         jLabel14 = new javax.swing.JLabel();
         lblwithdrawals = new javax.swing.JLabel();
-        lblprofit = new javax.swing.JLabel();
-        jLabel15 = new javax.swing.JLabel();
         bt_addFund2 = new javax.swing.JButton();
-        jLabel16 = new javax.swing.JLabel();
-        lblnetprofit = new javax.swing.JLabel();
 
         setBackground(new java.awt.Color(102, 102, 102));
 
@@ -537,7 +515,9 @@ public class Admin_cashManagment extends javax.swing.JPanel {
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                         .addComponent(jScrollPane3)
-                        .addComponent(lb_addRoute4, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel3Layout.createSequentialGroup()
+                            .addComponent(lb_addRoute4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addGap(46, 46, 46))
                         .addComponent(tf_withdrawalAmount, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(bt_addFund1, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
@@ -581,73 +561,41 @@ public class Admin_cashManagment extends javax.swing.JPanel {
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setText("Total Capital :");
 
-        jLabel21.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jLabel21.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel21.setText("Total Funds :");
-
         jLabel3.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel3.setText("Total Loan  :");
+        jLabel3.setText("Total Capital Loans  :");
 
         jLabel9.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel9.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel9.setText("Outstanding Interest :");
-
-        jLabel23.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jLabel23.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel23.setText("Total Withdrawals :");
-
-        jLabel24.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jLabel24.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel24.setText("Net Profit :");
+        jLabel9.setText("Outstanding Capital :");
 
         lb_v_totalCapital.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         lb_v_totalCapital.setForeground(new java.awt.Color(0, 204, 0));
         lb_v_totalCapital.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         lb_v_totalCapital.setText("0.00");
 
-        lb_v_totalFund.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        lb_v_totalFund.setForeground(new java.awt.Color(0, 204, 0));
-        lb_v_totalFund.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        lb_v_totalFund.setText("0.00");
-
         lb_v_totalLoan.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         lb_v_totalLoan.setForeground(new java.awt.Color(255, 234, 0));
         lb_v_totalLoan.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         lb_v_totalLoan.setText("0.00");
 
+        lb_v_outstandingCapital.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        lb_v_outstandingCapital.setForeground(new java.awt.Color(255, 87, 34));
+        lb_v_outstandingCapital.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        lb_v_outstandingCapital.setText("0.00");
+
+        jLabel10.setFont(new java.awt.Font("Tahoma", 2, 12)); // NOI18N
+        jLabel10.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel10.setText("(without interest)");
+
+        jLabel11.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel11.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel11.setText("Outstanding Interest :");
+
         lb_v_outstandingInterest.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         lb_v_outstandingInterest.setForeground(new java.awt.Color(255, 87, 34));
         lb_v_outstandingInterest.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         lb_v_outstandingInterest.setText("0.00");
-
-        lb_v_totWithdrawals.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
-        lb_v_totWithdrawals.setForeground(new java.awt.Color(244, 67, 102));
-        lb_v_totWithdrawals.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        lb_v_totWithdrawals.setText("0.00");
-
-        lb_v_netprofit.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
-        lb_v_netprofit.setForeground(new java.awt.Color(255, 255, 255));
-        lb_v_netprofit.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        lb_v_netprofit.setText("0.00");
-
-        jLabel10.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jLabel10.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel10.setText("Received Interest :");
-
-        lb_v_receivedInterest.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        lb_v_receivedInterest.setForeground(new java.awt.Color(255, 87, 34));
-        lb_v_receivedInterest.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        lb_v_receivedInterest.setText("0.00");
-
-        jLabel11.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jLabel11.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel11.setText("Due Interest :");
-
-        lb_v_dueInterest.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        lb_v_dueInterest.setForeground(new java.awt.Color(255, 87, 34));
-        lb_v_dueInterest.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        lb_v_dueInterest.setText("0.00");
 
         bt_addFund.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         bt_addFund.setForeground(new java.awt.Color(255, 255, 255));
@@ -663,21 +611,12 @@ public class Admin_cashManagment extends javax.swing.JPanel {
 
         jLabel12.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel12.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel12.setText("Total Discounts :");
+        jLabel12.setText("Assets Total :");
 
-        lb_v_totalDiscount.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        lb_v_totalDiscount.setForeground(new java.awt.Color(255, 87, 34));
-        lb_v_totalDiscount.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        lb_v_totalDiscount.setText("0.00");
-
-        jLabel25.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jLabel25.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel25.setText("Total Profit(+Fund) :");
-
-        lb_v_profit.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
-        lb_v_profit.setForeground(new java.awt.Color(255, 255, 255));
-        lb_v_profit.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        lb_v_profit.setText("0.00");
+        lb_v_totalAsset.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
+        lb_v_totalAsset.setForeground(new java.awt.Color(255, 255, 255));
+        lb_v_totalAsset.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        lb_v_totalAsset.setText("0.00");
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -688,89 +627,60 @@ public class Admin_cashManagment extends javax.swing.JPanel {
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jLabel24, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 135, Short.MAX_VALUE)
-                            .addComponent(jLabel21, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jLabel23, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addGap(10, 10, 10)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel2Layout.createSequentialGroup()
                                 .addGap(10, 10, 10)
                                 .addComponent(lb_v_totalLoan, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                            .addComponent(lb_v_totWithdrawals, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(lb_v_totalFund, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(lb_v_totalCapital, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(lb_v_netprofit, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                            .addComponent(lb_v_totalCapital, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(jLabel9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGap(10, 10, 10)
-                        .addComponent(lb_v_outstandingInterest, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addComponent(lb_v_outstandingCapital, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(jLabel11, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGap(10, 10, 10)
-                        .addComponent(lb_v_dueInterest, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(jLabel10, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(lb_v_receivedInterest, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addComponent(lb_v_outstandingInterest, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                         .addGap(0, 10, Short.MAX_VALUE)
                         .addComponent(bt_addFund, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                         .addComponent(jLabel12, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGap(10, 10, 10)
-                        .addComponent(lb_v_totalDiscount, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                        .addComponent(jLabel25, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGap(10, 10, 10)
-                        .addComponent(lb_v_profit, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                        .addComponent(lb_v_totalAsset, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addContainerGap()
+                .addContainerGap(116, Short.MAX_VALUE)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
                     .addComponent(lb_v_totalCapital))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel21, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lb_v_totalFund))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lb_v_totalLoan)
                     .addComponent(jLabel3))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lb_v_outstandingInterest)
+                    .addComponent(lb_v_outstandingCapital)
                     .addComponent(jLabel9))
                 .addGap(4, 4, 4)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel10)
-                    .addComponent(lb_v_receivedInterest))
+                .addComponent(jLabel10)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lb_v_dueInterest)
-                    .addComponent(jLabel11))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel11)
+                    .addComponent(lb_v_outstandingInterest))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lb_v_totalDiscount)
+                    .addComponent(lb_v_totalAsset)
                     .addComponent(jLabel12))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(lb_v_totWithdrawals, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jLabel23, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jLabel25, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(lb_v_profit, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(12, 12, 12)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jLabel24, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(lb_v_netprofit, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(31, 31, 31)
                 .addComponent(bt_addFund, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
@@ -813,15 +723,6 @@ public class Admin_cashManagment extends javax.swing.JPanel {
         lblwithdrawals.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         lblwithdrawals.setText("0.00");
 
-        lblprofit.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        lblprofit.setForeground(new java.awt.Color(255, 255, 255));
-        lblprofit.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        lblprofit.setText("0.00");
-
-        jLabel15.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jLabel15.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel15.setText("Total Profit :");
-
         bt_addFund2.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         bt_addFund2.setForeground(new java.awt.Color(255, 255, 255));
         bt_addFund2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/softidea/www/public_access/images/SuneraInvestment_selctButtonNormal.png"))); // NOI18N
@@ -833,15 +734,6 @@ public class Admin_cashManagment extends javax.swing.JPanel {
                 bt_addFund2ActionPerformed(evt);
             }
         });
-
-        jLabel16.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jLabel16.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel16.setText("Net Profit :");
-
-        lblnetprofit.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        lblnetprofit.setForeground(new java.awt.Color(255, 255, 255));
-        lblnetprofit.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        lblnetprofit.setText("0.00");
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
@@ -864,16 +756,8 @@ public class Admin_cashManagment extends javax.swing.JPanel {
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(lblwithdrawals, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel14))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(lblprofit, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel15))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(lblnetprofit, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel16))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(bt_addFund2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                .addGap(288, 288, 288)
+                .addComponent(bt_addFund2, javax.swing.GroupLayout.PREFERRED_SIZE, 78, Short.MAX_VALUE)
                 .addContainerGap())
         );
         jPanel4Layout.setVerticalGroup(
@@ -887,20 +771,14 @@ public class Admin_cashManagment extends javax.swing.JPanel {
                     .addGroup(jPanel4Layout.createSequentialGroup()
                         .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel8)
-                            .addComponent(jLabel14, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jLabel15))
+                            .addComponent(jLabel14, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(lblinstallments, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(lblwithdrawals, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(lblprofit, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(lblwithdrawals, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(jPanel4Layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
                         .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(jPanel4Layout.createSequentialGroup()
-                                .addComponent(jLabel16)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(lblnetprofit, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(jPanel4Layout.createSequentialGroup()
                                 .addComponent(jLabel7)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -962,7 +840,7 @@ public class Admin_cashManagment extends javax.swing.JPanel {
     }//GEN-LAST:event_bt_addFundActionPerformed
 
     private void bt_addFund1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_addFund1ActionPerformed
-        saveWithdrawCash();
+      saveWithdrawCash();
     }//GEN-LAST:event_bt_addFund1ActionPerformed
 
     private void tf_withdrawalAmountKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tf_withdrawalAmountKeyTyped
@@ -1005,13 +883,7 @@ public class Admin_cashManagment extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel14;
-    private javax.swing.JLabel jLabel15;
-    private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel21;
-    private javax.swing.JLabel jLabel23;
-    private javax.swing.JLabel jLabel24;
-    private javax.swing.JLabel jLabel25;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
@@ -1026,21 +898,14 @@ public class Admin_cashManagment extends javax.swing.JPanel {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JLabel lb_addRoute4;
-    private javax.swing.JLabel lb_v_dueInterest;
-    private javax.swing.JLabel lb_v_netprofit;
+    private javax.swing.JLabel lb_v_outstandingCapital;
     private javax.swing.JLabel lb_v_outstandingInterest;
-    private javax.swing.JLabel lb_v_profit;
-    private javax.swing.JLabel lb_v_receivedInterest;
-    private javax.swing.JLabel lb_v_totWithdrawals;
+    private javax.swing.JLabel lb_v_totalAsset;
     private javax.swing.JLabel lb_v_totalCapital;
-    private javax.swing.JLabel lb_v_totalDiscount;
-    private javax.swing.JLabel lb_v_totalFund;
     private javax.swing.JLabel lb_v_totalLoan;
     private javax.swing.JLabel lblfunds;
     private javax.swing.JLabel lblinstallments;
     private javax.swing.JLabel lblloans;
-    private javax.swing.JLabel lblnetprofit;
-    private javax.swing.JLabel lblprofit;
     private javax.swing.JLabel lblwithdrawals;
     private javax.swing.JTextArea ta_withdrawlDescription;
     private javax.swing.JTable tb_cashAccount;
