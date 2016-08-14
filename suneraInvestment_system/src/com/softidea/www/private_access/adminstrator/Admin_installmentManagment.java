@@ -74,18 +74,92 @@ public class Admin_installmentManagment extends javax.swing.JPanel {
 
     }
 
-    public void calArrius(){
+    public void calArrius() {
+        double arriers=0;
+        double paid=0;
         try {
-            ResultSet rs = MC_DB.myConnection().createStatement().executeQuery("SELECT LAST(payment_date) AS lastDate FROM installment WHERE idloans='"+loanID+"'");
-            if(rs.next()){
-                System.out.println("Last Date"+rs.getString("lastDate"));
+            ResultSet rs = MC_DB.myConnection().createStatement().executeQuery("SELECT SUM(payment) FROM installment WHERE idloans='" + loanID + "'");
+            if (rs.next()) {
+                paid = rs.getDouble(1);
             }
+            String loanDate = tf_regDate.getText();
+            int period = Integer.parseInt(tf_period.getText());
+            double installement = Double.parseDouble(tf_installment.getText());
+
+            String loantype = "";
+            rs = MC_DB.myConnection().createStatement().executeQuery("SELECT loan_mainperiodtype FROM loans WHERE idloans='" + loanID + "'");
+            if (rs.next()) {
+                loantype = rs.getString(1);
+            }
+
+            String today = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
+
+            if (loantype.toLowerCase().contains("daily") || (loantype.toLowerCase().contains("weekly"))) {
+
+                String tempdate = loanDate;
+                int no_of_days=0;
+                int no_of_saturdays = 0;
+
+                Date d = new SimpleDateFormat("yyyy-MM-dd").parse(loanDate);
+                String year = loanDate.split("-")[0];
+                int day = Integer.parseInt(new SimpleDateFormat("yyyy-DDD").format(d).split("-")[1]);
+                
+                for (int i = 1; (i < period) && (!today.equals(tempdate)); i++) {
+
+                    Date currentdate = new SimpleDateFormat("yyyy-DDD").parse(year + "-" + (day + i));
+
+                    tempdate = new SimpleDateFormat("yyyy-MM-dd").format(currentdate);
+                    
+                    String nowday = new SimpleDateFormat("EEEEEEEE").format(currentdate);
+
+                    if (nowday.equalsIgnoreCase("Saturday")) {
+                        no_of_saturdays++;
+                    }
+                    no_of_days++;
+
+                }
+                
+                if(loantype.equalsIgnoreCase("daily-withoutsaturday")){
+                    arriers = (no_of_days-no_of_saturdays)*installement;
+                }else if(loantype.equalsIgnoreCase("daily-withsaturday")){
+                    arriers = no_of_days*installement;
+                    
+                }else{
+                
+                    arriers = (no_of_days/7)*installement;
+                }
+                
+                
+
+            }else{
+                Date td = new Date();
+                int datdif=0;
+                int no_of_months = 0;
+                for (int i = 1; (i < period)&&(datdif<=0); i++) {
+                    String tempd=i+"";
+                    if(i<10){
+                        tempd="0"+i;
+                    }
+                    Date curr = new SimpleDateFormat("yyyy-MM-dd").parse("2016-"+tempd+"-31");
+                    datdif=curr.compareTo(td);
+                    no_of_months++;
+                    
+                }
+            
+                arriers= no_of_months*installement;
+            
+            
+            
+            }
+            arriers-=paid;
+            tf_arrius.setText(arriers+"");
+
         } catch (Exception e) {
             e.printStackTrace();
         }
-    
+
     }
-    
+
     public void setInterestValues() {
 
         double paid_discount = calPaidDiscount();
@@ -95,14 +169,13 @@ public class Admin_installmentManagment extends javax.swing.JPanel {
         double payable_amount = period * installment;
         double payable_interest = (payable_amount - loanAmount);
         double paidAmount = Double.parseDouble(tf_paidAmount.getText());
-        
-        double paid_interest=((payable_amount-loanAmount)/payable_amount)*paidAmount;
-        paid_interest=(Math.round(paid_interest));
+
+        double paid_interest = ((payable_amount - loanAmount) / payable_amount) * paidAmount;
+        paid_interest = (Math.round(paid_interest));
 
         double due_interest = (payable_interest - (paid_interest) - paid_discount);
         due_interest = Math.round(due_interest);
-         
-        
+
         tf_paidInterest.setText(paid_interest + "0");
         tf_payableInterest.setText(payable_interest + "0");
         tf_dueInterest.setText(due_interest + "0");
