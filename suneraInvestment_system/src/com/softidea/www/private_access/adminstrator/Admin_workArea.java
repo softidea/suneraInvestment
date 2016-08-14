@@ -545,7 +545,7 @@ public class Admin_workArea extends javax.swing.JFrame {
         jp_adminMainPanel.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         bt_usermang.setBackground(new java.awt.Color(0, 153, 102));
-        bt_usermang.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        bt_usermang.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         bt_usermang.setForeground(new java.awt.Color(255, 255, 255));
         bt_usermang.setIcon(new javax.swing.ImageIcon(getClass().getResource("/admin/home/images/admin_buttonMenu_in.png"))); // NOI18N
         bt_usermang.setText("User Managment");
@@ -560,7 +560,7 @@ public class Admin_workArea extends javax.swing.JFrame {
         });
         jp_adminMainPanel.add(bt_usermang, new org.netbeans.lib.awtextra.AbsoluteConstraints(104, 115, 200, 200));
 
-        bt_cusmang.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        bt_cusmang.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         bt_cusmang.setForeground(new java.awt.Color(255, 255, 255));
         bt_cusmang.setIcon(new javax.swing.ImageIcon(getClass().getResource("/admin/home/images/admin_buttonMenu_in.png"))); // NOI18N
         bt_cusmang.setText("Customer Managment");
@@ -576,7 +576,7 @@ public class Admin_workArea extends javax.swing.JFrame {
         jp_adminMainPanel.add(bt_cusmang, new org.netbeans.lib.awtextra.AbsoluteConstraints(322, 115, 200, 200));
 
         bt_fungmang.setBackground(new java.awt.Color(0, 153, 102));
-        bt_fungmang.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        bt_fungmang.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         bt_fungmang.setForeground(new java.awt.Color(255, 255, 255));
         bt_fungmang.setIcon(new javax.swing.ImageIcon(getClass().getResource("/admin/home/images/admin_buttonMenu_in.png"))); // NOI18N
         bt_fungmang.setText("Fund Managment");
@@ -592,7 +592,7 @@ public class Admin_workArea extends javax.swing.JFrame {
         jp_adminMainPanel.add(bt_fungmang, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 115, 200, 200));
 
         bt_installmentmang.setBackground(new java.awt.Color(0, 153, 102));
-        bt_installmentmang.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        bt_installmentmang.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
         bt_installmentmang.setForeground(new java.awt.Color(255, 255, 255));
         bt_installmentmang.setIcon(new javax.swing.ImageIcon(getClass().getResource("/admin/home/images/admin_buttonMenu_in.png"))); // NOI18N
         bt_installmentmang.setText("Installment Management");
@@ -608,7 +608,7 @@ public class Admin_workArea extends javax.swing.JFrame {
         jp_adminMainPanel.add(bt_installmentmang, new org.netbeans.lib.awtextra.AbsoluteConstraints(758, 115, 200, 200));
 
         bt_cashmang.setBackground(new java.awt.Color(0, 153, 102));
-        bt_cashmang.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        bt_cashmang.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         bt_cashmang.setForeground(new java.awt.Color(255, 255, 255));
         bt_cashmang.setIcon(new javax.swing.ImageIcon(getClass().getResource("/admin/home/images/admin_buttonMenu_in.png"))); // NOI18N
         bt_cashmang.setText("Cash Management");
@@ -624,7 +624,7 @@ public class Admin_workArea extends javax.swing.JFrame {
         jp_adminMainPanel.add(bt_cashmang, new org.netbeans.lib.awtextra.AbsoluteConstraints(104, 333, 200, 200));
 
         bt_loanmang.setBackground(new java.awt.Color(0, 153, 102));
-        bt_loanmang.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        bt_loanmang.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         bt_loanmang.setForeground(new java.awt.Color(255, 255, 255));
         bt_loanmang.setIcon(new javax.swing.ImageIcon(getClass().getResource("/admin/home/images/admin_buttonMenu_in.png"))); // NOI18N
         bt_loanmang.setText("Loan Managment");
@@ -640,7 +640,7 @@ public class Admin_workArea extends javax.swing.JFrame {
         jp_adminMainPanel.add(bt_loanmang, new org.netbeans.lib.awtextra.AbsoluteConstraints(322, 333, 200, 200));
 
         bt_administratormang.setBackground(new java.awt.Color(0, 153, 102));
-        bt_administratormang.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        bt_administratormang.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         bt_administratormang.setForeground(new java.awt.Color(255, 255, 255));
         bt_administratormang.setIcon(new javax.swing.ImageIcon(getClass().getResource("/admin/home/images/admin_buttonMenu_in.png"))); // NOI18N
         bt_administratormang.setText("Administrator Managment");
@@ -656,7 +656,7 @@ public class Admin_workArea extends javax.swing.JFrame {
         jp_adminMainPanel.add(bt_administratormang, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 333, 200, 200));
 
         bt_reports.setBackground(new java.awt.Color(0, 153, 102));
-        bt_reports.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        bt_reports.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         bt_reports.setForeground(new java.awt.Color(255, 255, 255));
         bt_reports.setIcon(new javax.swing.ImageIcon(getClass().getResource("/admin/home/images/admin_buttonMenu_in.png"))); // NOI18N
         bt_reports.setText("Reports Managment");
