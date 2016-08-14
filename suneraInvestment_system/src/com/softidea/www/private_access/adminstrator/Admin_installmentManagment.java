@@ -74,6 +74,18 @@ public class Admin_installmentManagment extends javax.swing.JPanel {
 
     }
 
+    public void calArrius(){
+        try {
+            ResultSet rs = MC_DB.myConnection().createStatement().executeQuery("SELECT LAST(payment_date) AS lastDate FROM installment WHERE idloans='"+loanID+"'");
+            if(rs.next()){
+                System.out.println("Last Date"+rs.getString("lastDate"));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    
+    }
+    
     public void setInterestValues() {
 
         double paid_discount = calPaidDiscount();
@@ -84,13 +96,12 @@ public class Admin_installmentManagment extends javax.swing.JPanel {
         double payable_interest = (payable_amount - loanAmount);
         double paidAmount = Double.parseDouble(tf_paidAmount.getText());
         
-        
-        double paid_interest = (payable_interest / loanAmount) * paidAmount;
-        paid_interest=Math.round(paid_interest);
-        System.out.println(paid_interest+"inttttttttttttttttttttttttttttttttttttttttttttt");
-        
-        double due_interest = (payable_interest - (paid_interest)-paid_discount);
-        due_interest=Math.round(due_interest);
+        double paid_interest=((payable_amount-loanAmount)/payable_amount)*paidAmount;
+        paid_interest=(Math.round(paid_interest));
+
+        double due_interest = (payable_interest - (paid_interest) - paid_discount);
+        due_interest = Math.round(due_interest);
+         
         
         tf_paidInterest.setText(paid_interest + "0");
         tf_payableInterest.setText(payable_interest + "0");
@@ -242,6 +253,8 @@ public class Admin_installmentManagment extends javax.swing.JPanel {
         tf_payableInterest = new javax.swing.JLabel();
         jLabel21 = new javax.swing.JLabel();
         tf_dueInterest = new javax.swing.JLabel();
+        jLabel22 = new javax.swing.JLabel();
+        tf_arrius = new javax.swing.JLabel();
         jPanel4 = new javax.swing.JPanel();
         tf_payment = new javax.swing.JTextField();
         jLabel16 = new javax.swing.JLabel();
@@ -498,6 +511,15 @@ public class Admin_installmentManagment extends javax.swing.JPanel {
         tf_dueInterest.setForeground(new java.awt.Color(0, 204, 255));
         tf_dueInterest.setText("00.00");
 
+        jLabel22.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel22.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel22.setText("Arius :");
+
+        tf_arrius.setBackground(new java.awt.Color(255, 255, 0));
+        tf_arrius.setFont(new java.awt.Font("Tahoma", 0, 20)); // NOI18N
+        tf_arrius.setForeground(new java.awt.Color(0, 204, 255));
+        tf_arrius.setText("00.00");
+
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
@@ -505,14 +527,12 @@ public class Admin_installmentManagment extends javax.swing.JPanel {
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addGap(5, 5, 5)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(tf_paidInterest, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(tf_paidAmount, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(tf_dueAmount, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel12)
                             .addComponent(jLabel13)
-                            .addComponent(jLabel14)
                             .addGroup(jPanel3Layout.createSequentialGroup()
                                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(jPanel3Layout.createSequentialGroup()
@@ -522,7 +542,17 @@ public class Admin_installmentManagment extends javax.swing.JPanel {
                                 .addGap(18, 18, 18)
                                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLabel21)
-                                    .addComponent(tf_dueInterest, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                    .addComponent(tf_dueInterest, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addGroup(jPanel3Layout.createSequentialGroup()
+                                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(jPanel3Layout.createSequentialGroup()
+                                        .addComponent(jLabel14)
+                                        .addGap(0, 0, Short.MAX_VALUE))
+                                    .addComponent(tf_paidInterest, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel22)
+                                    .addComponent(tf_arrius, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE))))
                         .addContainerGap())))
         );
         jPanel3Layout.setVerticalGroup(
@@ -537,7 +567,7 @@ public class Admin_installmentManagment extends javax.swing.JPanel {
                 .addGap(11, 11, 11)
                 .addComponent(tf_dueAmount, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addComponent(jLabel14)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -547,6 +577,10 @@ public class Admin_installmentManagment extends javax.swing.JPanel {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(tf_payableInterest, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addComponent(jLabel22)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(tf_arrius, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jLabel21)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(tf_dueInterest, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -827,6 +861,7 @@ public class Admin_installmentManagment extends javax.swing.JPanel {
         if (tf_nic.getText() != "" || tf_nic.getText() != null) {
 
             loadCutomerLoanData();
+            calArrius();
         }
 
     }//GEN-LAST:event_jButton2ActionPerformed
@@ -863,6 +898,7 @@ public class Admin_installmentManagment extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel19;
     private javax.swing.JLabel jLabel20;
     private javax.swing.JLabel jLabel21;
+    private javax.swing.JLabel jLabel22;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
@@ -874,6 +910,7 @@ public class Admin_installmentManagment extends javax.swing.JPanel {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable tb_loanInstallment;
     public static javax.swing.JTextField tf_address;
+    private javax.swing.JLabel tf_arrius;
     public static javax.swing.JTextField tf_contact;
     public static javax.swing.JTextField tf_discount;
     private javax.swing.JLabel tf_dueAmount;
@@ -916,15 +953,13 @@ public class Admin_installmentManagment extends javax.swing.JPanel {
                                 System.out.println(LOAN_AMOUNT);
                                 PAID_AMOUNT = getInstalmentLoanAmount();
                                 System.out.println(PAID_AMOUNT);
-                                
 
                                 if (PERIOD >= INSTALLMENT_COUNT) {
 
                                     if (INSTALLMENT_COUNT >= 0) {
 
                                         if (LOAN_AMOUNT > PAID_AMOUNT) {
-                                            
-                                            
+
                                             int response = JOptionPane.showConfirmDialog(null, "Do you want to add this Payment?", "Confirm",
                                                     JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
                                             if (response == JOptionPane.NO_OPTION) {

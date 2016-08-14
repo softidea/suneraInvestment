@@ -26,7 +26,7 @@
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="0" attributes="0">
-              <EmptySpace max="-2" attributes="0"/>
+              <EmptySpace min="0" pref="0" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" max="-2" attributes="0">
                   <Component id="jPanel2" max="32767" attributes="0"/>
                   <Component id="jPanel4" max="32767" attributes="0"/>
@@ -484,10 +484,10 @@
                         <Column editable="false" title="Loan NO" type="java.lang.Object"/>
                         <Column editable="true" title="Customer NIC" type="java.lang.Object"/>
                         <Column editable="false" title="Loan Amount" type="java.lang.Object"/>
+                        <Column editable="false" title="Period" type="java.lang.Object"/>
                         <Column editable="false" title="Installment" type="java.lang.Object"/>
-                        <Column editable="false" title="Due Amount" type="java.lang.Object"/>
-                        <Column editable="false" title="Payment Type" type="java.lang.Object"/>
-                        <Column editable="false" title="Loan Period" type="java.lang.Object"/>
+                        <Column editable="false" title="Due Payment" type="java.lang.Object"/>
+                        <Column editable="false" title="Loan TYpe" type="java.lang.Object"/>
                         <Column editable="false" title="Full Name" type="java.lang.Object"/>
                         <Column editable="true" title="Address" type="java.lang.Object"/>
                         <Column editable="false" title="Contact" type="java.lang.Object"/>

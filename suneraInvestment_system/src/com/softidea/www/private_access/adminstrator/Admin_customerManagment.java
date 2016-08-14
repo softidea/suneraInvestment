@@ -309,7 +309,7 @@ public class Admin_customerManagment extends javax.swing.JPanel {
 
             },
             new String [] {
-                "No", "Regidtation Date", "Loan NO", "Customer NIC", "Loan Amount", "Installment", "Due Amount", "Payment Type", "Loan Period", "Full Name", "Address", "Contact"
+                "No", "Regidtation Date", "Loan NO", "Customer NIC", "Loan Amount", "Period", "Installment", "Due Payment", "Loan TYpe", "Full Name", "Address", "Contact"
             }
         ) {
             boolean[] canEdit = new boolean [] {
@@ -742,7 +742,7 @@ public class Admin_customerManagment extends javax.swing.JPanel {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(0, 0, 0)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
