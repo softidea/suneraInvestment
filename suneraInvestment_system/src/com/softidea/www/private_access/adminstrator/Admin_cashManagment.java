@@ -5,26 +5,33 @@ import java.awt.event.KeyEvent;
 import java.sql.ResultSet;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Vector;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import net.sf.jasperreports.engine.JasperCompileManager;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.JasperReport;
+import net.sf.jasperreports.view.JRViewer;
+import net.sf.jasperreports.view.JasperViewer;
 
 public class Admin_cashManagment extends javax.swing.JPanel {
 
     double RI = 0;
 
-    double TOT_LOANS=0;
-    double TOT_INSTALLMENT=0;
-    double TOT_WITHDRAWAL=0;
-    double TOT_FUNDS=0;
-    
-    double TOT_CAPITAL=0;
-    double TOT_CAPITAL_LOANS=0;
-    double OUTSTANDING_CAPITAL=0;
-    double OUTSTANDING_INTEREST=0;
-    double TOT_ASSET=0;
-    
-    
+    double TOT_LOANS = 0;
+    double TOT_INSTALLMENT = 0;
+    double TOT_WITHDRAWAL = 0;
+    double TOT_FUNDS = 0;
+
+    double TOT_CAPITAL = 0;
+    double TOT_CAPITAL_LOANS = 0;
+    double OUTSTANDING_CAPITAL = 0;
+    double OUTSTANDING_INTEREST = 0;
+    double TOT_ASSET = 0;
+
     public Admin_cashManagment() {
         initComponents();
         new Thread(() -> {
@@ -66,16 +73,16 @@ public class Admin_cashManagment extends javax.swing.JPanel {
             }
         }
         lblfunds.setText(TF + "0");
-        this.TOT_FUNDS=TF;
-        
+        this.TOT_FUNDS = TF;
+
         lblloans.setText(TL + "0");
-        this.TOT_LOANS=TL;
-        
+        this.TOT_LOANS = TL;
+
         lblinstallments.setText(TI + "0");
-        this.TOT_INSTALLMENT=TI;
-        
+        this.TOT_INSTALLMENT = TI;
+
         lblwithdrawals.setText(TW + "0");
-        this.TOT_WITHDRAWAL=TW;
+        this.TOT_WITHDRAWAL = TW;
 
     }
 
@@ -90,7 +97,7 @@ public class Admin_cashManagment extends javax.swing.JPanel {
         System.out.println("OI======" + OI);
         System.out.println("RI======" + RI);
         lb_v_outstandingInterest.setText(OI - RI + "0");
-        this.OUTSTANDING_INTEREST=(OI-RI);
+        this.OUTSTANDING_INTEREST = (OI - RI);
     }
     //set due ineterest
 
@@ -101,7 +108,7 @@ public class Admin_cashManagment extends javax.swing.JPanel {
         System.out.println("OC+++++++++++++++++++" + OC);
         System.out.println("OI+++++++++++++++++++++++" + OI);
         lb_v_totalAsset.setText((OC + OI) + "0");
-        this.TOT_ASSET=(OC+OI);
+        this.TOT_ASSET = (OC + OI);
 
     }
 
@@ -167,7 +174,7 @@ public class Admin_cashManagment extends javax.swing.JPanel {
         double TCapital = TL + TI;
         System.out.println("total capital" + TL + TI);
         lb_v_totalCapital.setText(TCapital + "0");
-        this.TOT_CAPITAL=TCapital;
+        this.TOT_CAPITAL = TCapital;
 
     }
     //view capital
@@ -178,7 +185,7 @@ public class Admin_cashManagment extends javax.swing.JPanel {
             ResultSet rs = MC_DB.myConnection().createStatement().executeQuery("SELECT SUM(due_loan_amount) AS sumDueLoan FROM loans");
             if (rs.next()) {
                 lb_v_outstandingCapital.setText(Double.parseDouble(rs.getInt("sumDueLoan") + "") + "0");
-                this.OUTSTANDING_CAPITAL=Double.parseDouble(rs.getInt("sumDueLoan")+"");
+                this.OUTSTANDING_CAPITAL = Double.parseDouble(rs.getInt("sumDueLoan") + "");
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -190,13 +197,13 @@ public class Admin_cashManagment extends javax.swing.JPanel {
     //view loan amounts
     public final void viewTotalloans() {
         lb_v_totalLoan.setText(getTotalLoanAmounts() + "0");
-        this.TOT_CAPITAL_LOANS=getTotalLoanAmounts();
+        this.TOT_CAPITAL_LOANS = getTotalLoanAmounts();
     }
     //view loan amounts
 
     //get sum RI
     public void getTotalRI() {
-        double RI=0;
+        double RI = 0;
         try {
             ResultSet rs = MC_DB.myConnection().createStatement().executeQuery("SELECT * FROM loans");
             while (rs.next()) {
@@ -216,7 +223,7 @@ public class Admin_cashManagment extends javax.swing.JPanel {
                 RI += ((period * installment) - loanAmount) / (period * installment) * paidAmount;
             }
             System.out.println("RI----------------" + RI);
-            lb_v_withdrawAvailableAmount.setText("( Available withdrwal= "+Math.round(RI) + ".00 )");
+            lb_v_withdrawAvailableAmount.setText("( Available withdrwal= " + Math.round(RI) + ".00 )");
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -239,7 +246,7 @@ public class Admin_cashManagment extends javax.swing.JPanel {
                     JOptionPane.showMessageDialog(this, "Cash successfully withdrawed");
 
                 } else {
-                    JOptionPane.showMessageDialog(this, "Withdrawal Amount should be less than Received Interest Amount "+lb_v_withdrawAvailableAmount.getText(),"Withdrwal Amount can not Proceed",JOptionPane.WARNING_MESSAGE);
+                    JOptionPane.showMessageDialog(this, "Withdrawal Amount should be less than Received Interest Amount " + lb_v_withdrawAvailableAmount.getText(), "Withdrwal Amount can not Proceed", JOptionPane.WARNING_MESSAGE);
                 }
 
             } else {
@@ -262,8 +269,8 @@ public class Admin_cashManagment extends javax.swing.JPanel {
                 DefaultTableModel dtm = (DefaultTableModel) tb_cashAccount.getModel();
                 dtm.setRowCount(0);
                 try {
-                    String sDate = new SimpleDateFormat("yyyy-MM-dd").format(dc_startDate.getDate());
-                    String eDate = new SimpleDateFormat("yyyy-MM-dd").format(dc_endDate.getDate());
+                    String sDate = new SimpleDateFormat("YYYY-MM-dd").format(dc_startDate.getDate());
+                    String eDate = new SimpleDateFormat("YYYY-MM-dd").format(dc_endDate.getDate());
                     String cashType = cb_cashType.getSelectedItem().toString();
 
                     if (!(sDate.isEmpty() && eDate.isEmpty() && cashType.isEmpty())) {
@@ -896,6 +903,16 @@ public class Admin_cashManagment extends javax.swing.JPanel {
 
     private void bt_addFundActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_addFundActionPerformed
 
+        //jc_start.getDate()
+        String startDate = new SimpleDateFormat("YYYY-MM-dd").format(dc_startDate.getDate());
+        String endDate = new SimpleDateFormat("YYYY-MM-dd").format(dc_endDate.getDate());
+        String cashtype=cb_cashType.getSelectedItem().toString();
+        
+        String path = "src//Reports//loan//report_cash_AdvancedReport.jrxml";
+        //E:\Project_SE\suneraInvestment\suneraInvestment_system\src\Reports\customer\report_customerandloandetalsHistory.jrxml
+
+        md_reportView(path, startDate, endDate,cashtype);
+
 
     }//GEN-LAST:event_bt_addFundActionPerformed
 
@@ -975,5 +992,34 @@ public class Admin_cashManagment extends javax.swing.JPanel {
     private static void setCurrentDate() {
         dc_startDate.setDate(new Date());
         dc_endDate.setDate(new Date());
+    }
+
+    private void md_reportView(String rp_parth, String sdate, String edate,String cashtype) {
+
+        try {
+            JasperReport jp = JasperCompileManager.compileReport(rp_parth);
+            System.out.println("===========jasper report compiled successfully==========");
+            Map<String, Object> map = new HashMap<String, Object>();
+
+            map.put("startDate", sdate);
+            map.put("endDate", edate);
+            map.put("todaydate", new SimpleDateFormat("yyyy-MM-dd").format(new Date()));
+            map.put("cashtype", cashtype);
+
+            JasperPrint jasperPrint = JasperFillManager.fillReport(jp, map, MC_DB.myConnection());
+            JasperViewer.viewReport(jasperPrint, false);
+            JRViewer v = new JRViewer(jasperPrint);
+            //jTabbedPane1.addTab(monthName+" Income In "+jc_Check_monthly_Income_In_Course.getSelectedItem().toString(), v);
+//            if (jTabbedPane1.getTabCount() > 0) {
+//                jTabbedPane1.remove(jTabbedPane1.getTabCount() - 1);
+//            }
+//
+//            jTabbedPane1.addTab("View Reports", v);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            //Logger.getLogger(Inventory_reports.class.getName()).log(Level.SEVERE, null, e);
+        }
+
     }
 }
