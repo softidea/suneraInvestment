@@ -903,15 +903,7 @@ public class Admin_cashManagment extends javax.swing.JPanel {
 
     private void bt_addFundActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_addFundActionPerformed
 
-        //jc_start.getDate()
-        String startDate = new SimpleDateFormat("YYYY-MM-dd").format(dc_startDate.getDate());
-        String endDate = new SimpleDateFormat("YYYY-MM-dd").format(dc_endDate.getDate());
-        String cashtype=cb_cashType.getSelectedItem().toString();
         
-        String path = "src//Reports//loan//report_cash_AdvancedReport.jrxml";
-        //E:\Project_SE\suneraInvestment\suneraInvestment_system\src\Reports\customer\report_customerandloandetalsHistory.jrxml
-
-        md_reportView(path, startDate, endDate,cashtype);
 
 
     }//GEN-LAST:event_bt_addFundActionPerformed
@@ -937,7 +929,24 @@ public class Admin_cashManagment extends javax.swing.JPanel {
     }//GEN-LAST:event_cb_cashTypeItemStateChanged
 
     private void bt_addFund2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_addFund2ActionPerformed
-        // TODO add your handling code here:
+
+        //jc_start.getDate()
+        String startDate = new SimpleDateFormat("YYYY-MM-dd").format(dc_startDate.getDate());
+        String endDate = new SimpleDateFormat("YYYY-MM-dd").format(dc_endDate.getDate());
+        String todayDate = new SimpleDateFormat("YYYY-MM-dd").format(new Date());
+
+        String totfund = lblfunds.getText();
+        String totloan = lblloans.getText();
+        String installment = lblinstallments.getText();
+        String withdraw = lblwithdrawals.getText();
+        
+        String subtitle ="Daily";
+        
+        String path = "src//Reports//loan//report_cash_dateRangeReport.jrxml";
+        //E:\Project_SE\suneraInvestment\suneraInvestment_system\src\Reports\customer\report_customerandloandetalsHistory.jrxml
+
+        md_reportView(path, startDate, endDate,todayDate,totfund,totloan,installment,withdraw,subtitle);
+
     }//GEN-LAST:event_bt_addFund2ActionPerformed
 
     private void cb_cashTypeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cb_cashTypeActionPerformed
@@ -994,8 +1003,8 @@ public class Admin_cashManagment extends javax.swing.JPanel {
         dc_endDate.setDate(new Date());
     }
 
-    private void md_reportView(String rp_parth, String sdate, String edate,String cashtype) {
-
+    private void md_reportView(String rp_parth, String sdate, String edate, String todayDate,String totfund,String totloan,String installment,String withdraw,String subtitle) {
+        
         try {
             JasperReport jp = JasperCompileManager.compileReport(rp_parth);
             System.out.println("===========jasper report compiled successfully==========");
@@ -1003,9 +1012,22 @@ public class Admin_cashManagment extends javax.swing.JPanel {
 
             map.put("startDate", sdate);
             map.put("endDate", edate);
-            map.put("todaydate", new SimpleDateFormat("yyyy-MM-dd").format(new Date()));
-            map.put("cashtype", cashtype);
-
+//            map.put("todaydate", todayDate);
+//            map.put("variable1", totfund);
+//            map.put("variable2", totloan);
+//            map.put("variable3", installment);
+//            map.put("variable4", withdraw);
+//            map.put("v_sub_title", subtitle);
+            
+            System.out.println(sdate);
+            System.out.println(edate);
+            System.out.println(todayDate);
+            System.out.println(totfund);
+            System.out.println(totloan);
+            System.out.println(installment);
+            System.out.println(withdraw);
+            System.out.println(subtitle);
+            
             JasperPrint jasperPrint = JasperFillManager.fillReport(jp, map, MC_DB.myConnection());
             JasperViewer.viewReport(jasperPrint, false);
             JRViewer v = new JRViewer(jasperPrint);
