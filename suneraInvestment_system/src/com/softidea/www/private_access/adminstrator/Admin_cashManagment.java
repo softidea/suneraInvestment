@@ -269,8 +269,8 @@ public class Admin_cashManagment extends javax.swing.JPanel {
                 DefaultTableModel dtm = (DefaultTableModel) tb_cashAccount.getModel();
                 dtm.setRowCount(0);
                 try {
-                    String sDate = new SimpleDateFormat("YYYY-MM-dd").format(dc_startDate.getDate());
-                    String eDate = new SimpleDateFormat("YYYY-MM-dd").format(dc_endDate.getDate());
+                    String sDate = new SimpleDateFormat("yyyy-MM-dd").format(dc_startDate.getDate());
+                    String eDate = new SimpleDateFormat("yyyy-MM-dd").format(dc_endDate.getDate());
                     String cashType = cb_cashType.getSelectedItem().toString();
 
                     if (!(sDate.isEmpty() && eDate.isEmpty() && cashType.isEmpty())) {
