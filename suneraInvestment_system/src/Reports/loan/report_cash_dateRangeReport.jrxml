@@ -58,7 +58,7 @@
 				<text><![CDATA[Cash Reports -]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="85" y="81" width="162" height="17" forecolor="#FAFAFA" uuid="d65a5c3f-64c1-4a93-9611-ebc19556cf9a"/>
+				<reportElement x="85" y="78" width="162" height="20" forecolor="#FAFAFA" uuid="d65a5c3f-64c1-4a93-9611-ebc19556cf9a"/>
 				<textElement verticalAlignment="Middle">
 					<font fontName="Tahoma" size="12"/>
 				</textElement>

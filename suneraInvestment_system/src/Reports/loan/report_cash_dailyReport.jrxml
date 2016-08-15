@@ -17,7 +17,7 @@
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
 	<queryString>
-		<![CDATA[SELECT * FROM `cash_account`  WHERE `date` BETWEEN $P{startdate} AND $P{enddate} AND `cash_ac_type`=$P{cashtype}; ]]>
+		<![CDATA[SELECT * FROM `cash_account`  WHERE `date` BETWEEN $P{startdate} AND $P{enddate} AND `cash_ac_type`=$P{cashtype};]]>
 	</queryString>
 	<field name="idcash_account" class="java.lang.Integer">
 		<fieldDescription><![CDATA[]]></fieldDescription>

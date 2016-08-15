@@ -336,10 +336,13 @@ public class Admin_reportManagment extends javax.swing.JPanel {
     private javax.swing.JLabel lb_reportChange;
     // End of variables declaration//GEN-END:variables
 
+    private void md_report_(){}
+    
     private void md_reportView(String rp_parth, String sdate, String edate) {
 
         try {
             JasperReport jp = JasperCompileManager.compileReport(rp_parth);
+            System.out.println("===========jasper report compiled successfully==========");
             Map<String, Object> map = new HashMap<String, Object>();
 
             map.put("startDate", sdate);
