@@ -266,7 +266,7 @@ public class Admin_installmentManagment extends javax.swing.JPanel {
                     ResultSet rs = MC_DB.search_dataOne("installment", "idloans", loanID + "");
                     while (rs.next()) {
                         Vector v = new Vector();
-                        v.add(rs.getString("idinstallment"));
+                        v.add(rs.getRow());
                         v.add(rs.getDouble("payment"));
                         v.add(rs.getString("payment_date"));
                         v.add(rs.getDouble("discount"));

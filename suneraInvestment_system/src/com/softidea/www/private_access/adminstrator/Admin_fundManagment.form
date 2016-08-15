@@ -189,7 +189,7 @@
 
           <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
           <SubComponents>
-            <Component class="javax.swing.JTable" name="tb_fund">
+            <Component class="javax.swing.JTable" name="tb_inactive_fund">
               <Properties>
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                   <Font name="Tahoma" size="14" style="0"/>
@@ -249,7 +249,7 @@
                 </Property>
               </Properties>
               <Events>
-                <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="tb_fundMouseClicked"/>
+                <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="tb_inactive_fundMouseClicked"/>
               </Events>
             </Component>
           </SubComponents>
@@ -427,7 +427,7 @@
             </Property>
             <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
               <Border info="org.netbeans.modules.form.compat2.border.TitledBorderInfo">
-                <TitledBorder title="Funder Active/Inactive">
+                <TitledBorder title="Fund Settlement">
                   <Font PropertyName="font" name="Tahoma" size="14" style="0"/>
                   <Color PropertyName="color" blue="ff" green="ff" red="ff" type="rgb"/>
                 </TitledBorder>
@@ -442,11 +442,11 @@
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="1" attributes="0">
                           <Component id="bt_funder1" pref="273" max="32767" attributes="0"/>
-                          <Component id="cb_selectFunder3" max="32767" attributes="0"/>
+                          <Component id="cb_zerofundstatus" max="32767" attributes="0"/>
                           <Component id="lb_addRoute9" max="32767" attributes="0"/>
-                          <Component id="cb_selectFunder2" max="32767" attributes="0"/>
+                          <Component id="cb_zerofund" max="32767" attributes="0"/>
                           <Component id="lb_addRoute8" max="32767" attributes="0"/>
-                          <Component id="cb_selectInactiveFunder" max="32767" attributes="0"/>
+                          <Component id="cb_selectActiveFunder" max="32767" attributes="0"/>
                           <Component id="lb_addRoute7" max="32767" attributes="0"/>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
@@ -458,15 +458,15 @@
                   <Group type="102" alignment="0" attributes="0">
                       <Component id="lb_addRoute7" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="cb_selectInactiveFunder" min="-2" pref="40" max="-2" attributes="0"/>
+                      <Component id="cb_selectActiveFunder" min="-2" pref="40" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="lb_addRoute8" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="cb_selectFunder2" min="-2" pref="40" max="-2" attributes="0"/>
+                      <Component id="cb_zerofund" min="-2" pref="40" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="lb_addRoute9" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="cb_selectFunder3" min="-2" pref="40" max="-2" attributes="0"/>
+                      <Component id="cb_zerofundstatus" min="-2" pref="40" max="-2" attributes="0"/>
                       <EmptySpace max="32767" attributes="0"/>
                       <Component id="bt_funder1" min="-2" pref="40" max="-2" attributes="0"/>
                       <EmptySpace min="-2" pref="5" max="-2" attributes="0"/>
@@ -497,7 +497,7 @@
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
                   <Image iconType="3" name="/com/softidea/www/public_access/images/SuneraInvestment_selctButtonNormal.png"/>
                 </Property>
-                <Property name="text" type="java.lang.String" value="Add Funder"/>
+                <Property name="text" type="java.lang.String" value="Settle Fund"/>
                 <Property name="horizontalTextPosition" type="int" value="0"/>
                 <Property name="rolloverIcon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
                   <Image iconType="3" name="/com/softidea/www/public_access/images/SuneraInvestment_selctButtonHover.png"/>
@@ -507,7 +507,7 @@
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="bt_funder1ActionPerformed"/>
               </Events>
             </Component>
-            <Component class="javax.swing.JComboBox" name="cb_selectInactiveFunder">
+            <Component class="javax.swing.JComboBox" name="cb_selectActiveFunder">
               <Properties>
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                   <Font name="Tahoma" size="14" style="0"/>
@@ -517,7 +517,8 @@
                 </Property>
               </Properties>
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="cb_selectInactiveFunderActionPerformed"/>
+                <EventHandler event="itemStateChanged" listener="java.awt.event.ItemListener" parameters="java.awt.event.ItemEvent" handler="cb_selectActiveFunderItemStateChanged"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="cb_selectActiveFunderActionPerformed"/>
               </Events>
             </Component>
             <Component class="javax.swing.JLabel" name="lb_addRoute7">
@@ -531,7 +532,7 @@
                 <Property name="text" type="java.lang.String" value="Select Funder"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JComboBox" name="cb_selectFunder2">
+            <Component class="javax.swing.JComboBox" name="cb_zerofund">
               <Properties>
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                   <Font name="Tahoma" size="14" style="0"/>
@@ -541,7 +542,8 @@
                 </Property>
               </Properties>
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="cb_selectFunder2ActionPerformed"/>
+                <EventHandler event="itemStateChanged" listener="java.awt.event.ItemListener" parameters="java.awt.event.ItemEvent" handler="cb_zerofundItemStateChanged"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="cb_zerofundActionPerformed"/>
               </Events>
             </Component>
             <Component class="javax.swing.JLabel" name="lb_addRoute9">
@@ -555,17 +557,20 @@
                 <Property name="text" type="java.lang.String" value="Status:"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JComboBox" name="cb_selectFunder3">
+            <Component class="javax.swing.JComboBox" name="cb_zerofundstatus">
               <Properties>
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                   <Font name="Tahoma" size="14" style="0"/>
                 </Property>
                 <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-                  <StringArray count="0"/>
+                  <StringArray count="2">
+                    <StringItem index="0" value="Active"/>
+                    <StringItem index="1" value="In-Active"/>
+                  </StringArray>
                 </Property>
               </Properties>
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="cb_selectFunder3ActionPerformed"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="cb_zerofundstatusActionPerformed"/>
               </Events>
             </Component>
           </SubComponents>
@@ -783,9 +788,9 @@
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Component id="bt_funder2" pref="277" max="32767" attributes="0"/>
-                          <Component id="cb_selectFunder5" alignment="1" max="32767" attributes="0"/>
+                          <Component id="cb_loadActiveStatus" alignment="1" max="32767" attributes="0"/>
                           <Component id="lb_addRoute12" alignment="1" max="32767" attributes="0"/>
-                          <Component id="cb_selectInactiveFunder1" alignment="1" max="32767" attributes="0"/>
+                          <Component id="cb_loadFunders" alignment="1" max="32767" attributes="0"/>
                           <Component id="lb_addRoute11" max="32767" attributes="0"/>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
@@ -797,11 +802,11 @@
                   <Group type="102" alignment="0" attributes="0">
                       <Component id="lb_addRoute11" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="cb_selectInactiveFunder1" min="-2" pref="40" max="-2" attributes="0"/>
+                      <Component id="cb_loadFunders" min="-2" pref="40" max="-2" attributes="0"/>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
                       <Component id="lb_addRoute12" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="cb_selectFunder5" min="-2" pref="40" max="-2" attributes="0"/>
+                      <Component id="cb_loadActiveStatus" min="-2" pref="40" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="bt_funder2" min="-2" pref="40" max="-2" attributes="0"/>
                       <EmptySpace max="32767" attributes="0"/>
@@ -831,7 +836,7 @@
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="bt_funder2ActionPerformed"/>
               </Events>
             </Component>
-            <Component class="javax.swing.JComboBox" name="cb_selectInactiveFunder1">
+            <Component class="javax.swing.JComboBox" name="cb_loadFunders">
               <Properties>
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                   <Font name="Tahoma" size="14" style="0"/>
@@ -841,7 +846,8 @@
                 </Property>
               </Properties>
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="cb_selectInactiveFunder1ActionPerformed"/>
+                <EventHandler event="itemStateChanged" listener="java.awt.event.ItemListener" parameters="java.awt.event.ItemEvent" handler="cb_loadFundersItemStateChanged"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="cb_loadFundersActionPerformed"/>
               </Events>
             </Component>
             <Component class="javax.swing.JLabel" name="lb_addRoute11">
@@ -866,17 +872,20 @@
                 <Property name="text" type="java.lang.String" value="Status:"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JComboBox" name="cb_selectFunder5">
+            <Component class="javax.swing.JComboBox" name="cb_loadActiveStatus">
               <Properties>
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                   <Font name="Tahoma" size="14" style="0"/>
                 </Property>
                 <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-                  <StringArray count="0"/>
+                  <StringArray count="2">
+                    <StringItem index="0" value="Active"/>
+                    <StringItem index="1" value="In-Active"/>
+                  </StringArray>
                 </Property>
               </Properties>
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="cb_selectFunder5ActionPerformed"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="cb_loadActiveStatusActionPerformed"/>
               </Events>
             </Component>
           </SubComponents>

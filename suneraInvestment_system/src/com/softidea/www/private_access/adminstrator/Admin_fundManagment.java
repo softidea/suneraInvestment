@@ -27,12 +27,69 @@ public class Admin_fundManagment extends javax.swing.JPanel {
                 md_tb_load_Funder();
                 md_tb_load_Fund();
                 md_loadFunder();
+                loadAllFunders();
+                loadActiveFunders();
                 dc_backDate.setDate(new Date());
 
             } catch (Exception e) {
                 e.printStackTrace();
             }
         }).start();
+
+    }
+
+    public void loadFunderStatus() {
+
+        String funder = cb_loadFunders.getSelectedItem().toString();
+        String fundDetail[] = funder.split("-");
+
+        try {
+            ResultSet rs = MC_DB.myConnection().createStatement().executeQuery("SELECT funder_status FROM funder WHERE idfunder='" + Integer.parseInt(fundDetail[1]) + "'");
+            if (rs.next()) {
+                String status = rs.getString("funder_status");
+                if (status.equals("Active")) {
+                    cb_loadActiveStatus.setSelectedIndex(0);
+                } else {
+                    cb_loadActiveStatus.setSelectedIndex(1);
+                }
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    public void loadAllFunders() {
+        try {
+
+            ResultSet rs_ldfunder = MC_DB.myConnection().createStatement().executeQuery("SELECT * FROM funder");
+            Vector v = new Vector();
+
+            while (rs_ldfunder.next()) {
+                cb_loadFunders.addItem(rs_ldfunder.getString("funder_name") + "-" + rs_ldfunder.getString("idfunder"));
+
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+    }
+        public void loadActiveFunders() {
+        try {
+
+            ResultSet rs_ldfunder = MC_DB.myConnection().createStatement().executeQuery("SELECT * FROM funder WHERE funder_status='Active'");
+            Vector v = new Vector();
+
+            while (rs_ldfunder.next()) {
+                cb_selectActiveFunder.addItem(rs_ldfunder.getString("funder_name") + "-" + rs_ldfunder.getString("idfunder"));
+
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
     }
 
@@ -44,7 +101,7 @@ public class Admin_fundManagment extends javax.swing.JPanel {
         jScrollPane1 = new javax.swing.JScrollPane();
         tb_funder = new javax.swing.JTable();
         jScrollPane2 = new javax.swing.JScrollPane();
-        tb_fund = new javax.swing.JTable();
+        tb_inactive_fund = new javax.swing.JTable();
         jPanel2 = new javax.swing.JPanel();
         tf_address = new javax.swing.JTextField();
         lb_addRoute = new javax.swing.JLabel();
@@ -56,11 +113,11 @@ public class Admin_fundManagment extends javax.swing.JPanel {
         vp_funderactiveinactive = new javax.swing.JPanel();
         lb_addRoute8 = new javax.swing.JLabel();
         bt_funder1 = new javax.swing.JButton();
-        cb_selectInactiveFunder = new javax.swing.JComboBox();
+        cb_selectActiveFunder = new javax.swing.JComboBox();
         lb_addRoute7 = new javax.swing.JLabel();
-        cb_selectFunder2 = new javax.swing.JComboBox();
+        cb_zerofund = new javax.swing.JComboBox();
         lb_addRoute9 = new javax.swing.JLabel();
-        cb_selectFunder3 = new javax.swing.JComboBox();
+        cb_zerofundstatus = new javax.swing.JComboBox();
         jPanel3 = new javax.swing.JPanel();
         tf_fundAmount = new javax.swing.JTextField();
         lb_addRoute3 = new javax.swing.JLabel();
@@ -74,10 +131,10 @@ public class Admin_fundManagment extends javax.swing.JPanel {
         jLabel1 = new javax.swing.JLabel();
         vp_funderactiveinactive1 = new javax.swing.JPanel();
         bt_funder2 = new javax.swing.JButton();
-        cb_selectInactiveFunder1 = new javax.swing.JComboBox();
+        cb_loadFunders = new javax.swing.JComboBox();
         lb_addRoute11 = new javax.swing.JLabel();
         lb_addRoute12 = new javax.swing.JLabel();
-        cb_selectFunder5 = new javax.swing.JComboBox();
+        cb_loadActiveStatus = new javax.swing.JComboBox();
         bt_funder3 = new javax.swing.JButton();
 
         setBackground(new java.awt.Color(102, 102, 102));
@@ -112,8 +169,8 @@ public class Admin_fundManagment extends javax.swing.JPanel {
             tb_funder.getColumnModel().getColumn(4).setPreferredWidth(10);
         }
 
-        tb_fund.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        tb_fund.setModel(new javax.swing.table.DefaultTableModel(
+        tb_inactive_fund.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        tb_inactive_fund.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
@@ -129,12 +186,12 @@ public class Admin_fundManagment extends javax.swing.JPanel {
                 return canEdit [columnIndex];
             }
         });
-        tb_fund.addMouseListener(new java.awt.event.MouseAdapter() {
+        tb_inactive_fund.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                tb_fundMouseClicked(evt);
+                tb_inactive_fundMouseClicked(evt);
             }
         });
-        jScrollPane2.setViewportView(tb_fund);
+        jScrollPane2.setViewportView(tb_inactive_fund);
 
         jPanel2.setBackground(new java.awt.Color(66, 66, 66));
         jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Add Funder", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 14), new java.awt.Color(255, 255, 255))); // NOI18N
@@ -230,7 +287,7 @@ public class Admin_fundManagment extends javax.swing.JPanel {
         );
 
         vp_funderactiveinactive.setBackground(new java.awt.Color(66, 66, 66));
-        vp_funderactiveinactive.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Funder Active/Inactive", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 14), new java.awt.Color(255, 255, 255))); // NOI18N
+        vp_funderactiveinactive.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Fund Settlement", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 14), new java.awt.Color(255, 255, 255))); // NOI18N
 
         lb_addRoute8.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         lb_addRoute8.setForeground(new java.awt.Color(255, 255, 255));
@@ -239,7 +296,7 @@ public class Admin_fundManagment extends javax.swing.JPanel {
         bt_funder1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         bt_funder1.setForeground(new java.awt.Color(255, 255, 255));
         bt_funder1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/softidea/www/public_access/images/SuneraInvestment_selctButtonNormal.png"))); // NOI18N
-        bt_funder1.setText("Add Funder");
+        bt_funder1.setText("Settle Fund");
         bt_funder1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         bt_funder1.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/com/softidea/www/public_access/images/SuneraInvestment_selctButtonHover.png"))); // NOI18N
         bt_funder1.addActionListener(new java.awt.event.ActionListener() {
@@ -248,10 +305,15 @@ public class Admin_fundManagment extends javax.swing.JPanel {
             }
         });
 
-        cb_selectInactiveFunder.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        cb_selectInactiveFunder.addActionListener(new java.awt.event.ActionListener() {
+        cb_selectActiveFunder.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        cb_selectActiveFunder.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                cb_selectActiveFunderItemStateChanged(evt);
+            }
+        });
+        cb_selectActiveFunder.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cb_selectInactiveFunderActionPerformed(evt);
+                cb_selectActiveFunderActionPerformed(evt);
             }
         });
 
@@ -259,10 +321,15 @@ public class Admin_fundManagment extends javax.swing.JPanel {
         lb_addRoute7.setForeground(new java.awt.Color(255, 255, 255));
         lb_addRoute7.setText("Select Funder");
 
-        cb_selectFunder2.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        cb_selectFunder2.addActionListener(new java.awt.event.ActionListener() {
+        cb_zerofund.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        cb_zerofund.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                cb_zerofundItemStateChanged(evt);
+            }
+        });
+        cb_zerofund.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cb_selectFunder2ActionPerformed(evt);
+                cb_zerofundActionPerformed(evt);
             }
         });
 
@@ -270,10 +337,11 @@ public class Admin_fundManagment extends javax.swing.JPanel {
         lb_addRoute9.setForeground(new java.awt.Color(255, 255, 255));
         lb_addRoute9.setText("Status:");
 
-        cb_selectFunder3.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        cb_selectFunder3.addActionListener(new java.awt.event.ActionListener() {
+        cb_zerofundstatus.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        cb_zerofundstatus.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Active", "In-Active" }));
+        cb_zerofundstatus.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cb_selectFunder3ActionPerformed(evt);
+                cb_zerofundstatusActionPerformed(evt);
             }
         });
 
@@ -285,11 +353,11 @@ public class Admin_fundManagment extends javax.swing.JPanel {
                 .addContainerGap()
                 .addGroup(vp_funderactiveinactiveLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(bt_funder1, javax.swing.GroupLayout.PREFERRED_SIZE, 273, Short.MAX_VALUE)
-                    .addComponent(cb_selectFunder3, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(cb_zerofundstatus, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(lb_addRoute9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(cb_selectFunder2, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(cb_zerofund, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(lb_addRoute8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(cb_selectInactiveFunder, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(cb_selectActiveFunder, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(lb_addRoute7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
@@ -298,15 +366,15 @@ public class Admin_fundManagment extends javax.swing.JPanel {
             .addGroup(vp_funderactiveinactiveLayout.createSequentialGroup()
                 .addComponent(lb_addRoute7)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(cb_selectInactiveFunder, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(cb_selectActiveFunder, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(lb_addRoute8)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(cb_selectFunder2, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(cb_zerofund, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(lb_addRoute9)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(cb_selectFunder3, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(cb_zerofundstatus, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(bt_funder1, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(5, 5, 5))
@@ -439,10 +507,15 @@ public class Admin_fundManagment extends javax.swing.JPanel {
             }
         });
 
-        cb_selectInactiveFunder1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        cb_selectInactiveFunder1.addActionListener(new java.awt.event.ActionListener() {
+        cb_loadFunders.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        cb_loadFunders.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                cb_loadFundersItemStateChanged(evt);
+            }
+        });
+        cb_loadFunders.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cb_selectInactiveFunder1ActionPerformed(evt);
+                cb_loadFundersActionPerformed(evt);
             }
         });
 
@@ -454,10 +527,11 @@ public class Admin_fundManagment extends javax.swing.JPanel {
         lb_addRoute12.setForeground(new java.awt.Color(255, 255, 255));
         lb_addRoute12.setText("Status:");
 
-        cb_selectFunder5.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        cb_selectFunder5.addActionListener(new java.awt.event.ActionListener() {
+        cb_loadActiveStatus.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        cb_loadActiveStatus.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Active", "In-Active" }));
+        cb_loadActiveStatus.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cb_selectFunder5ActionPerformed(evt);
+                cb_loadActiveStatusActionPerformed(evt);
             }
         });
 
@@ -469,9 +543,9 @@ public class Admin_fundManagment extends javax.swing.JPanel {
                 .addContainerGap()
                 .addGroup(vp_funderactiveinactive1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(bt_funder2, javax.swing.GroupLayout.PREFERRED_SIZE, 277, Short.MAX_VALUE)
-                    .addComponent(cb_selectFunder5, javax.swing.GroupLayout.Alignment.TRAILING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(cb_loadActiveStatus, javax.swing.GroupLayout.Alignment.TRAILING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(lb_addRoute12, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(cb_selectInactiveFunder1, javax.swing.GroupLayout.Alignment.TRAILING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(cb_loadFunders, javax.swing.GroupLayout.Alignment.TRAILING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(lb_addRoute11, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
@@ -480,11 +554,11 @@ public class Admin_fundManagment extends javax.swing.JPanel {
             .addGroup(vp_funderactiveinactive1Layout.createSequentialGroup()
                 .addComponent(lb_addRoute11)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(cb_selectInactiveFunder1, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(cb_loadFunders, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(lb_addRoute12)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(cb_selectFunder5, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(cb_loadActiveStatus, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(bt_funder2, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -675,11 +749,11 @@ public class Admin_fundManagment extends javax.swing.JPanel {
 
     }//GEN-LAST:event_tb_funderMouseClicked
 
-    private void tb_fundMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tb_fundMouseClicked
+    private void tb_inactive_fundMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tb_inactive_fundMouseClicked
 
         md_tb_load_Fund();
 
-    }//GEN-LAST:event_tb_fundMouseClicked
+    }//GEN-LAST:event_tb_inactive_fundMouseClicked
 
     private void tf_funderNameKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tf_funderNameKeyReleased
 
@@ -735,36 +809,66 @@ public class Admin_fundManagment extends javax.swing.JPanel {
     }//GEN-LAST:event_ta_FundDiscriptionMouseClicked
 
     private void bt_funder1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_funder1ActionPerformed
-        // TODO add your handling code here:
+       
+        changeZeroFundStatus(cb_zerofundstatus.getSelectedItem().toString());
+        
+        
     }//GEN-LAST:event_bt_funder1ActionPerformed
 
-    private void cb_selectInactiveFunderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cb_selectInactiveFunderActionPerformed
+    private void cb_selectActiveFunderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cb_selectActiveFunderActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_cb_selectInactiveFunderActionPerformed
+    }//GEN-LAST:event_cb_selectActiveFunderActionPerformed
 
-    private void cb_selectFunder2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cb_selectFunder2ActionPerformed
+    private void cb_zerofundActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cb_zerofundActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_cb_selectFunder2ActionPerformed
+    }//GEN-LAST:event_cb_zerofundActionPerformed
 
-    private void cb_selectFunder3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cb_selectFunder3ActionPerformed
+    private void cb_zerofundstatusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cb_zerofundstatusActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_cb_selectFunder3ActionPerformed
+    }//GEN-LAST:event_cb_zerofundstatusActionPerformed
 
     private void bt_funder2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_funder2ActionPerformed
-        // TODO add your handling code here:
+       
+        changeFunderStatus();
+        md_tb_load_Funder();
+        md_tb_load_Fund();
+        loadActiveFunders();
+        
     }//GEN-LAST:event_bt_funder2ActionPerformed
 
-    private void cb_selectInactiveFunder1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cb_selectInactiveFunder1ActionPerformed
+    private void cb_loadFundersActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cb_loadFundersActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_cb_selectInactiveFunder1ActionPerformed
+    }//GEN-LAST:event_cb_loadFundersActionPerformed
 
-    private void cb_selectFunder5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cb_selectFunder5ActionPerformed
+    private void cb_loadActiveStatusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cb_loadActiveStatusActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_cb_selectFunder5ActionPerformed
+    }//GEN-LAST:event_cb_loadActiveStatusActionPerformed
 
     private void bt_funder3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_funder3ActionPerformed
-        // TODO add your handling code here:
+        
+//        viewInactiveFunders();
+        
     }//GEN-LAST:event_bt_funder3ActionPerformed
+
+    private void cb_loadFundersItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cb_loadFundersItemStateChanged
+     
+        loadFunderStatus();  
+        
+    }//GEN-LAST:event_cb_loadFundersItemStateChanged
+
+    private void cb_selectActiveFunderItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cb_selectActiveFunderItemStateChanged
+        
+        loadZeroFunds(cb_selectActiveFunder.getSelectedItem().toString());
+        
+        
+    }//GEN-LAST:event_cb_selectActiveFunderItemStateChanged
+
+    private void cb_zerofundItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cb_zerofundItemStateChanged
+       
+        loadUpdateFundStatus(cb_zerofund.getSelectedItem().toString());
+        
+        
+    }//GEN-LAST:event_cb_zerofundItemStateChanged
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -773,12 +877,12 @@ public class Admin_fundManagment extends javax.swing.JPanel {
     private javax.swing.JButton bt_funder1;
     private javax.swing.JButton bt_funder2;
     private javax.swing.JButton bt_funder3;
+    private javax.swing.JComboBox cb_loadActiveStatus;
+    private javax.swing.JComboBox cb_loadFunders;
+    private javax.swing.JComboBox cb_selectActiveFunder;
     private javax.swing.JComboBox cb_selectFunder;
-    private javax.swing.JComboBox cb_selectFunder2;
-    private javax.swing.JComboBox cb_selectFunder3;
-    private javax.swing.JComboBox cb_selectFunder5;
-    private javax.swing.JComboBox cb_selectInactiveFunder;
-    private javax.swing.JComboBox cb_selectInactiveFunder1;
+    private javax.swing.JComboBox cb_zerofund;
+    private javax.swing.JComboBox cb_zerofundstatus;
     private com.toedter.calendar.JDateChooser dc_backDate;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
@@ -799,8 +903,8 @@ public class Admin_fundManagment extends javax.swing.JPanel {
     private javax.swing.JLabel lb_addRoute8;
     private javax.swing.JLabel lb_addRoute9;
     private javax.swing.JTextField ta_FundDiscription;
-    private javax.swing.JTable tb_fund;
     private javax.swing.JTable tb_funder;
+    private javax.swing.JTable tb_inactive_fund;
     private javax.swing.JTextField tf_address;
     private javax.swing.JTextField tf_contactNumber;
     private javax.swing.JTextField tf_fundAmount;
@@ -857,7 +961,7 @@ public class Admin_fundManagment extends javax.swing.JPanel {
                 try {
 
                     rs_fund = MC_DB.myConnection().createStatement().executeQuery("SELECT * FROM fund ORDER BY idfund DESC");
-                    DefaultTableModel dtm_fund = (DefaultTableModel) tb_fund.getModel();
+                    DefaultTableModel dtm_fund = (DefaultTableModel) tb_inactive_fund.getModel();
                     dtm_fund.setRowCount(0);
                     while (rs_fund.next()) {
 
@@ -877,8 +981,7 @@ public class Admin_fundManagment extends javax.swing.JPanel {
                         dtm_fund.addRow(v);
                     }
 
-                } catch (SQLException e) 
-                {
+                } catch (SQLException e) {
                     e.printStackTrace();
                 }
             } catch (Exception e) {
@@ -970,6 +1073,85 @@ public class Admin_fundManagment extends javax.swing.JPanel {
         tf_fundAmount.setText("");
         ta_FundDiscription.setText("");
 
+    }
+
+    private void changeFunderStatus() {
+       
+        String funder = cb_loadFunders.getSelectedItem().toString();
+        String fundDetail[] = funder.split("-");
+        int funderid=Integer.parseInt(fundDetail[1]);
+        String funder_status= cb_loadActiveStatus.getSelectedItem().toString();
+        System.out.println(fundDetail[1]);
+        try {
+            MC_DB.myConnection().createStatement().executeUpdate("UPDATE funder SET funder_status='"+funder_status+"' WHERE idfunder='"+funderid+"'");
+            JOptionPane.showMessageDialog(this, "Funder status Updated");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        
+    }
+
+//    private void viewInactiveFunders() {
+//       DefaultTableModel dtm = (DefaultTableModel)tb_inactive_fund.getModel();
+//       dtm.setRowCount(0);
+//        try {
+//            ResultSet rs = MC_DB.myConnection().createStatement().executeQuery("SELECT * FROM funder WHERE funder_status='In-Active'");
+//            while(rs.next()){
+//                Vector v = new Vector();
+//               
+//            }
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//        
+//        
+//    }
+
+    private void loadZeroFunds(String funder) {
+        
+        String fundDetail[] = funder.split("-");
+        
+        try {
+            ResultSet rs = MC_DB.myConnection().createStatement().executeQuery("SELECT * FROM fund WHERE funder_idfunder='"+Integer.parseInt(fundDetail[1])+"' ");
+            while(rs.next()){
+                if(rs.getDouble("fund_update")==0){
+                    cb_zerofund.addItem(rs.getDouble("fund_update")+"- Fund ID="+rs.getInt("idfund"));
+                } 
+            }
+            
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void loadUpdateFundStatus(String fund) {
+        String fundDetail[]=fund.split("=");
+        try {
+            
+            ResultSet rs = MC_DB.myConnection().createStatement().executeQuery("SELECT * FROM fund WHERE idfund='"+Integer.parseInt(fundDetail[1])+"'");
+            if(rs.next()){
+                if(rs.getString("fund_status").equals("Active")){
+                    cb_zerofundstatus.setSelectedIndex(0);
+                }else{
+                    cb_zerofundstatus.setSelectedIndex(1);
+                }
+            }
+            
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        
+    }
+
+    private void changeZeroFundStatus(String fundStatus) {
+        String fundDetail[] =cb_zerofund.getSelectedItem().toString().split("=");
+        
+        try {
+            MC_DB.myConnection().createStatement().executeUpdate("UPDATE fund SET fund_status='"+fundStatus+"' WHERE idfund='"+Integer.parseInt(fundDetail[1])+"'");
+            JOptionPane.showMessageDialog(this, "Fund Status have been changed successfully");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
 }
