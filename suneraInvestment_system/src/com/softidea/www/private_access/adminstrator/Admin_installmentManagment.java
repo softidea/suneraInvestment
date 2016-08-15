@@ -198,7 +198,7 @@ public class Admin_installmentManagment extends javax.swing.JPanel {
 
             }
             arriers -= paid;
-            tf_arrius.setText(arriers + "");
+            tf_arrius.setText(arriers +"");
             this.ARRIUS = arriers;
 
         } catch (Exception e) {
