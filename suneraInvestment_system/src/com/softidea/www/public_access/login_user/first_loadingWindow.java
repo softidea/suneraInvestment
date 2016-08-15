@@ -6,7 +6,7 @@
 package com.softidea.www.public_access.login_user;
 
 import com.sun.awt.AWTUtilities;
-import java.awt.Toolkit;
+import javax.swing.ImageIcon;
 import javax.swing.UIManager;
 
 /**
@@ -18,10 +18,13 @@ public class first_loadingWindow extends javax.swing.JFrame {
     /**
      * Creates new form first_loadingWindow
      */
+    DisplayTrayIcon dti = new DisplayTrayIcon();
+
     public first_loadingWindow() {
+
         initComponents();
-        
-        
+        //this.setIconImage().getImage();
+
         try {
             UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
             jLabel2.setIcon(null);
@@ -29,7 +32,7 @@ public class first_loadingWindow extends javax.swing.JFrame {
             jLabel4.setIcon(null);
             jLabel5.setIcon(null);
             jLabel6.setIcon(null);
-            
+
         } catch (Exception ex) {
         }
         try {
@@ -142,10 +145,10 @@ public class first_loadingWindow extends javax.swing.JFrame {
         //</editor-fold>
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new first_loadingWindow().setVisible(true);
-            }
+        java.awt.EventQueue.invokeLater(() -> {
+            first_loadingWindow w = new first_loadingWindow();
+            w.setIconImage(CreateImagesss("/FormatFactoryicon100.png").getImage());
+            w.setVisible(true);
         });
     }
 
@@ -197,6 +200,7 @@ public class first_loadingWindow extends javax.swing.JFrame {
 
                             if (i == 101) {
                                 user_login user = new user_login();
+                                user.setIconImage(CreateImagesss("/FormatFactoryicon100.png").getImage());
                                 user.setVisible(true);
                                 first_loadingWindow.this.dispose();
                             }
@@ -211,6 +215,10 @@ public class first_loadingWindow extends javax.swing.JFrame {
 
     }
 
-    
-    
+    public static ImageIcon CreateImagesss(String path) {
+        //setIconImage(CreateImagesss("/FormatFactoryicon100.png").getImage());
+        return new ImageIcon(java.awt.Toolkit.getDefaultToolkit().getClass().getResource(path));
+
+    }
+
 }

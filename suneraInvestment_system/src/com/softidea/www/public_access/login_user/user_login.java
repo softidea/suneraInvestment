@@ -12,6 +12,7 @@ import java.awt.HeadlessException;
 import java.awt.event.KeyEvent;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.UIManager;
 
@@ -390,7 +391,9 @@ public class user_login extends javax.swing.JFrame {
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(() -> {
-            new user_login().setVisible(true);
+            user_login uu=new user_login();
+            //uu.setIconImage(CreateImagesss("/FormatFactoryicon100.png").getImage());
+            uu.setVisible(true);
         });
     }
 
@@ -477,6 +480,12 @@ public class user_login extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Invalid Username or Password!");
         }
 
+    }
+    
+    public static ImageIcon CreateImagesss(String path){
+        //setIconImage(CreateImagesss("/FormatFactoryicon100.png").getImage());
+        return new ImageIcon(java.awt.Toolkit.getDefaultToolkit().getClass().getResource(path));
+    
     }
 
 }

@@ -1,0 +1,314 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report_cash_dailyReport" language="groovy" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="2889d323-2154-4bc9-ae3f-dba728c0fa23">
+	<property name="ireport.zoom" value="1.5"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<style name="Title" fontName="Arial" fontSize="26" isBold="true" pdfFontName="Helvetica-Bold"/>
+	<style name="SubTitle" forecolor="#666666" fontName="Arial" fontSize="18"/>
+	<style name="Column header" forecolor="#FFFFFF" fontName="Arial" fontSize="12" isBold="true"/>
+	<style name="Detail" fontName="Arial" fontSize="12"/>
+	<parameter name="startdate" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="enddate" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="cashtype" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT * FROM `cash_account`  WHERE `date` BETWEEN $P{startdate} AND $P{enddate} AND `cash_ac_type`=$P{cashtype}; ]]>
+	</queryString>
+	<field name="idcash_account" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="date" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="amount" class="java.lang.Double">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="cash_ac_type" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="cash_ac_discription" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="cash_ac_status" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<variable name="v_sub_title" class="java.lang.String"/>
+	<variable name="variable1" class="java.lang.String"/>
+	<variable name="amount_1" class="java.lang.Double" calculation="Sum">
+		<variableExpression><![CDATA[$F{amount}]]></variableExpression>
+	</variable>
+	<variable name="var1" class="java.lang.String"/>
+	<variable name="var2" class="java.lang.String"/>
+	<variable name="var3" class="java.lang.String"/>
+	<variable name="var4" class="java.lang.String"/>
+	<variable name="var5" class="java.lang.String"/>
+	<title>
+		<band height="96" splitType="Stretch">
+			<rectangle>
+				<reportElement mode="Opaque" x="1" y="0" width="554" height="95" forecolor="#FFFFFF" backcolor="#4CAF50" uuid="87c4b1b0-54ec-48a3-98a0-b388582e4fa5"/>
+				<graphicElement>
+					<pen lineWidth="0.0"/>
+				</graphicElement>
+			</rectangle>
+			<staticText>
+				<reportElement style="SubTitle" x="4" y="74" width="81" height="21" forecolor="#FAFAFA" uuid="273efc0f-8668-44b9-9757-29632b7d28fd"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Tahoma" size="12"/>
+				</textElement>
+				<text><![CDATA[Cash Reports -]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Title" x="190" y="3" width="269" height="43" forecolor="#FFFFFF" uuid="3702e7d0-75ef-4c3e-9d16-bbe57f1b1f7a"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Tahoma" size="24" isBold="false" pdfFontName="Helvetica"/>
+				</textElement>
+				<text><![CDATA[SUNERA INVESTMENTS]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="85" y="74" width="162" height="21" forecolor="#FAFAFA" uuid="d65a5c3f-64c1-4a93-9611-ebc19556cf9a"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Tahoma" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{v_sub_title}]]></textFieldExpression>
+			</textField>
+			<image hAlign="Center" vAlign="Middle">
+				<reportElement x="116" y="3" width="74" height="63" uuid="8aab406a-039f-4856-850d-6535e1458724"/>
+				<imageExpression><![CDATA["E:\\Project_SE\\suneraInvestment\\suneraInvestment_system\\src\\com\\softidea\\www\\public_access\\images\\Logo.png"]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="191" y="46" width="268" height="20" uuid="914e99f4-9890-4d60-b79e-87156c020f1d"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
+				<text><![CDATA[Infront of Fuel Station,Anuradhapura Road, Kahatagasdigiliya]]></text>
+			</staticText>
+			<line>
+				<reportElement x="4" y="71" width="549" height="1" uuid="ca0033d8-fac0-434a-aaae-91352d403915"/>
+			</line>
+			<textField>
+				<reportElement style="Detail" x="469" y="76" width="83" height="15" forecolor="#FFFFFF" uuid="a5fe7e1c-b32e-4692-b816-9821449cf640"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Tahoma"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{cash_ac_type}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement style="SubTitle" x="405" y="73" width="64" height="21" forecolor="#FAFAFA" uuid="df8a8649-40bf-45fa-9179-3c6a5d6e001b"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Tahoma" size="12"/>
+				</textElement>
+				<text><![CDATA[Cash Type -]]></text>
+			</staticText>
+		</band>
+	</title>
+	<columnHeader>
+		<band height="25" splitType="Stretch">
+			<frame>
+				<reportElement mode="Opaque" x="1" y="5" width="554" height="20" backcolor="#4CAF50" uuid="725c7157-5d64-4196-816d-619b64fd1e9c"/>
+				<staticText>
+					<reportElement style="Column header" x="4" y="3" width="80" height="15" uuid="1579b257-18f7-425b-8ca5-db920388d453"/>
+					<textElement verticalAlignment="Middle">
+						<font fontName="Tahoma"/>
+					</textElement>
+					<text><![CDATA[Date]]></text>
+				</staticText>
+				<staticText>
+					<reportElement style="Column header" x="86" y="3" width="84" height="15" uuid="2d8ebba2-a015-4e4c-851a-037f16259e8e"/>
+					<textElement verticalAlignment="Middle">
+						<font fontName="Tahoma"/>
+					</textElement>
+					<text><![CDATA[Cash Type]]></text>
+				</staticText>
+				<staticText>
+					<reportElement style="Column header" x="172" y="3" width="296" height="15" uuid="a24acc01-90cb-49a0-97f8-10fa07f96746"/>
+					<textElement verticalAlignment="Middle">
+						<font fontName="Tahoma"/>
+					</textElement>
+					<text><![CDATA[Discription]]></text>
+				</staticText>
+				<staticText>
+					<reportElement style="Column header" x="473" y="3" width="79" height="15" uuid="62d78240-8250-487b-8e00-0fb335e72f4a"/>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font fontName="Tahoma"/>
+					</textElement>
+					<text><![CDATA[Amount]]></text>
+				</staticText>
+			</frame>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="21" splitType="Stretch">
+			<frame>
+				<reportElement x="4" y="1" width="551" height="15" uuid="35dae968-3f25-43ca-b483-95ec7cc742c9"/>
+				<textField>
+					<reportElement style="Detail" x="4" y="0" width="77" height="15" uuid="4734124c-36c3-4e16-8909-5778aaa91f21"/>
+					<textElement verticalAlignment="Middle">
+						<font fontName="Tahoma" size="10"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{date}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement style="Detail" x="84" y="0" width="83" height="15" uuid="964e3cff-bdca-4063-b6d2-af8f822d97c3"/>
+					<textElement verticalAlignment="Middle">
+						<font fontName="Tahoma" size="10"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{cash_ac_type}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement style="Detail" x="169" y="0" width="296" height="15" uuid="8aba6bbc-3a42-4e09-a315-3a7cf27d9d99"/>
+					<textElement verticalAlignment="Middle">
+						<font fontName="Tahoma" size="10"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{cash_ac_discription}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement style="Detail" mode="Opaque" x="470" y="0" width="79" height="15" backcolor="#999999" uuid="d76d447e-2be2-4a4f-8baf-4556a357117b"/>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font fontName="Tahoma" size="10"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{amount}]]></textFieldExpression>
+				</textField>
+			</frame>
+			<line>
+				<reportElement positionType="FixRelativeToBottom" mode="Transparent" x="4" y="16" width="551" height="1" forecolor="#4CAF50" backcolor="#4CAF50" uuid="3e3adcad-aa79-4fb8-8df9-afc6a1793476"/>
+				<graphicElement>
+					<pen lineWidth="0.5" lineColor="#999999"/>
+				</graphicElement>
+			</line>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="26" splitType="Stretch">
+			<textField pattern="EEEEE dd MMMMM yyyy">
+				<reportElement style="Column header" x="422" y="0" width="131" height="26" forecolor="#000000" uuid="90537631-af32-4bca-86a6-3ae4aecf7e00"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Tahoma" size="10" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement style="Column header" x="3" y="0" width="131" height="26" forecolor="#000000" uuid="89a38552-8135-4881-be47-b905325de21b"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Tahoma" size="10" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Cash Reports]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="367" y="0" width="55" height="26" uuid="44e4516a-64ca-493e-8003-9ff59dca269a"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Tahoma"/>
+				</textElement>
+				<text><![CDATA[Issue Date:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="261" y="0" width="32" height="26" uuid="f2e15a50-62f3-4316-a8e6-26b9c88d7de0"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Tahoma"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<summary>
+		<band height="83" splitType="Stretch">
+			<rectangle>
+				<reportElement x="1" y="0" width="554" height="83" backcolor="#4CAF50" uuid="cf9e419e-44c2-45d8-b38f-291edc12516f"/>
+				<graphicElement>
+					<pen lineWidth="0.0"/>
+				</graphicElement>
+			</rectangle>
+			<rectangle>
+				<reportElement x="1" y="17" width="554" height="20" backcolor="#1B5E20" uuid="1c676f0c-c4c5-4ada-9c73-549b827feb69"/>
+				<graphicElement>
+					<pen lineWidth="0.0"/>
+				</graphicElement>
+			</rectangle>
+			<staticText>
+				<reportElement style="Column header" x="463" y="0" width="89" height="15" uuid="3d589e86-d6f4-451f-aee9-429fd10e8c26"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Tahoma"/>
+				</textElement>
+				<text><![CDATA[Total Amount:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="1" y="0" width="80" height="15" uuid="3127c1c5-2e62-4cc4-92fd-0edd2ca881f2"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Tahoma"/>
+				</textElement>
+				<text><![CDATA[Date]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="381" y="16" width="171" height="20" forecolor="#FF3333" uuid="a5a77d99-4c38-4099-8cfe-bbd9a5370992"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Tahoma" size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{amount_1}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement style="SubTitle" x="6" y="37" width="95" height="21" forecolor="#FAFAFA" uuid="23b89e67-2e06-41f6-aca8-a2bcd941228c"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Tahoma" size="10"/>
+				</textElement>
+				<text><![CDATA[Total Capital         :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="SubTitle" x="6" y="60" width="95" height="21" forecolor="#FAFAFA" uuid="803fc339-eb73-44c1-ab26-a3cbf9c6c12e"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Tahoma" size="10"/>
+				</textElement>
+				<text><![CDATA[Total Capital Loans:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="SubTitle" x="199" y="37" width="104" height="21" forecolor="#FAFAFA" uuid="fe924172-44f0-4810-81bc-045472fe0cf0"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Tahoma" size="10"/>
+				</textElement>
+				<text><![CDATA[Outstanding Capital  :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="SubTitle" x="199" y="60" width="104" height="21" forecolor="#FAFAFA" uuid="e7ee9d63-a34d-42f2-95e2-618b91786888"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Tahoma" size="10"/>
+				</textElement>
+				<text><![CDATA[Outstanding Interest :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="SubTitle" x="405" y="60" width="66" height="21" forecolor="#FAFAFA" uuid="c7e17e97-ea22-4346-90a7-19ccee099088"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Tahoma" size="10"/>
+				</textElement>
+				<text><![CDATA[Assets Total :]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="104" y="38" width="91" height="20" uuid="e3a585ab-664c-4900-b3d4-13b6d9f2185b"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$V{var1}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="104" y="63" width="91" height="20" uuid="30213b52-9495-4f9e-8c01-70d7e7d7dda6"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$V{var2}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="305" y="38" width="100" height="20" uuid="81696cb0-9b76-4e6a-9c0b-ffe3c5ffab41"/>
+				<textFieldExpression><![CDATA[$V{var3}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="306" y="60" width="99" height="20" uuid="c60f3e6e-3005-4847-b770-a8f678d1d57f"/>
+				<textFieldExpression><![CDATA[$V{var4}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="471" y="61" width="81" height="20" uuid="b4a91595-d1a0-4e48-8e6e-89d009cc4569"/>
+				<textFieldExpression><![CDATA[$V{var5}]]></textFieldExpression>
+			</textField>
+		</band>
+	</summary>
+</jasperReport>
