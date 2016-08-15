@@ -22,15 +22,10 @@ import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
-/**
- *
- * @author deepalsuranga
- */
 public class Admin_customerManagment extends javax.swing.JPanel {
 
-    /**
-     * Creates new form jp_customer_add
-     */
+    double DueFundAmount = 0;
+
     public Admin_customerManagment() {
 
         initComponents();
@@ -777,114 +772,116 @@ public class Admin_customerManagment extends javax.swing.JPanel {
 
     private void bt_addLoanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_addLoanActionPerformed
 
-        int isOK = JOptionPane.showConfirmDialog(this, "Are you Sure?", "Confrom", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
-        md_profitCalculation();
-        if (isOK == JOptionPane.YES_OPTION) {
+        if (checkLoanLessThanDueFund()) {
+            int isOK = JOptionPane.showConfirmDialog(this, "Are you Sure?", "Confrom", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+            md_profitCalculation();
+            if (isOK == JOptionPane.YES_OPTION) {
 
-            Date d = new Date();
-            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-            String today_date = sdf.format(d);
+                Date d = new Date();
+                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+                String today_date = sdf.format(d);
 
-            try {
-                String gender = "male";
-                if (Admin_customerManagment.rb_male.isSelected()) {
-                    gender = "male";
-                } else if (Admin_customerManagment.rb_female.isSelected()) {
-                    gender = "female";
-                }
-
-                ///////////////////////////////////
-                String gen_loan_id = tf_loanNumber.getText().toUpperCase();
-
-                ////////////////////////////////////////////////////////////////
                 try {
-                    MC_DB.myConnection().createStatement().executeQuery("SELECT e.`funder_name`, e.`idfunder`, u.`fund`, u.`fund_date`,u.`idfund` FROM `funder` AS e LEFT JOIN `fund` AS u ON e.`idfunder` = u.`funder_idfunder`;");
-                    MC_DB.myConnection().createStatement().executeQuery("SELECT * from funder where idfunder='" + md_funderID() + "' ");
-                } catch (SQLException ex) {
-                    Logger.getLogger(Admin_customerManagment.class.getName()).log(Level.SEVERE, null, ex);
-                }
-
-                //////////////////////////////////////////////////////////
-                String idwithFund = cb_selectFund.getSelectedItem().toString();
-
-                if (cb_selectFund.getSelectedIndex() == 0) {
-                    cb_periodType.setEnabled(true);
-                } else {
-                    cb_periodType.setEnabled(false);
-                    lb_v_finalDate.setText("");
-                }
-
-                int fundID = 0;
-                try {
-                    String[] id = idwithFund.split("-", 0);
-                    if (id != null) {
-
-                        fundID = Integer.parseInt(id[0]);
-
+                    String gender = "male";
+                    if (Admin_customerManagment.rb_male.isSelected()) {
+                        gender = "male";
+                    } else if (Admin_customerManagment.rb_female.isSelected()) {
+                        gender = "female";
                     }
-                } catch (NumberFormatException e) {
-                }
+
+                    ///////////////////////////////////
+                    String gen_loan_id = tf_loanNumber.getText().toUpperCase();
+
+                    ////////////////////////////////////////////////////////////////
+                    try {
+                        MC_DB.myConnection().createStatement().executeQuery("SELECT e.`funder_name`, e.`idfunder`, u.`fund`, u.`fund_date`,u.`idfund` FROM `funder` AS e LEFT JOIN `fund` AS u ON e.`idfunder` = u.`funder_idfunder`;");
+                        MC_DB.myConnection().createStatement().executeQuery("SELECT * from funder where idfunder='" + md_funderID() + "' ");
+                    } catch (SQLException ex) {
+                        Logger.getLogger(Admin_customerManagment.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+
+                    //////////////////////////////////////////////////////////
+                    String idwithFund = cb_selectFund.getSelectedItem().toString();
+
+                    if (cb_selectFund.getSelectedIndex() == 0) {
+                        cb_periodType.setEnabled(true);
+                    } else {
+                        cb_periodType.setEnabled(false);
+                        lb_v_finalDate.setText("");
+                    }
+
+                    int fundID = 0;
+                    try {
+                        String[] id = idwithFund.split("-", 0);
+                        if (id != null) {
+
+                            fundID = Integer.parseInt(id[0]);
+
+                        }
+                    } catch (NumberFormatException e) {
+                    }
 
                 /////////////////////////////////////////////////////
-                //DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-                //get current date time with Date()
-                Date date = new Date();
-                dc_registrationDate.setDate(date);
+                    //DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+                    //get current date time with Date()
+                    Date date = new Date();
+                    dc_registrationDate.setDate(date);
 
-                ///////////////////////////////////////////////////////   
-                if (pmd.EmtyisTextFiled(tf_nic) && pmd.EmtyisTextFiled(tf_name) && pmd.EmtyisTextFiled(tf_address) && pmd.EmtyisTextFiled(tf_contact) && pmd.EmtyisTextFiled(tf_loanAmount) && pmd.EmtyisTextFiled(tf_period)) {
-                    SimpleDateFormat sdfc = new SimpleDateFormat("yyyy-MM-dd");
-                    String register_date = sdf.format(d);
-                    String subType = "withSaturday";
-                    if (cb_periodType.getSelectedIndex() == 0) {
-                        subType = "withOutSaturday";
+                    ///////////////////////////////////////////////////////   
+                    if (pmd.EmtyisTextFiled(tf_nic) && pmd.EmtyisTextFiled(tf_name) && pmd.EmtyisTextFiled(tf_address) && pmd.EmtyisTextFiled(tf_contact) && pmd.EmtyisTextFiled(tf_loanAmount) && pmd.EmtyisTextFiled(tf_period)) {
+                        SimpleDateFormat sdfc = new SimpleDateFormat("yyyy-MM-dd");
+                        String register_date = sdf.format(d);
+                        String subType = "withSaturday";
+                        if (cb_periodType.getSelectedIndex() == 0) {
+                            subType = "withOutSaturday";
+                        } else {
+                            subType = "withSaturday";
+                        }
+
+                        boolean isture = md_cus.saveCustomer(
+                                tf_nic.getText().toLowerCase(),
+                                tf_name.getText().toLowerCase(),
+                                tf_address.getText().toLowerCase(),
+                                tf_contact.getText().toLowerCase(),
+                                gender,
+                                gen_loan_id,
+                                register_date,
+                                tf_loanAmount.getText().trim(),
+                                cb_mainInstallmentPeriodType.getSelectedItem().toString() + "-" + subType,
+                                tf_period.getText(),
+                                lb_v_installment.getText(),
+                                tf_extraInterest.getText(),
+                                lb_v_totalAmount.getText(),
+                                "0.00",
+                                "active",
+                                fundID + "",
+                                md_funderID()
+                        );
+
+                        String sql_tocash = "INSERT INTO `cash_account` (`date`,`amount`,`cash_ac_type`,`cash_ac_discription`,`cash_ac_status`) VALUES ('" + register_date + "','" + md_Calc.stringTodoubleString(tf_loanAmount.getText().trim()) + "','Loan','" + "NIC:" + tf_nic.getText().toString() + "-Loan Number:" + tf_loanNumber.getText() + "','Active');";
+                        MC_DB.update_data(sql_tocash);
+                        md_tb_loadCustomer("active");
+                        md_loans.minToFunderFund(fundID, lb_v_loanAmount.getText());
+
+                        if (isture == true) {
+                            JOptionPane.showMessageDialog(this, "Customer And Loan Successfully \n Saved!");
+                            String periodType = cb_mainInstallmentPeriodType.getSelectedItem().toString().substring(0, 1).toUpperCase();
+                            md_genLoadId(periodType);
+                        } else {
+                            JOptionPane.showMessageDialog(this, "Customer And Loan  \n Not Saved!");
+                        }
+
                     } else {
-                        subType = "withSaturday";
+                        JOptionPane.showMessageDialog(this, "Field(s) is Empty! \n Can't add Loan");
                     }
 
-                    boolean isture = md_cus.saveCustomer(
-                            tf_nic.getText().toLowerCase(),
-                            tf_name.getText().toLowerCase(),
-                            tf_address.getText().toLowerCase(),
-                            tf_contact.getText().toLowerCase(),
-                            gender,
-                            gen_loan_id,
-                            register_date,
-                            tf_loanAmount.getText().trim(),
-                            cb_mainInstallmentPeriodType.getSelectedItem().toString() + "-" + subType,
-                            tf_period.getText(),
-                            lb_v_installment.getText(),
-                            tf_extraInterest.getText(),
-                            lb_v_totalAmount.getText(),
-                            "0.00",
-                            "active",
-                            fundID + "",
-                            md_funderID()
-                    );
-
-                    String sql_tocash = "INSERT INTO `cash_account` (`date`,`amount`,`cash_ac_type`,`cash_ac_discription`,`cash_ac_status`) VALUES ('" + register_date + "','" + md_Calc.stringTodoubleString(tf_loanAmount.getText().trim()) + "','Loan','" + "NIC:" + tf_nic.getText().toString() + "-Loan Number:" + tf_loanNumber.getText() + "','Active');";
-                    MC_DB.update_data(sql_tocash);
-                    md_tb_loadCustomer("active");
-                    md_loans.minToFunderFund(fundID, lb_v_loanAmount.getText());
-
-                    if (isture == true) {
-                        JOptionPane.showMessageDialog(this, "Customer And Loan Successfully \n Saved!");
-                        String periodType = cb_mainInstallmentPeriodType.getSelectedItem().toString().substring(0, 1).toUpperCase();
-                        md_genLoadId(periodType);
-                    } else {
-                        JOptionPane.showMessageDialog(this, "Customer And Loan  \n Not Saved!");
-                    }
-
-                } else {
-                    JOptionPane.showMessageDialog(this, "Field(s) is Empty! \n Can't add Loan");
+                } catch (HeadlessException e) {
+                    e.printStackTrace();
                 }
 
-            } catch (HeadlessException e) {
-                e.printStackTrace();
+            } else if (isOK == JOptionPane.NO_OPTION) {
+                md_profitCalculation();
             }
-
-        } else if (isOK == JOptionPane.NO_OPTION) {
-            md_profitCalculation();
         }
 
 
@@ -980,6 +977,12 @@ public class Admin_customerManagment extends javax.swing.JPanel {
 
 
     private void tf_loanAmountKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tf_loanAmountKeyPressed
+
+        int key = evt.getKeyCode();
+
+        if (key == KeyEvent.VK_ENTER) {
+            checkLoanLessThanDueFund();
+        }
 
 
     }//GEN-LAST:event_tf_loanAmountKeyPressed
@@ -1322,6 +1325,7 @@ public class Admin_customerManagment extends javax.swing.JPanel {
             while (rs.next()) {
 
                 double fund = rs.getDouble("fund_update");
+                DueFundAmount = rs.getDouble("fund_update");
                 String funddate = rs.getString("fund_date");
                 int fundid = rs.getInt("idfund");
 
@@ -1618,6 +1622,19 @@ public class Admin_customerManagment extends javax.swing.JPanel {
         rb_male.setSelected(false);
         rb_female.setSelected(false);
         tf_contact.setText("");
+
+    }
+
+    private boolean checkLoanLessThanDueFund() {
+
+        if (DueFundAmount >= Double.parseDouble(tf_loanAmount.getText())) {
+            return true;
+        } else {
+            tf_extraInterest.setText("");
+            tf_period.setText("");
+            JOptionPane.showMessageDialog(this, "Waring:Loan Amount should be less than fund amount", "Warning", JOptionPane.WARNING_MESSAGE);
+            return false;
+        }
 
     }
 
