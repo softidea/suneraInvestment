@@ -199,6 +199,7 @@ public class Admin_cashManagment extends javax.swing.JPanel {
                     RI += ((period * installment) - loanAmount) / (period * installment) * paidAmount;
 
                 }
+                System.out.println("RI----------------"+RI);
 
             } else {
                 JOptionPane.showMessageDialog(null, "Can not save empty values", "Error", JOptionPane.ERROR_MESSAGE);
@@ -230,7 +231,7 @@ public class Admin_cashManagment extends javax.swing.JPanel {
                             while (rs.next()) {
                                 Vector v = new Vector();
                                 v.add(rs.getString("idcash_account"));
-                                v.add(rs.getString("amount"));
+                                v.add(rs.getDouble("amount"));
                                 v.add(rs.getString("cash_ac_type"));
                                 v.add(rs.getString("cash_ac_discription"));
                                 v.add(rs.getString("date"));
@@ -242,7 +243,7 @@ public class Admin_cashManagment extends javax.swing.JPanel {
                             while (rs.next()) {
                                 Vector v = new Vector();
                                 v.add(rs.getString("idcash_account"));
-                                v.add(rs.getString("amount"));
+                                v.add(rs.getDouble("amount"));
                                 v.add(rs.getString("cash_ac_type"));
                                 v.add(rs.getString("cash_ac_discription"));
                                 v.add(rs.getString("date"));
