@@ -27,6 +27,7 @@ public class Admin_cashManagment extends javax.swing.JPanel {
                 setDueTotalInterest();
                 viewCashTableData();
                 viewTotalAssets();
+                getTotalRI();
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -172,9 +173,37 @@ public class Admin_cashManagment extends javax.swing.JPanel {
     }
     //view loan amounts
 
+    //get sum RI
+    public void getTotalRI() {
+        double RI=0;
+        try {
+            ResultSet rs = MC_DB.myConnection().createStatement().executeQuery("SELECT * FROM loans");
+            while (rs.next()) {
+                int period = Integer.parseInt(rs.getString("loan_period"));
+                double loanAmount = rs.getDouble("loan_amount");
+                double installment = rs.getDouble("loan_installment");
+                int idloan = rs.getInt("idloans");
+
+                System.out.println("idloan================" + idloan);
+                double paidAmount = 0;
+
+                ResultSet rs2 = MC_DB.myConnection().createStatement().executeQuery("SELECT SUM(payment) AS calPayment FROM installment WHERE idloans='" + idloan + "'");
+                if (rs2.next()) {
+                    paidAmount = Double.parseDouble(rs2.getInt("calPayment") + "");
+
+                }
+                RI += ((period * installment) - loanAmount) / (period * installment) * paidAmount;
+            }
+            System.out.println("RI----------------" + RI);
+            lb_v_withdrawAvailableAmount.setText("( Available withdrwal= "+Math.round(RI) + ".00 )");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+    //get sum RI
+
     // saving wihdrawal to cash account
     public void saveWithdrawCash() {
-        double RI = 0;
         try {
             String withdrawDate = new SimpleDateFormat("YYYY-MM-dd").format(new Date());
             String withdrawAmount = tf_withdrawalAmount.getText();
@@ -183,23 +212,14 @@ public class Admin_cashManagment extends javax.swing.JPanel {
             String cashStatus = "Active";
             if (!(withdrawAmount.isEmpty() && withdrawDes.isEmpty())) {
 
-                ResultSet rs = MC_DB.myConnection().createStatement().executeQuery("SELECT * FROM loans");
-                while (rs.next()) {
-                    int period = Integer.parseInt(rs.getString("loan_period"));
-                    double loanAmount = rs.getDouble("loan_amount");
-                    double installment = rs.getDouble("loan_installment");
-                    int idloan = rs.getInt("idloans");
-                    System.out.println("idloan================" + idloan);
-                    double paidAmount = 0;
-                    ResultSet rs2 = MC_DB.myConnection().createStatement().executeQuery("SELECT SUM(payment) AS calPayment FROM installment WHERE idloans='" + idloan + "'");
-                    if (rs2.next()) {
-                        paidAmount = Double.parseDouble(rs2.getInt("calPayment") + "");
-                    }
+                if (Double.parseDouble(tf_withdrawalAmount.getText()) <= Double.parseDouble(lb_v_withdrawAvailableAmount.getText())) {
 
-                    RI += ((period * installment) - loanAmount) / (period * installment) * paidAmount;
+                    MC_DB.myConnection().createStatement().executeUpdate("INSERT INTO cash_account (`date`,amount,cash_ac_type,cash_ac_discription,cash_ac_status) VALUES ('" + withdrawDate + "','" + withdrawAmount + "','" + cashType + "','" + withdrawDes + "','" + cashStatus + "')");
+                    JOptionPane.showMessageDialog(this, "Cash successfully withdrawed");
 
+                } else {
+                    JOptionPane.showMessageDialog(this, "Withdrawal Amount should be less than Received Interest Amount "+lb_v_withdrawAvailableAmount.getText(),"Withdrwal Amount can not Proceed",JOptionPane.WARNING_MESSAGE);
                 }
-                System.out.println("RI----------------"+RI);
 
             } else {
                 JOptionPane.showMessageDialog(null, "Can not save empty values", "Error", JOptionPane.ERROR_MESSAGE);
@@ -369,6 +389,7 @@ public class Admin_cashManagment extends javax.swing.JPanel {
         jScrollPane3 = new javax.swing.JScrollPane();
         ta_withdrawlDescription = new javax.swing.JTextArea();
         bt_addFund1 = new javax.swing.JButton();
+        lb_v_withdrawAvailableAmount = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tb_cashAccount = new javax.swing.JTable();
         jPanel2 = new javax.swing.JPanel();
@@ -516,20 +537,26 @@ public class Admin_cashManagment extends javax.swing.JPanel {
             }
         });
 
+        lb_v_withdrawAvailableAmount.setFont(new java.awt.Font("Tahoma", 2, 12)); // NOI18N
+        lb_v_withdrawAvailableAmount.setForeground(new java.awt.Color(255, 255, 255));
+        lb_v_withdrawAvailableAmount.setText("00.00");
+
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
                 .addContainerGap(20, Short.MAX_VALUE)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                        .addComponent(jScrollPane3)
-                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel3Layout.createSequentialGroup()
-                            .addComponent(lb_addRoute4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addGap(46, 46, 46))
-                        .addComponent(tf_withdrawalAmount, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(bt_addFund1, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(lb_v_withdrawAvailableAmount, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(jScrollPane3)
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel3Layout.createSequentialGroup()
+                                .addComponent(lb_addRoute4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addGap(166, 166, 166))
+                            .addComponent(tf_withdrawalAmount, javax.swing.GroupLayout.DEFAULT_SIZE, 300, Short.MAX_VALUE))
+                        .addComponent(bt_addFund1, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
         jPanel3Layout.setVerticalGroup(
@@ -540,8 +567,10 @@ public class Admin_cashManagment extends javax.swing.JPanel {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(tf_withdrawalAmount, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 66, Short.MAX_VALUE)
-                .addGap(10, 10, 10)
+                .addComponent(lb_v_withdrawAvailableAmount)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 10, Short.MAX_VALUE)
                 .addComponent(bt_addFund1, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
@@ -668,7 +697,7 @@ public class Admin_cashManagment extends javax.swing.JPanel {
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addContainerGap(116, Short.MAX_VALUE)
+                .addContainerGap(42, Short.MAX_VALUE)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
                     .addComponent(lb_v_totalCapital))
@@ -831,9 +860,9 @@ public class Admin_cashManagment extends javax.swing.JPanel {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                        .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
@@ -912,6 +941,7 @@ public class Admin_cashManagment extends javax.swing.JPanel {
     private javax.swing.JLabel lb_v_totalAsset;
     private javax.swing.JLabel lb_v_totalCapital;
     private javax.swing.JLabel lb_v_totalLoan;
+    private javax.swing.JLabel lb_v_withdrawAvailableAmount;
     private javax.swing.JLabel lblfunds;
     private javax.swing.JLabel lblinstallments;
     private javax.swing.JLabel lblloans;
