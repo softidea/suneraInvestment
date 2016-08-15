@@ -135,7 +135,6 @@ public class Admin_fundManagment extends javax.swing.JPanel {
         lb_addRoute11 = new javax.swing.JLabel();
         lb_addRoute12 = new javax.swing.JLabel();
         cb_loadActiveStatus = new javax.swing.JComboBox();
-        bt_funder3 = new javax.swing.JButton();
 
         setBackground(new java.awt.Color(102, 102, 102));
 
@@ -559,22 +558,10 @@ public class Admin_fundManagment extends javax.swing.JPanel {
                 .addComponent(lb_addRoute12)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(cb_loadActiveStatus, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(18, 18, 18)
                 .addComponent(bt_funder2, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
-
-        bt_funder3.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        bt_funder3.setForeground(new java.awt.Color(255, 255, 255));
-        bt_funder3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/softidea/www/public_access/images/SuneraInvestment_selctButtonNormal.png"))); // NOI18N
-        bt_funder3.setText("View Inactive Funders");
-        bt_funder3.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        bt_funder3.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/com/softidea/www/public_access/images/SuneraInvestment_selctButtonHover.png"))); // NOI18N
-        bt_funder3.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                bt_funder3ActionPerformed(evt);
-            }
-        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -597,11 +584,7 @@ public class Admin_fundManagment extends javax.swing.JPanel {
                         .addGap(5, 5, 5))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(0, 3, Short.MAX_VALUE)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(vp_funderactiveinactive1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(10, 10, 10)
-                                .addComponent(bt_funder3, javax.swing.GroupLayout.PREFERRED_SIZE, 283, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(vp_funderactiveinactive1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(10, 10, 10)
                         .addComponent(vp_funderactiveinactive, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addContainerGap())))
@@ -615,12 +598,10 @@ public class Admin_fundManagment extends javax.swing.JPanel {
                         .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 307, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(vp_funderactiveinactive, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(vp_funderactiveinactive1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(bt_funder3, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(0, 0, Short.MAX_VALUE))
+                                .addComponent(vp_funderactiveinactive, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(0, 0, Short.MAX_VALUE))
+                            .addComponent(vp_funderactiveinactive1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -844,12 +825,6 @@ public class Admin_fundManagment extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_cb_loadActiveStatusActionPerformed
 
-    private void bt_funder3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_funder3ActionPerformed
-        
-//        viewInactiveFunders();
-        
-    }//GEN-LAST:event_bt_funder3ActionPerformed
-
     private void cb_loadFundersItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cb_loadFundersItemStateChanged
      
         loadFunderStatus();  
@@ -876,7 +851,6 @@ public class Admin_fundManagment extends javax.swing.JPanel {
     private javax.swing.JButton bt_funder;
     private javax.swing.JButton bt_funder1;
     private javax.swing.JButton bt_funder2;
-    private javax.swing.JButton bt_funder3;
     private javax.swing.JComboBox cb_loadActiveStatus;
     private javax.swing.JComboBox cb_loadFunders;
     private javax.swing.JComboBox cb_selectActiveFunder;
@@ -1091,21 +1065,21 @@ public class Admin_fundManagment extends javax.swing.JPanel {
         
     }
 
-//    private void viewInactiveFunders() {
-//       DefaultTableModel dtm = (DefaultTableModel)tb_inactive_fund.getModel();
-//       dtm.setRowCount(0);
-//        try {
-//            ResultSet rs = MC_DB.myConnection().createStatement().executeQuery("SELECT * FROM funder WHERE funder_status='In-Active'");
-//            while(rs.next()){
-//                Vector v = new Vector();
-//               
-//            }
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
-//        
-//        
-//    }
+    private void viewInactiveFunders() {
+       DefaultTableModel dtm = (DefaultTableModel)tb_inactive_fund.getModel();
+       dtm.setRowCount(0);
+        try {
+            ResultSet rs = MC_DB.myConnection().createStatement().executeQuery("SELECT * FROM funder WHERE funder_status='In-Active'");
+            while(rs.next()){
+                Vector v = new Vector();
+               
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        
+        
+    }
 
     private void loadZeroFunds(String funder) {
         
