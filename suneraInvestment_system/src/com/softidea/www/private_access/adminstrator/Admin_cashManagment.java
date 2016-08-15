@@ -262,8 +262,8 @@ public class Admin_cashManagment extends javax.swing.JPanel {
                 DefaultTableModel dtm = (DefaultTableModel) tb_cashAccount.getModel();
                 dtm.setRowCount(0);
                 try {
-                    String sDate = new SimpleDateFormat("YYYY-MM-dd").format(dc_startDate.getDate());
-                    String eDate = new SimpleDateFormat("YYYY-MM-dd").format(dc_endDate.getDate());
+                    String sDate = new SimpleDateFormat("yyyy-MM-dd").format(dc_startDate.getDate());
+                    String eDate = new SimpleDateFormat("yyyy-MM-dd").format(dc_endDate.getDate());
                     String cashType = cb_cashType.getSelectedItem().toString();
 
                     if (!(sDate.isEmpty() && eDate.isEmpty() && cashType.isEmpty())) {
@@ -934,8 +934,8 @@ public class Admin_cashManagment extends javax.swing.JPanel {
     private javax.swing.JButton bt_addFund1;
     private javax.swing.JButton bt_addFund2;
     private javax.swing.JComboBox cb_cashType;
-    private com.toedter.calendar.JDateChooser dc_endDate;
-    private com.toedter.calendar.JDateChooser dc_startDate;
+    public static com.toedter.calendar.JDateChooser dc_endDate;
+    public static com.toedter.calendar.JDateChooser dc_startDate;
     private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
@@ -972,7 +972,7 @@ public class Admin_cashManagment extends javax.swing.JPanel {
     private javax.swing.JTextField tf_withdrawalAmount;
     // End of variables declaration//GEN-END:variables
 
-    private void setCurrentDate() {
+    private static void setCurrentDate() {
         dc_startDate.setDate(new Date());
         dc_endDate.setDate(new Date());
     }

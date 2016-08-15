@@ -91,7 +91,7 @@ public class Admin_installmentManagment extends javax.swing.JPanel {
                 ResultSet rs_loadLoan = MC_DB.myConnection().createStatement().executeQuery("SElECT * FROM loans WHERE idcustomer='" + cus_id + "' AND loan_status='Active'");
                 if (rs_loadLoan.next()) {
                     loanID = rs_loadLoan.getInt("idloans");
-                    LOAN_NO=rs.getString("loan_no");
+                    LOAN_NO=rs_loadLoan.getString("loan_no");
 //                        JOptionPane.showMessageDialog(this, "loan id" + loanID);
                     tf_loanAmount.setText(rs_loadLoan.getDouble("loan_amount") + "0");
                     this.LOAN_AMOUNT=rs_loadLoan.getDouble("loan_amount");
