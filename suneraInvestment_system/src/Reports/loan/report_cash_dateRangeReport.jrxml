@@ -39,6 +39,11 @@
 	<variable name="amount_1" class="java.lang.Double" calculation="Sum">
 		<variableExpression><![CDATA[$F{amount}]]></variableExpression>
 	</variable>
+	<variable name="variable1" class="java.lang.String"/>
+	<variable name="variable2" class="java.lang.String"/>
+	<variable name="variable3" class="java.lang.String"/>
+	<variable name="variable4" class="java.lang.String"/>
+	<variable name="variable5" class="java.lang.String"/>
 	<background>
 		<band splitType="Stretch"/>
 	</background>
@@ -197,7 +202,7 @@
 		</band>
 	</pageFooter>
 	<summary>
-		<band height="87" splitType="Stretch">
+		<band height="103" splitType="Stretch">
 			<rectangle>
 				<reportElement x="2" y="20" width="554" height="20" backcolor="#1B5E20" uuid="1328915d-1f6b-4dca-8800-2c52cf91aae4"/>
 				<graphicElement>
@@ -205,7 +210,7 @@
 				</graphicElement>
 			</rectangle>
 			<rectangle>
-				<reportElement x="1" y="3" width="554" height="83" backcolor="#4CAF50" uuid="db8ce6b3-c9d0-4d55-b140-08c4e0c11196"/>
+				<reportElement x="1" y="3" width="554" height="100" backcolor="#4CAF50" uuid="db8ce6b3-c9d0-4d55-b140-08c4e0c11196"/>
 				<graphicElement>
 					<pen lineWidth="0.0"/>
 				</graphicElement>
@@ -243,6 +248,62 @@
 					<font size="11"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{todaydate}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement style="SubTitle" x="254" y="47" width="104" height="21" forecolor="#FAFAFA" uuid="f52e3da1-ac30-4a2c-8ccf-04a0bffe03df"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Tahoma" size="12"/>
+				</textElement>
+				<text><![CDATA[Total Installment       :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="SubTitle" x="12" y="70" width="95" height="21" forecolor="#FAFAFA" uuid="c3a33a0f-3220-46e5-b252-2f37653fc069"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Tahoma" size="12"/>
+				</textElement>
+				<text><![CDATA[Total Loans           :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="SubTitle" x="12" y="47" width="95" height="21" forecolor="#FAFAFA" uuid="61641f9f-a948-4374-9a71-4626520ae7a0"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Tahoma" size="12"/>
+				</textElement>
+				<text><![CDATA[Total Funds          :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="SubTitle" x="254" y="70" width="104" height="21" forecolor="#FAFAFA" uuid="555049ab-921b-46f2-8470-946ee3e310c7"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Tahoma" size="12"/>
+				</textElement>
+				<text><![CDATA[Total Withdrawal        :]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="107" y="50" width="98" height="20" uuid="1632ba9b-05a3-43b0-b645-bf9c8175fce0"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{variable1}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="107" y="70" width="98" height="21" uuid="0f80bcfa-bde8-401f-99c4-d86741984f78"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{variable2}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="360" y="47" width="100" height="20" uuid="93629992-e44c-4564-bb68-712d2507d8e7"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{variable3}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="358" y="70" width="100" height="21" uuid="e6f9157c-eedb-4013-b913-0f427cce10db"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{variable4}]]></textFieldExpression>
 			</textField>
 		</band>
 	</summary>
