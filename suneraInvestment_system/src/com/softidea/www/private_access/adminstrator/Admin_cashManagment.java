@@ -13,6 +13,18 @@ public class Admin_cashManagment extends javax.swing.JPanel {
 
     double RI = 0;
 
+    double TOT_LOANS=0;
+    double TOT_INSTALLMENT=0;
+    double TOT_WITHDRAWAL=0;
+    double TOT_FUNDS=0;
+    
+    double TOT_CAPITAL=0;
+    double TOT_CAPITAL_LOANS=0;
+    double OUTSTANDING_CAPITAL=0;
+    double OUTSTANDING_INTEREST=0;
+    double TOT_ASSET=0;
+    
+    
     public Admin_cashManagment() {
         initComponents();
         new Thread(() -> {
@@ -54,12 +66,16 @@ public class Admin_cashManagment extends javax.swing.JPanel {
             }
         }
         lblfunds.setText(TF + "0");
+        this.TOT_FUNDS=TF;
+        
         lblloans.setText(TL + "0");
+        this.TOT_LOANS=TL;
+        
         lblinstallments.setText(TI + "0");
+        this.TOT_INSTALLMENT=TI;
+        
         lblwithdrawals.setText(TW + "0");
-        //lblprofit.setText((TF+TI)-(TL+TW)+"0");
-//       lblnetprofit.setText((TF+TI)-(TL+TW)-(TF-TL)+"0");
-        //lblnetprofit.setText((TI-TW)+"0");
+        this.TOT_WITHDRAWAL=TW;
 
     }
 
@@ -74,6 +90,7 @@ public class Admin_cashManagment extends javax.swing.JPanel {
         System.out.println("OI======" + OI);
         System.out.println("RI======" + RI);
         lb_v_outstandingInterest.setText(OI - RI + "0");
+        this.OUTSTANDING_INTEREST=(OI-RI);
     }
     //set due ineterest
 
@@ -84,6 +101,7 @@ public class Admin_cashManagment extends javax.swing.JPanel {
         System.out.println("OC+++++++++++++++++++" + OC);
         System.out.println("OI+++++++++++++++++++++++" + OI);
         lb_v_totalAsset.setText((OC + OI) + "0");
+        this.TOT_ASSET=(OC+OI);
 
     }
 
@@ -149,6 +167,7 @@ public class Admin_cashManagment extends javax.swing.JPanel {
         double TCapital = TL + TI;
         System.out.println("total capital" + TL + TI);
         lb_v_totalCapital.setText(TCapital + "0");
+        this.TOT_CAPITAL=TCapital;
 
     }
     //view capital
@@ -159,6 +178,7 @@ public class Admin_cashManagment extends javax.swing.JPanel {
             ResultSet rs = MC_DB.myConnection().createStatement().executeQuery("SELECT SUM(due_loan_amount) AS sumDueLoan FROM loans");
             if (rs.next()) {
                 lb_v_outstandingCapital.setText(Double.parseDouble(rs.getInt("sumDueLoan") + "") + "0");
+                this.OUTSTANDING_CAPITAL=Double.parseDouble(rs.getInt("sumDueLoan")+"");
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -170,6 +190,7 @@ public class Admin_cashManagment extends javax.swing.JPanel {
     //view loan amounts
     public final void viewTotalloans() {
         lb_v_totalLoan.setText(getTotalLoanAmounts() + "0");
+        this.TOT_CAPITAL_LOANS=getTotalLoanAmounts();
     }
     //view loan amounts
 
