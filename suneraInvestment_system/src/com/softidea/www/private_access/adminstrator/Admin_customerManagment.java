@@ -523,6 +523,11 @@ public class Admin_customerManagment extends javax.swing.JPanel {
                 cb_choseStatusItemStateChanged(evt);
             }
         });
+        cb_choseStatus.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cb_choseStatusActionPerformed(evt);
+            }
+        });
 
         jLabel15.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel15.setForeground(new java.awt.Color(255, 255, 255));
@@ -1227,6 +1232,10 @@ public class Admin_customerManagment extends javax.swing.JPanel {
 
     }//GEN-LAST:event_tb_customerAddViewMouseMoved
 
+    private void cb_choseStatusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cb_choseStatusActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cb_choseStatusActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton bt_addLoan;
@@ -1549,6 +1558,7 @@ public class Admin_customerManagment extends javax.swing.JPanel {
         new Thread(() -> {
             try {
                 DefaultTableModel dtm;
+                
                 try {
 
                     ResultSet rs;

@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report_cash_dailyReport" language="groovy" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="2889d323-2154-4bc9-ae3f-dba728c0fa23">
 	<property name="ireport.zoom" value="1.5"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="72"/>
+	<property name="ireport.y" value="113"/>
 	<style name="Title" fontName="Arial" fontSize="26" isBold="true" pdfFontName="Helvetica-Bold"/>
 	<style name="SubTitle" forecolor="#666666" fontName="Arial" fontSize="18"/>
 	<style name="Column header" forecolor="#FFFFFF" fontName="Arial" fontSize="12" isBold="true"/>
@@ -10,6 +10,17 @@
 	<parameter name="cus_nicLocal" class="java.lang.String">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
+	<parameter name="cus_name" class="java.lang.String"/>
+	<parameter name="cus_contact" class="java.lang.String"/>
+	<parameter name="cus_address" class="java.lang.String"/>
+	<parameter name="loanamount" class="java.lang.String"/>
+	<parameter name="period" class="java.lang.String"/>
+	<parameter name="installment" class="java.lang.String"/>
+	<parameter name="reg_date" class="java.lang.String"/>
+	<parameter name="loanno" class="java.lang.String"/>
+	<parameter name="paidamount" class="java.lang.String"/>
+	<parameter name="dueamount" class="java.lang.String"/>
+	<parameter name="arries" class="java.lang.String"/>
 	<queryString>
 		<![CDATA[SELECT * FROM `installment` AS i,loans AS l,`customer` AS c WHERE l.`idloans`=i.`idloans` AND l.`idcustomer`=c.`idcustomer` AND l.`idcustomer`=c.`idcustomer` AND c.`cus_nic`=$P{cus_nicLocal};]]>
 	</queryString>
@@ -157,21 +168,6 @@
 				</textElement>
 				<text><![CDATA[Contact:]]></text>
 			</staticText>
-			<textField>
-				<reportElement x="75" y="99" width="172" height="20" uuid="ac9aaa69-e3d7-4a38-9e80-719b8a5b9d67"/>
-				<textElement verticalAlignment="Middle"/>
-				<textFieldExpression><![CDATA[$F{cus_nic}]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement x="75" y="123" width="172" height="20" uuid="31242b86-2cb3-49ce-b83b-e788dca5dce6"/>
-				<textElement verticalAlignment="Middle"/>
-				<textFieldExpression><![CDATA[$F{cus_fullname}]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement x="75" y="149" width="172" height="20" uuid="637b8d16-34eb-47c4-8bdd-b98bcfe2a4ce"/>
-				<textElement verticalAlignment="Middle"/>
-				<textFieldExpression><![CDATA[$F{cus_contact}]]></textFieldExpression>
-			</textField>
 			<staticText>
 				<reportElement style="SubTitle" x="292" y="120" width="95" height="21" forecolor="#FAFAFA" uuid="3cbd14c1-1097-48c7-a309-f7ee142fa9e5"/>
 				<textElement verticalAlignment="Middle">
@@ -194,17 +190,12 @@
 				<text><![CDATA[Loan Amount:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement style="SubTitle" x="23" y="172" width="46" height="20" forecolor="#FAFAFA" uuid="81a28409-178c-44de-831d-d1a11b9b53fe"/>
+				<reportElement style="SubTitle" x="22" y="172" width="46" height="20" forecolor="#FAFAFA" uuid="81a28409-178c-44de-831d-d1a11b9b53fe"/>
 				<textElement verticalAlignment="Middle">
 					<font fontName="Tahoma" size="11"/>
 				</textElement>
 				<text><![CDATA[Address:]]></text>
 			</staticText>
-			<textField>
-				<reportElement x="75" y="173" width="172" height="20" uuid="c29d6ea3-19dc-4b94-99bd-29192575cfbd"/>
-				<textElement verticalAlignment="Middle"/>
-				<textFieldExpression><![CDATA[$F{cus_address}]]></textFieldExpression>
-			</textField>
 			<staticText>
 				<reportElement style="SubTitle" x="292" y="166" width="95" height="21" forecolor="#FAFAFA" uuid="8b090ab8-d131-4866-9820-0c20f412a2cb"/>
 				<textElement verticalAlignment="Middle">
@@ -212,39 +203,75 @@
 				</textElement>
 				<text><![CDATA[Registration Date:]]></text>
 			</staticText>
-			<textField>
-				<reportElement x="367" y="74" width="176" height="20" forecolor="#FFFFFF" uuid="45f422ae-9439-4895-9730-bcee299d49e0"/>
-				<textElement verticalAlignment="Middle">
-					<font size="14"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$F{loan_no}]]></textFieldExpression>
-			</textField>
 			<staticText>
-				<reportElement style="SubTitle" x="289" y="74" width="78" height="21" forecolor="#FAFAFA" uuid="6cf29e05-9f13-4d80-9aa0-01c5f7304224"/>
+				<reportElement style="SubTitle" x="289" y="74" width="60" height="21" forecolor="#FAFAFA" uuid="6cf29e05-9f13-4d80-9aa0-01c5f7304224"/>
 				<textElement verticalAlignment="Middle">
 					<font fontName="Tahoma" size="11"/>
 				</textElement>
 				<text><![CDATA[Loan NO:]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="389" y="98" width="144" height="20" uuid="ccec8843-114c-4e16-8a88-91ad601fe366"/>
-				<textElement verticalAlignment="Middle"/>
-				<textFieldExpression><![CDATA[$F{loan_amount}]]></textFieldExpression>
+				<reportElement x="77" y="100" width="100" height="20" forecolor="#FFFFFF" uuid="4ebcd5a8-75cf-4f86-8414-60d98df58db6"/>
+				<textElement>
+					<font fontName="Tahoma" size="11"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{cus_nicLocal}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="390" y="120" width="143" height="20" uuid="68fa553b-59c5-4e47-a2cd-b95c54c7542e"/>
-				<textElement verticalAlignment="Middle"/>
-				<textFieldExpression><![CDATA[$F{loan_period}]]></textFieldExpression>
+				<reportElement x="78" y="124" width="100" height="20" forecolor="#FFFFFF" uuid="52a8692c-c0e9-461a-b1f3-d7fc282c31a1"/>
+				<textElement>
+					<font fontName="Tahoma" size="11"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{cus_name}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="390" y="143" width="143" height="20" uuid="757272f7-f005-49e2-931a-78c89f000cb0"/>
-				<textElement verticalAlignment="Middle"/>
-				<textFieldExpression><![CDATA[$F{loan_installment}]]></textFieldExpression>
+				<reportElement x="77" y="149" width="100" height="20" forecolor="#FFFFFF" uuid="f7f7a87e-632f-4748-91ce-405d9cb1b80e"/>
+				<textElement>
+					<font fontName="Tahoma" size="11"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{cus_contact}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="391" y="166" width="143" height="20" uuid="da95ce77-657d-4d03-b95b-1fbf8efd86cb"/>
-				<textElement verticalAlignment="Middle"/>
-				<textFieldExpression><![CDATA[$F{loan_date}]]></textFieldExpression>
+				<reportElement x="77" y="173" width="100" height="20" forecolor="#FFFFFF" uuid="f29c7971-b519-4404-9cab-7503569db9ed"/>
+				<textElement>
+					<font fontName="Tahoma" size="11"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{cus_address}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="388" y="101" width="100" height="20" forecolor="#FFFFFF" uuid="ea034c17-b9a5-4cc6-8364-9aec97a6a042"/>
+				<textElement>
+					<font fontName="Tahoma" size="11"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{loanamount}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="388" y="123" width="100" height="20" forecolor="#FFFFFF" uuid="6f5ca840-1af6-43ba-aae7-a4f914e1e163"/>
+				<textElement>
+					<font fontName="Tahoma" size="11"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{period}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="388" y="145" width="100" height="20" forecolor="#FFFFFF" uuid="8b43a880-ae63-46f5-a5a5-c815f90c1361"/>
+				<textElement>
+					<font fontName="Tahoma" size="11"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{installment}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="389" y="169" width="100" height="20" forecolor="#FFFFFF" uuid="37187d0b-bbd3-420d-843d-2f298865d6ef"/>
+				<textElement>
+					<font fontName="Tahoma" size="11"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{reg_date}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="350" y="76" width="100" height="20" forecolor="#FFFFFF" uuid="68c937dc-be7c-4fe2-a6f1-394eb5a3b6c5"/>
+				<textElement>
+					<font fontName="Tahoma" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{loanno}]]></textFieldExpression>
 			</textField>
 		</band>
 	</title>
@@ -373,62 +400,26 @@
 				<text><![CDATA[Date]]></text>
 			</staticText>
 			<staticText>
-				<reportElement style="SubTitle" x="6" y="37" width="95" height="21" forecolor="#FAFAFA" uuid="23b89e67-2e06-41f6-aca8-a2bcd941228c"/>
+				<reportElement style="SubTitle" x="6" y="43" width="85" height="21" forecolor="#FAFAFA" uuid="23b89e67-2e06-41f6-aca8-a2bcd941228c"/>
 				<textElement verticalAlignment="Middle">
-					<font fontName="Tahoma" size="10"/>
+					<font fontName="Tahoma" size="11" isBold="true"/>
 				</textElement>
-				<text><![CDATA[Total Capital         :]]></text>
+				<text><![CDATA[Paid Amount :]]></text>
 			</staticText>
 			<staticText>
-				<reportElement style="SubTitle" x="6" y="60" width="95" height="21" forecolor="#FAFAFA" uuid="803fc339-eb73-44c1-ab26-a3cbf9c6c12e"/>
+				<reportElement style="SubTitle" x="204" y="44" width="75" height="21" forecolor="#FAFAFA" uuid="803fc339-eb73-44c1-ab26-a3cbf9c6c12e"/>
 				<textElement verticalAlignment="Middle">
-					<font fontName="Tahoma" size="10"/>
+					<font fontName="Tahoma" size="11" isBold="true"/>
 				</textElement>
-				<text><![CDATA[Total Capital Loans:]]></text>
+				<text><![CDATA[Due Amount  :]]></text>
 			</staticText>
 			<staticText>
-				<reportElement style="SubTitle" x="199" y="37" width="104" height="21" forecolor="#FAFAFA" uuid="fe924172-44f0-4810-81bc-045472fe0cf0"/>
+				<reportElement style="SubTitle" x="403" y="45" width="47" height="21" forecolor="#FAFAFA" uuid="c7e17e97-ea22-4346-90a7-19ccee099088"/>
 				<textElement verticalAlignment="Middle">
-					<font fontName="Tahoma" size="10"/>
+					<font fontName="Tahoma" size="11" isBold="true"/>
 				</textElement>
-				<text><![CDATA[Outstanding Capital  :]]></text>
+				<text><![CDATA[Arries :]]></text>
 			</staticText>
-			<staticText>
-				<reportElement style="SubTitle" x="199" y="60" width="104" height="21" forecolor="#FAFAFA" uuid="e7ee9d63-a34d-42f2-95e2-618b91786888"/>
-				<textElement verticalAlignment="Middle">
-					<font fontName="Tahoma" size="10"/>
-				</textElement>
-				<text><![CDATA[Outstanding Interest :]]></text>
-			</staticText>
-			<staticText>
-				<reportElement style="SubTitle" x="405" y="60" width="66" height="21" forecolor="#FAFAFA" uuid="c7e17e97-ea22-4346-90a7-19ccee099088"/>
-				<textElement verticalAlignment="Middle">
-					<font fontName="Tahoma" size="10"/>
-				</textElement>
-				<text><![CDATA[Assets Total :]]></text>
-			</staticText>
-			<textField>
-				<reportElement x="104" y="38" width="91" height="20" uuid="e3a585ab-664c-4900-b3d4-13b6d9f2185b"/>
-				<textElement verticalAlignment="Middle"/>
-				<textFieldExpression><![CDATA[$V{var1}]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement x="104" y="63" width="91" height="20" uuid="30213b52-9495-4f9e-8c01-70d7e7d7dda6"/>
-				<textElement verticalAlignment="Middle"/>
-				<textFieldExpression><![CDATA[$V{var2}]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement x="305" y="38" width="100" height="20" uuid="81696cb0-9b76-4e6a-9c0b-ffe3c5ffab41"/>
-				<textFieldExpression><![CDATA[$V{var3}]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement x="306" y="60" width="99" height="20" uuid="c60f3e6e-3005-4847-b770-a8f678d1d57f"/>
-				<textFieldExpression><![CDATA[$V{var4}]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement x="471" y="61" width="81" height="20" uuid="b4a91595-d1a0-4e48-8e6e-89d009cc4569"/>
-				<textFieldExpression><![CDATA[$V{var5}]]></textFieldExpression>
-			</textField>
 			<textField>
 				<reportElement x="4" y="18" width="100" height="20" forecolor="#FFFFFF" uuid="fbdb9df3-09d6-4337-b700-73088924ff87"/>
 				<textElement verticalAlignment="Middle">
@@ -442,6 +433,27 @@
 					<font isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$V{payment_1}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="91" y="46" width="100" height="20" forecolor="#FFFFFF" uuid="83a5167f-2d0c-4247-b226-15edfa4563e7"/>
+				<textElement>
+					<font fontName="Tahoma" size="11" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{paidamount}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="279" y="49" width="100" height="20" forecolor="#FFFFFF" uuid="5189a4ff-94e1-481d-916d-8b58c64066af"/>
+				<textElement>
+					<font fontName="Tahoma" size="11" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{dueamount}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="446" y="50" width="100" height="20" forecolor="#FFFFFF" uuid="907cd55a-896d-41d6-b35b-b9dac2119b44"/>
+				<textElement>
+					<font fontName="Tahoma" size="11" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{arries}]]></textFieldExpression>
 			</textField>
 		</band>
 	</summary>

@@ -903,8 +903,27 @@ public class Admin_cashManagment extends javax.swing.JPanel {
 
     private void bt_addFundActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_addFundActionPerformed
 
-        
+        //jc_start.getDate()
+        String startDate = new SimpleDateFormat("YYYY-MM-dd").format(dc_startDate.getDate());
+        String endDate = new SimpleDateFormat("YYYY-MM-dd").format(dc_endDate.getDate());
+        String todayDate = new SimpleDateFormat("YYYY-MM-dd").format(new Date());
 
+        String cashType = cb_cashType.getSelectedItem().toString();
+        if (cashType.equals("All")) {JOptionPane.showMessageDialog(this, "Print all Temporarly Disabled");}else{
+            
+            String totCapital = lb_v_totalCapital.getText();
+            String totCapLoans = lb_v_totalLoan.getText();
+            String out_capital = lb_v_outstandingCapital.getText();
+            String out_interest = lb_v_outstandingInterest.getText();
+            String asset = lb_v_totalAsset.getText();
+
+            String subtitle = "Final Report";
+
+            String path = "src//Reports//loan//report_cash_AdvancedReport.jrxml";
+            //E:\Project_SE\suneraInvestment\suneraInvestment_system\src\Reports\customer\report_customerandloandetalsHistory.jrxml
+
+            cash_reportView(path, startDate, endDate, subtitle, cashType, totCapital, totCapLoans, out_capital, out_interest,asset);
+        }
 
     }//GEN-LAST:event_bt_addFundActionPerformed
 
@@ -939,13 +958,13 @@ public class Admin_cashManagment extends javax.swing.JPanel {
         String totloan = lblloans.getText();
         String installment = lblinstallments.getText();
         String withdraw = lblwithdrawals.getText();
-        
-        String subtitle ="Daily";
-        
+
+        String subtitle = "Daily";
+
         String path = "src//Reports//loan//report_cash_dateRangeReport.jrxml";
         //E:\Project_SE\suneraInvestment\suneraInvestment_system\src\Reports\customer\report_customerandloandetalsHistory.jrxml
 
-        md_reportView(path, startDate, endDate,todayDate,totfund,totloan,installment,withdraw,subtitle);
+        md_reportView(path, startDate, endDate, todayDate, totfund, totloan, installment, withdraw, subtitle);
 
     }//GEN-LAST:event_bt_addFund2ActionPerformed
 
@@ -1003,22 +1022,66 @@ public class Admin_cashManagment extends javax.swing.JPanel {
         dc_endDate.setDate(new Date());
     }
 
-    private void md_reportView(String rp_parth, String sdate, String edate, String todayDate,String totfund,String totloan,String installment,String withdraw,String subtitle) {
-        
+    private void cash_reportView(String rp_parth, String startDate, String endDate, String subtitle, String cashType, String totCapital, String totCapLoans, String out_capital, String out_interest,String asset) {
+
         try {
             JasperReport jp = JasperCompileManager.compileReport(rp_parth);
             System.out.println("===========jasper report compiled successfully==========");
             Map<String, Object> map = new HashMap<String, Object>();
 
-            map.put("startDate", sdate);
-            map.put("endDate", edate);
-//            map.put("todaydate", todayDate);
-//            map.put("variable1", totfund);
-//            map.put("variable2", totloan);
-//            map.put("variable3", installment);
-//            map.put("variable4", withdraw);
-//            map.put("v_sub_title", subtitle);
-            
+            map.put("startdate", startDate);
+            map.put("enddate", endDate);
+            map.put("cashtype", cashType);
+            map.put("sub_type", subtitle);
+            map.put("totcapital", totCapital);
+            map.put("totcapitalloans", totCapLoans);
+            map.put("tot_out_capital", out_capital);
+            map.put("tot_out_interest", out_interest);
+            map.put("tot_asset",asset );
+
+            System.out.println(startDate);
+            System.out.println(endDate);
+            System.out.println(cashType);
+            System.out.println(subtitle);
+            System.out.println(totCapital);
+            System.out.println(totCapLoans);
+            System.out.println(out_capital);
+            System.out.println(out_interest);
+            System.out.println(asset);
+
+            JasperPrint jasperPrint = JasperFillManager.fillReport(jp, map, MC_DB.myConnection());
+            JasperViewer.viewReport(jasperPrint, false);
+            JRViewer v = new JRViewer(jasperPrint);
+            //jTabbedPane1.addTab(monthName+" Income In "+jc_Check_monthly_Income_In_Course.getSelectedItem().toString(), v);
+//            if (jTabbedPane1.getTabCount() > 0) {
+//                jTabbedPane1.remove(jTabbedPane1.getTabCount() - 1);
+//            }
+//
+//            jTabbedPane1.addTab("View Reports", v);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            //Logger.getLogger(Inventory_reports.class.getName()).log(Level.SEVERE, null, e);
+        }
+
+    }
+
+    private void md_reportView(String rp_parth, String sdate, String edate, String todayDate, String totfund, String totloan, String installment, String withdraw, String subtitle) {
+
+        try {
+            JasperReport jp = JasperCompileManager.compileReport(rp_parth);
+            System.out.println("===========jasper report compiled successfully==========");
+            Map<String, Object> map = new HashMap<String, Object>();
+
+            map.put("startdate", sdate);
+            map.put("enddate", edate);
+            map.put("todaydate", todayDate);
+            map.put("totfund", totfund);
+            map.put("totloans", totloan);
+            map.put("totinstallment", installment);
+            map.put("totwithdrawal", withdraw);
+            map.put("p_subType", subtitle);
+
             System.out.println(sdate);
             System.out.println(edate);
             System.out.println(todayDate);
@@ -1027,7 +1090,7 @@ public class Admin_cashManagment extends javax.swing.JPanel {
             System.out.println(installment);
             System.out.println(withdraw);
             System.out.println(subtitle);
-            
+
             JasperPrint jasperPrint = JasperFillManager.fillReport(jp, map, MC_DB.myConnection());
             JasperViewer.viewReport(jasperPrint, false);
             JRViewer v = new JRViewer(jasperPrint);
