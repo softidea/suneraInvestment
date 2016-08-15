@@ -16,6 +16,25 @@ public class Admin_installmentManagment extends javax.swing.JPanel {
     int loanID = 1;
     double due_Loan_Amount = 0;
 
+    String CUS_NIC="";
+    String CUS_NAME="";
+    String CUS_ADDRESS="";
+    String CUS_CONTACT="";
+    
+    String LOAN_NO="";
+    int LOAN_PERIOD=0;
+    double LOAN_AMOUNT=0;
+    double LOAN_INSTALLMENT=0;
+    String LOAN_REG_DATE="";
+    
+    double PAID_AMOUNT=0;
+    double DUE_AMOUNT=0;
+    double DUE_INTEREST=0;
+    double PAID_INTEREST=0;
+    double PAYABLE_INTEREST=0;
+    double ARRIUS=0;
+    
+    
     public Admin_installmentManagment() {
         initComponents();
 
@@ -47,27 +66,44 @@ public class Admin_installmentManagment extends javax.swing.JPanel {
         double dueAmount = loanAmount - paidAmount;
         tf_dueAmount.setText(dueAmount + "0");
         due_Loan_Amount = dueAmount;
+        this.DUE_AMOUNT=dueAmount;
     }
 
     public void loadCutomerLoanData() {
         try {
             ResultSet rs = MC_DB.search_dataOne("customer", "cus_nic", tf_nic.getText().trim().toLowerCase());
             if (rs.next()) {
+                
+                this.CUS_NIC=tf_nic.getText().trim();
+                
                 tf_name.setText(rs.getString("cus_fullname"));
+                this.CUS_NAME=rs.getString("cus_fullname");
+                
                 tf_address.setText(rs.getString("cus_address"));
+                this.CUS_ADDRESS=rs.getString("cus_address");
+                
                 tf_contact.setText(rs.getString("cus_contact"));
-
+                this.CUS_NIC=rs.getString("cus_contact");
+                
                 int cus_id = rs.getInt("idcustomer");
 //                    JOptionPane.showMessageDialog(this, cus_id);
 
                 ResultSet rs_loadLoan = MC_DB.myConnection().createStatement().executeQuery("SElECT * FROM loans WHERE idcustomer='" + cus_id + "' AND loan_status='Active'");
                 if (rs_loadLoan.next()) {
                     loanID = rs_loadLoan.getInt("idloans");
+                    LOAN_NO=rs.getString("loan_no");
 //                        JOptionPane.showMessageDialog(this, "loan id" + loanID);
                     tf_loanAmount.setText(rs_loadLoan.getDouble("loan_amount") + "0");
+                    this.LOAN_AMOUNT=rs_loadLoan.getDouble("loan_amount");
+                    
                     tf_period.setText(rs_loadLoan.getString("loan_period"));
+                    this.LOAN_PERIOD=Integer.parseInt(rs_loadLoan.getString("loan_period"));
+                    
                     tf_installment.setText(rs_loadLoan.getDouble("loan_installment") + "0");
+                    this.LOAN_INSTALLMENT=rs_loadLoan.getDouble("loan_installment");
+                    
                     tf_regDate.setText(rs_loadLoan.getString("loan_date"));
+                    this.LOAN_REG_DATE=rs_loadLoan.getString("loan_date");
 
                     viewInstalments(loanID);
                     setPaidAmount();
@@ -155,6 +191,7 @@ public class Admin_installmentManagment extends javax.swing.JPanel {
             }
             arriers -= paid;
             tf_arrius.setText(arriers + "");
+            this.ARRIUS=arriers;
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -179,9 +216,13 @@ public class Admin_installmentManagment extends javax.swing.JPanel {
         due_interest = Math.round(due_interest);
 
         tf_paidInterest.setText(paid_interest + "0");
+        this.PAID_INTEREST=paid_interest;
+        
         tf_payableInterest.setText(payable_interest + "0");
+        this.PAYABLE_INTEREST=payable_interest;
+        
         tf_dueInterest.setText(due_interest + "0");
-
+        this.DUE_INTEREST=due_interest;
     }
 
     public void setPaidAmount() {
@@ -193,6 +234,7 @@ public class Admin_installmentManagment extends javax.swing.JPanel {
                 amount = rs.getInt("sumPayment");
             }
             tf_paidAmount.setText(amount + "0");
+            this.PAID_AMOUNT=amount;
         } catch (Exception e) {
             e.printStackTrace();
         }

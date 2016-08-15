@@ -778,7 +778,7 @@ public class Admin_customerManagment extends javax.swing.JPanel {
             if (isOK == JOptionPane.YES_OPTION) {
 
                 Date d = new Date();
-                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+                SimpleDateFormat sdf = new SimpleDateFormat("YYYY-MM-dd");
                 String today_date = sdf.format(d);
 
                 try {
