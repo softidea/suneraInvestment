@@ -57,13 +57,12 @@ public class Admin_installmentManagment extends javax.swing.JPanel {
         } catch (Exception e) {
             e.printStackTrace();
         }
-
     }
 
     public void setDueAmount() {
-        double loanAmount = Double.parseDouble(tf_loanAmount.getText());
         double paidAmount = Double.parseDouble(tf_paidAmount.getText());
-        double dueAmount = loanAmount - paidAmount;
+        double payableAmount = Double.parseDouble(tf_period.getText())*Double.parseDouble(tf_installment.getText());
+        double dueAmount = payableAmount - paidAmount;
         tf_dueAmount.setText(dueAmount + "0");
         due_Loan_Amount = dueAmount;
         this.DUE_AMOUNT=dueAmount;
@@ -900,62 +899,9 @@ public class Admin_installmentManagment extends javax.swing.JPanel {
     private void tf_nicKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tf_nicKeyReleased
 
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
-            if (tf_nic.getText() != "" || tf_nic.getText() != null) {
-
-                try {
-                    ResultSet rs = MC_DB.search_dataOne("customer", "cus_nic", tf_nic.getText().trim().toLowerCase());
-                    if (rs.next()) {
-                        tf_name.setText(rs.getString("cus_fullname"));
-                        tf_address.setText(rs.getString("cus_address"));
-                        tf_contact.setText(rs.getString("cus_contact"));
-
-                        int cus_id = rs.getInt("idcustomer");
-//                    JOptionPane.showMessageDialog(this, cus_id);
-
-                        ResultSet rs_loadLoan = MC_DB.myConnection().createStatement().executeQuery("SElECT * FROM loans WHERE idcustomer='" + cus_id + "'");
-                        if (rs_loadLoan.next()) {
-
-                            String loan_status = rs_loadLoan.getString("loan_status");
-
-                            if (loan_status.equals("Active")) {
-                                loanID = rs_loadLoan.getInt("idloans");
-//                        JOptionPane.showMessageDialog(this, "loan id" + loanID);
-                                tf_loanAmount.setText(rs_loadLoan.getDouble("loan_amount") + "0");
-                                tf_period.setText(rs_loadLoan.getString("loan_period"));
-                                tf_installment.setText(rs_loadLoan.getDouble("loan_installment") + "");
-                                tf_regDate.setText(rs_loadLoan.getString("loan_date"));
-
-                                viewInstalments(loanID);
-                                setPaidAmount();
-                                setDueAmount();
-                                setInterestValues();
-                            } else if (loan_status.equals("In-Active")) {
-                                loanID = rs_loadLoan.getInt("idloans");
-//                        JOptionPane.showMessageDialog(this, "loan id" + loanID);
-                                tf_loanAmount.setText(rs_loadLoan.getDouble("loan_amount") + "");
-                                tf_period.setText(rs_loadLoan.getString("loan_period"));
-                                tf_installment.setText(rs_loadLoan.getDouble("loan_installment") + "0");
-                                tf_regDate.setText(rs_loadLoan.getString("loan_date"));
-
-                                viewInstalments(loanID);
-                                setPaidAmount();
-                                setDueAmount();
-                                setInterestValues();
-
-                                tf_payment.setEnabled(false);
-                                tf_discount.setEnabled(false);
-                                bt_payInstallment.setEnabled(false);
-
-                            }
-
-                        }
-
-                    }
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-
-            }
+           
+            loadCutomerLoanData();
+            calArrius();
 
         }
 

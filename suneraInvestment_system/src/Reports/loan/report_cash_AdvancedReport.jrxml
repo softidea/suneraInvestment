@@ -17,7 +17,7 @@
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
 	<queryString>
-		<![CDATA[SELECT * FROM `cash_account`  WHERE `date` BETWEEN $P{startdate} AND $P{enddate} AND `cash_ac_type`=$P{cashtype}; ]]>
+		<![CDATA[SELECT * FROM `cash_account`  WHERE `date` BETWEEN $P{startdate} AND $P{enddate} AND `cash_ac_type`=$P{cashtype};]]>
 	</queryString>
 	<field name="idcash_account" class="java.lang.Integer">
 		<fieldDescription><![CDATA[]]></fieldDescription>
@@ -78,7 +78,7 @@
 			</textField>
 			<image hAlign="Center" vAlign="Middle">
 				<reportElement x="116" y="3" width="74" height="63" uuid="8aab406a-039f-4856-850d-6535e1458724"/>
-				<imageExpression><![CDATA["E:\\Project_SE\\suneraInvestment\\suneraInvestment_system\\src\\com\\softidea\\www\\public_access\\images\\Logo.png"]]></imageExpression>
+				<imageExpression><![CDATA["http://www.ayolaninvestments.com/suneralogo/Logo.png"]]></imageExpression>
 			</image>
 			<staticText>
 				<reportElement x="191" y="46" width="268" height="20" uuid="914e99f4-9890-4d60-b79e-87156c020f1d"/>

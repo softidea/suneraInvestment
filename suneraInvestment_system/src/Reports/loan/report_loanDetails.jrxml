@@ -37,20 +37,20 @@
 	<title>
 		<band height="88" splitType="Stretch">
 			<staticText>
-				<reportElement style="SubTitle" x="98" y="52" width="373" height="33" uuid="7c6f7c16-36ce-4326-8010-4b0e98c61260"/>
+				<reportElement style="SubTitle" x="98" y="52" width="373" height="20" uuid="7c6f7c16-36ce-4326-8010-4b0e98c61260"/>
 				<textElement>
-					<font size="22"/>
+					<font size="16"/>
 				</textElement>
 				<text><![CDATA[Loan Reports]]></text>
 			</staticText>
 			<image>
-				<reportElement x="3" y="4" width="95" height="81" uuid="da6d473f-f4b1-4e6e-b9f8-aa6d97b5f1c8"/>
-				<imageExpression><![CDATA["E:\\Project_SE\\suneraInvestment\\suneraInvestment_system\\src\\com\\softidea\\www\\public_access\\images\\Logo.png"]]></imageExpression>
+				<reportElement x="36" y="15" width="62" height="57" uuid="da6d473f-f4b1-4e6e-b9f8-aa6d97b5f1c8"/>
+				<imageExpression><![CDATA["http://www.ayolaninvestments.com/suneralogo/Logo.png"]]></imageExpression>
 			</image>
 			<staticText>
-				<reportElement style="Title" x="98" y="4" width="378" height="48" uuid="949405f2-10c9-4ef5-bdeb-fc07e5e39996"/>
+				<reportElement style="Title" x="98" y="15" width="378" height="37" uuid="949405f2-10c9-4ef5-bdeb-fc07e5e39996"/>
 				<textElement verticalAlignment="Middle">
-					<font size="30" isBold="false" pdfFontName="Helvetica"/>
+					<font size="26" isBold="false" pdfFontName="Helvetica"/>
 				</textElement>
 				<text><![CDATA[SUNERA INVESTMENTS]]></text>
 			</staticText>

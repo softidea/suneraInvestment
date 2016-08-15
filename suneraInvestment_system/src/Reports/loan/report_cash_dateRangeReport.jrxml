@@ -71,7 +71,8 @@
 			</textField>
 			<image hAlign="Center" vAlign="Middle">
 				<reportElement x="117" y="6" width="74" height="63" uuid="1414d7fc-51d5-4a75-9d64-db4603da0f66"/>
-				<imageExpression><![CDATA["E:\\Project_SE\\suneraInvestment\\suneraInvestment_system\\src\\com\\softidea\\www\\public_access\\images\\Logo.png"]]></imageExpression>
+				<imageExpression><![CDATA["http://www.ayolaninvestments.com/suneralogo/Logo.png"]]></imageExpression>
+				<anchorNameExpression><![CDATA["http://design.ubuntu.com/wp-content/uploads/ubuntu-logo32.png"]]></anchorNameExpression>
 			</image>
 			<staticText>
 				<reportElement style="Title" x="191" y="6" width="269" height="43" forecolor="#FFFFFF" uuid="869d0444-ffd7-4403-b726-585618cad95d"/>

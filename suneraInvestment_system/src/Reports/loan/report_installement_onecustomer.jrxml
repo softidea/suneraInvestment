@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report_cash_dailyReport" language="groovy" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="2889d323-2154-4bc9-ae3f-dba728c0fa23">
 	<property name="ireport.zoom" value="1.5"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="73"/>
+	<property name="ireport.y" value="72"/>
 	<style name="Title" fontName="Arial" fontSize="26" isBold="true" pdfFontName="Helvetica-Bold"/>
 	<style name="SubTitle" forecolor="#666666" fontName="Arial" fontSize="18"/>
 	<style name="Column header" forecolor="#FFFFFF" fontName="Arial" fontSize="12" isBold="true"/>
@@ -112,7 +112,7 @@
 			</staticText>
 			<image hAlign="Center" vAlign="Middle">
 				<reportElement x="116" y="3" width="74" height="63" uuid="8aab406a-039f-4856-850d-6535e1458724"/>
-				<imageExpression><![CDATA["E:\\Project_SE\\suneraInvestment\\suneraInvestment_system\\src\\com\\softidea\\www\\public_access\\images\\Logo.png"]]></imageExpression>
+				<imageExpression><![CDATA["http://www.ayolaninvestments.com/suneralogo/Logo.png"]]></imageExpression>
 			</image>
 			<staticText>
 				<reportElement x="191" y="46" width="268" height="20" uuid="914e99f4-9890-4d60-b79e-87156c020f1d"/>
