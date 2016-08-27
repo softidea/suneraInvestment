@@ -51,7 +51,6 @@ public class Admin_cashManagment extends javax.swing.JPanel {
                 e.printStackTrace();
             }
         }).start();
-
     }
 
     //view all cash account
