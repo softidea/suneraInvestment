@@ -131,13 +131,11 @@ public class Admin_cashManagment extends javax.swing.JPanel {
         System.out.println("OI+++++++++++++++++++++++" + OI);
         lb_v_totalAsset.setText((OC + OI) + "0");
         this.TOT_ASSET = (OC + OI);
-
     }
 
     //view total assets
     //get received interest
     public void getReceivedInterest() {
-
         try {
             ResultSet rs = MC_DB.myConnection().createStatement().executeQuery("SELECT * FROM loans");
             while (rs.next()) {
