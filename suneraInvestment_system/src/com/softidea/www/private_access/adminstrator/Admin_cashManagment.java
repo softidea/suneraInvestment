@@ -53,14 +53,14 @@ public class Admin_cashManagment extends javax.swing.JPanel {
         }).start();
     }
 
-    //view all cash account
-    public void viewAllCash(){
-        System.out.println("view alll;;; date");
-        DefaultTableModel dtm = (DefaultTableModel)tb_cashAccount.getModel();
+//view all cash account
+    public void viewAllCash() {
+//        System.out.println("view alll;;; date");
+        DefaultTableModel dtm = (DefaultTableModel) tb_cashAccount.getModel();
         dtm.setRowCount(0);
         try {
             ResultSet rs = MC_DB.myConnection().createStatement().executeQuery("SELECT * FROM cash_account");
-            while(rs.next()){
+            while (rs.next()) {
                 Vector v = new Vector();
                 v.add(rs.getString("idcash_account"));
                 v.add(rs.getString("amount"));
@@ -73,8 +73,8 @@ public class Admin_cashManagment extends javax.swing.JPanel {
             e.printStackTrace();
         }
     }
-    //view all cash account
-    
+//view all cash account
+
     //view table date
     public void viewCashTableData() {
         double TL = 0;
@@ -213,14 +213,14 @@ public class Admin_cashManagment extends javax.swing.JPanel {
     }
     //view due loan amount
 
-    //view loan amounts
+//view loan amounts
     public final void viewTotalloans() {
         lb_v_totalLoan.setText(getTotalLoanAmounts() + "0");
         this.TOT_CAPITAL_LOANS = getTotalLoanAmounts();
     }
-    //view loan amounts
+//view loan amounts
 
-    //get sum RI
+//get sum RI
     public void getTotalRI() {
         double RI = 0;
         try {
@@ -242,14 +242,14 @@ public class Admin_cashManagment extends javax.swing.JPanel {
                 RI += ((period * installment) - loanAmount) / (period * installment) * paidAmount;
             }
             System.out.println("RI----------------" + RI);
-            lb_v_withdrawAvailableAmount.setText(Math.round(RI)+"");
+            lb_v_withdrawAvailableAmount.setText(Math.round(RI) + "");
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
-    //get sum RI
+//get sum RI
 
-    // saving wihdrawal to cash account
+// saving wihdrawal to cash account
     public void saveWithdrawCash() {
         try {
             String withdrawDate = new SimpleDateFormat("YYYY-MM-dd").format(new Date());
@@ -275,13 +275,11 @@ public class Admin_cashManagment extends javax.swing.JPanel {
         } catch (Exception e) {
             e.printStackTrace();
         }
-
     }
-    //saving withdrawal to cash account
+//saving withdrawal to cash account
 
-    //view cash account
+//view cash account
     public void viewCashAccount() {
-
         new Thread(() -> {
             try {
                 ResultSet rs = null;
@@ -936,8 +934,10 @@ public class Admin_cashManagment extends javax.swing.JPanel {
         String todayDate = new SimpleDateFormat("YYYY-MM-dd").format(new Date());
 
         String cashType = cb_cashType.getSelectedItem().toString();
-        if (cashType.equals("All")) {JOptionPane.showMessageDialog(this, "Print all Temporarly Disabled");}else{
-            
+        if (cashType.equals("All")) {
+            JOptionPane.showMessageDialog(this, "Print all Temporarly Disabled");
+        } else {
+
             String totCapital = lb_v_totalCapital.getText();
             String totCapLoans = lb_v_totalLoan.getText();
             String out_capital = lb_v_outstandingCapital.getText();
@@ -949,7 +949,7 @@ public class Admin_cashManagment extends javax.swing.JPanel {
             String path = "src//Reports//loan//report_cash_AdvancedReport.jrxml";
             //E:\Project_SE\suneraInvestment\suneraInvestment_system\src\Reports\customer\report_customerandloandetalsHistory.jrxml
 
-            cash_reportView(path, startDate, endDate, subtitle, cashType, totCapital, totCapLoans, out_capital, out_interest,asset);
+            cash_reportView(path, startDate, endDate, subtitle, cashType, totCapital, totCapLoans, out_capital, out_interest, asset);
         }
 
     }//GEN-LAST:event_bt_addFundActionPerformed
@@ -968,8 +968,8 @@ public class Admin_cashManagment extends javax.swing.JPanel {
     }//GEN-LAST:event_tf_withdrawalAmountKeyTyped
 
     private void cb_cashTypeItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cb_cashTypeItemStateChanged
-        
-        DefaultTableModel dtm = (DefaultTableModel)tb_cashAccount.getModel();
+
+        DefaultTableModel dtm = (DefaultTableModel) tb_cashAccount.getModel();
         dtm.setRowCount(0);
         viewCashAccount();
 
@@ -1052,7 +1052,7 @@ public class Admin_cashManagment extends javax.swing.JPanel {
         dc_endDate.setDate(new Date());
     }
 
-    private void cash_reportView(String rp_parth, String startDate, String endDate, String subtitle, String cashType, String totCapital, String totCapLoans, String out_capital, String out_interest,String asset) {
+    private void cash_reportView(String rp_parth, String startDate, String endDate, String subtitle, String cashType, String totCapital, String totCapLoans, String out_capital, String out_interest, String asset) {
 
         try {
             JasperReport jp = JasperCompileManager.compileReport(rp_parth);
@@ -1067,7 +1067,7 @@ public class Admin_cashManagment extends javax.swing.JPanel {
             map.put("totcapitalloans", totCapLoans);
             map.put("tot_out_capital", out_capital);
             map.put("tot_out_interest", out_interest);
-            map.put("tot_asset",asset );
+            map.put("tot_asset", asset);
 
             System.out.println(startDate);
             System.out.println(endDate);
