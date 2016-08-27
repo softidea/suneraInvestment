@@ -37,7 +37,7 @@ public class Admin_cashManagment extends javax.swing.JPanel {
         new Thread(() -> {
             try {
                 setCurrentDate();
-                viewCashAccount();
+                viewAllCash();
                 viewCapital();
                 viewLoanDueAmounts();
                 viewTotalloans();
@@ -54,6 +54,28 @@ public class Admin_cashManagment extends javax.swing.JPanel {
 
     }
 
+    //view all cash account
+    public void viewAllCash(){
+        System.out.println("view alll;;; date");
+        DefaultTableModel dtm = (DefaultTableModel)tb_cashAccount.getModel();
+        dtm.setRowCount(0);
+        try {
+            ResultSet rs = MC_DB.myConnection().createStatement().executeQuery("SELECT * FROM cash_account");
+            while(rs.next()){
+                Vector v = new Vector();
+                v.add(rs.getString("idcash_account"));
+                v.add(rs.getString("amount"));
+                v.add(rs.getString("cash_ac_type"));
+                v.add(rs.getString("cash_ac_discription"));
+                v.add(rs.getString("date"));
+                dtm.addRow(v);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+    //view all cash account
+    
     //view table date
     public void viewCashTableData() {
         double TL = 0;
@@ -261,7 +283,7 @@ public class Admin_cashManagment extends javax.swing.JPanel {
     //saving withdrawal to cash account
 
     //view cash account
-    public final void viewCashAccount() {
+    public void viewCashAccount() {
 
         new Thread(() -> {
             try {
@@ -949,7 +971,9 @@ public class Admin_cashManagment extends javax.swing.JPanel {
     }//GEN-LAST:event_tf_withdrawalAmountKeyTyped
 
     private void cb_cashTypeItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cb_cashTypeItemStateChanged
-
+        
+        DefaultTableModel dtm = (DefaultTableModel)tb_cashAccount.getModel();
+        dtm.setRowCount(0);
         viewCashAccount();
 
 
