@@ -782,9 +782,9 @@ public class Admin_customerManagment extends javax.swing.JPanel {
             md_profitCalculation();
             if (isOK == JOptionPane.YES_OPTION) {
 
-                Date d = new Date();
+//              Date d = new Date();
                 SimpleDateFormat sdf = new SimpleDateFormat("YYYY-MM-dd");
-                String today_date = sdf.format(d);
+//                String today_date = sdf.format(d);
 
                 try {
                     String gender = "male";
@@ -819,9 +819,7 @@ public class Admin_customerManagment extends javax.swing.JPanel {
                     try {
                         String[] id = idwithFund.split("-", 0);
                         if (id != null) {
-
                             fundID = Integer.parseInt(id[0]);
-
                         }
                     } catch (NumberFormatException e) {
                     }
@@ -829,13 +827,13 @@ public class Admin_customerManagment extends javax.swing.JPanel {
                 /////////////////////////////////////////////////////
                     //DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
                     //get current date time with Date()
-                    Date date = new Date();
-                    dc_registrationDate.setDate(date);
+//                    Date date = new Date();
+//                    dc_registrationDate.setDate(date);
 
                     ///////////////////////////////////////////////////////   
                     if (pmd.EmtyisTextFiled(tf_nic) && pmd.EmtyisTextFiled(tf_name) && pmd.EmtyisTextFiled(tf_address) && pmd.EmtyisTextFiled(tf_contact) && pmd.EmtyisTextFiled(tf_loanAmount) && pmd.EmtyisTextFiled(tf_period)) {
-                        SimpleDateFormat sdfc = new SimpleDateFormat("yyyy-MM-dd");
-                        String register_date = sdf.format(d);
+//                        SimpleDateFormat sdfc = new SimpleDateFormat("yyyy-MM-dd");
+                        String register_date = sdf.format(dc_registrationDate.getDate());
                         String subType = "withSaturday";
                         if (cb_periodType.getSelectedIndex() == 0) {
                             subType = "withOutSaturday";

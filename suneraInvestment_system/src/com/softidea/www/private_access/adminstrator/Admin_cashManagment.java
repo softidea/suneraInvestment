@@ -280,21 +280,30 @@ public class Admin_cashManagment extends javax.swing.JPanel {
 
 //view cash account
     public void viewCashAccount() {
+
+//        System.out.println(dc_startDate.getDate());
+//        String d = new SimpleDateFormat("YYYY-MM-dd").format(dc_startDate.getDate());
+//        System.out.println(d+"hello");     
+        String sDate = new SimpleDateFormat("YYYY-MM-dd").format(dc_startDate.getDate());
+        String eDate = new SimpleDateFormat("yyyy-MM-dd").format(dc_endDate.getDate());
+        String cashType = cb_cashType.getSelectedItem().toString();
+
+        System.out.println(sDate + " ^^ " + eDate + " ^^ " + cashType);
+
         new Thread(() -> {
             try {
                 ResultSet rs = null;
                 DefaultTableModel dtm = (DefaultTableModel) tb_cashAccount.getModel();
                 dtm.setRowCount(0);
                 try {
-                    String sDate = new SimpleDateFormat("yyyy-MM-dd").format(dc_startDate.getDate());
-                    String eDate = new SimpleDateFormat("yyyy-MM-dd").format(dc_endDate.getDate());
-                    String cashType = cb_cashType.getSelectedItem().toString();
 
                     if (!(sDate.isEmpty() && eDate.isEmpty() && cashType.isEmpty())) {
                         if (cashType.equals("All")) {
                             rs = MC_DB.myConnection().createStatement().executeQuery("SELECT * FROM cash_account WHERE date BETWEEN '" + sDate + "' AND '" + eDate + "'");
+                            dtm.setRowCount(0);
                             while (rs.next()) {
                                 Vector v = new Vector();
+                                System.out.println(rs.getString("idcash_account"));
                                 v.add(rs.getString("idcash_account"));
                                 v.add(rs.getDouble("amount"));
                                 v.add(rs.getString("cash_ac_type"));
@@ -305,8 +314,10 @@ public class Admin_cashManagment extends javax.swing.JPanel {
                             }
                         } else {
                             rs = MC_DB.myConnection().createStatement().executeQuery("SELECT * FROM cash_account WHERE date BETWEEN '" + sDate + "' AND '" + eDate + "' AND cash_ac_type='" + cashType + "'");
+                            dtm.setRowCount(0);
                             while (rs.next()) {
                                 Vector v = new Vector();
+                                System.out.println(rs.getString("idcash_account"));
                                 v.add(rs.getString("idcash_account"));
                                 v.add(rs.getDouble("amount"));
                                 v.add(rs.getString("cash_ac_type"));
@@ -470,8 +481,10 @@ public class Admin_cashManagment extends javax.swing.JPanel {
         jLabel4.setForeground(new java.awt.Color(255, 255, 255));
         jLabel4.setText("Start Date :");
 
+        dc_startDate.setDateFormatString("yyyy-MM-dd");
         dc_startDate.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
 
+        dc_endDate.setDateFormatString("yyyy-MM-dd");
         dc_endDate.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
 
         jLabel5.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N

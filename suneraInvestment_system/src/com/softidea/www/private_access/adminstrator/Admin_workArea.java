@@ -92,7 +92,6 @@ public class Admin_workArea extends javax.swing.JFrame {
     public Admin_workArea(String userMail) {
 
         initComponents();
-
         try {
 
             if(userMail.equals("User")){

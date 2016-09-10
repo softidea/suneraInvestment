@@ -317,8 +317,8 @@ public class Admin_installmentManagment extends javax.swing.JPanel {
                     while (rs.next()) {
                         Vector v = new Vector();
                         v.add(rs.getRow());
-                        v.add(rs.getDouble("payment"));
                         v.add(rs.getString("payment_date"));
+                        v.add(rs.getDouble("payment"));
                         v.add(rs.getDouble("discount"));
                         dtm.addRow(v);
                     }
