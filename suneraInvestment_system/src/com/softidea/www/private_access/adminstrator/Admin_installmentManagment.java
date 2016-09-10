@@ -21,7 +21,13 @@ import net.sf.jasperreports.engine.JasperReport;
 import net.sf.jasperreports.view.JRViewer;
 import net.sf.jasperreports.view.JasperViewer;
 
+
+
+
 public class Admin_installmentManagment extends javax.swing.JPanel {
+    
+    
+  
 
     int loanID = 1;
     double due_Loan_Amount = 0;
@@ -154,7 +160,7 @@ public class Admin_installmentManagment extends javax.swing.JPanel {
                 String year = loanDate.split("-")[0];
                 int day = Integer.parseInt(new SimpleDateFormat("yyyy-DDD").format(d).split("-")[1]);
 
-                for (int i = 1; (i < period) && (!today.equals(tempdate)); i++) {
+                for (int i = 1; (i <= period) && (!today.equals(tempdate)); i++) {
 
                     Date currentdate = new SimpleDateFormat("yyyy-DDD").parse(year + "-" + (day + i));
 
@@ -163,15 +169,20 @@ public class Admin_installmentManagment extends javax.swing.JPanel {
                     String nowday = new SimpleDateFormat("EEEEEEEE").format(currentdate);
 
                     if (nowday.equalsIgnoreCase("Saturday")) {
+                        
                         no_of_saturdays++;
+                        if (loantype.equalsIgnoreCase("Daily-withOutSaturday")) {
+                            period++;
+                            System.out.println(period);
+                        }
                     }
                     no_of_days++;
-
+                    
                 }
-
-                if (loantype.equalsIgnoreCase("daily-withoutsaturday")) {
+                
+                if (loantype.equalsIgnoreCase("Daily-withOutSaturday")) {
                     arriers = (no_of_days - no_of_saturdays) * installement;
-                } else if (loantype.equalsIgnoreCase("daily-withsaturday")) {
+                } else if (loantype.equalsIgnoreCase("Daily-withSaturday")) {
                     arriers = no_of_days * installement;
 
                 } else {
@@ -183,7 +194,7 @@ public class Admin_installmentManagment extends javax.swing.JPanel {
                 Date td = new Date();
                 int datdif = 0;
                 int no_of_months = 0;
-                for (int i = 1; (i < period) && (datdif <= 0); i++) {
+                for (int i = 1; (i <= period) && (datdif <= 0); i++) {
                     String tempd = i + "";
                     if (i < 10) {
                         tempd = "0" + i;
