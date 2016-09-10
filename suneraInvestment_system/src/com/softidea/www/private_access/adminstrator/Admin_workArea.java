@@ -27,8 +27,11 @@ import javax.swing.border.Border;
 
 public class Admin_workArea extends javax.swing.JFrame {
 
+    public String usermail_display;
+
     public Admin_workArea() {
         //this.setIconImage(CreateImagesss("/FormatFactoryicon100.png").getImage());
+
         initComponents();
         new Thread(() -> {
             try {
@@ -61,7 +64,7 @@ public class Admin_workArea extends javax.swing.JFrame {
         initComponents();
         try {
             UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
-           
+
         } catch (ClassNotFoundException | IllegalAccessException | InstantiationException | UnsupportedLookAndFeelException ex) {
         }
         md_HomeMenuVisibleLabel(false);
@@ -84,6 +87,24 @@ public class Admin_workArea extends javax.swing.JFrame {
         }
         loadCusFundCount();
 
+    }
+
+    public Admin_workArea(String userMail) {
+
+        initComponents();
+
+        try {
+
+            if(userMail.equals("User")){
+                bt_loanmang.setVisible(false);
+                bt_cashmang.setVisible(false);
+                bt_usermang.setVisible(false);
+                bt_administratormang.setVisible(false);
+                bt_reports.setVisible(false);
+            }
+            
+        } catch (Exception e) {
+        }
     }
 
     /**
@@ -917,7 +938,6 @@ Border borderC = BorderFactory.createLineBorder(new Color(255, 255, 255), 1);
 //
 //                }
 //            });
-
             load_fundManagment();
         }).start();
 
@@ -1081,8 +1101,8 @@ Border borderC = BorderFactory.createLineBorder(new Color(255, 255, 255), 1);
 
         showDate();
         showTime();
-        
-        
+
+
     }//GEN-LAST:event_jPanel5MouseMoved
 
     /**
@@ -1388,6 +1408,7 @@ Border borderC = BorderFactory.createLineBorder(new Color(255, 255, 255), 1);
             }
         }).start();
     }
+
     final void showTime2() {
         new Timer(0, new ActionListener() {
 
@@ -1411,6 +1432,7 @@ Border borderC = BorderFactory.createLineBorder(new Color(255, 255, 255), 1);
         System.out.println(s);
 
     }
+
     final void showDate2() {
         Date d = new Date();
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");

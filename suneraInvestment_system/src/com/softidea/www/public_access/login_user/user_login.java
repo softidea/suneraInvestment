@@ -463,7 +463,7 @@ public class user_login extends javax.swing.JFrame {
 
             JOptionPane.showMessageDialog(this, "Admin is Successfully Login! ");
             this.dispose();
-            Admin_workArea admin = new Admin_workArea();
+            Admin_workArea admin = new Admin_workArea("Admin");
             admin.setVisible(true);
 //                            JOptionPane.showMessageDialog(this, "User is Login! ");
         } else if (a_type == 10) {
@@ -472,7 +472,7 @@ public class user_login extends javax.swing.JFrame {
         } else if (a_type == 01) {
             JOptionPane.showMessageDialog(this, "User is Successfully Login! ");
             this.dispose();
-            Admin_workArea user = new Admin_workArea();
+            Admin_workArea user = new Admin_workArea("User");
             user.setVisible(true);
         } else if (a_type == 00) {
             JOptionPane.showMessageDialog(this, "User Is Not a Active User! \n Contact Administrator ");
