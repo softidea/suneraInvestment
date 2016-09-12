@@ -21,13 +21,7 @@ import net.sf.jasperreports.engine.JasperReport;
 import net.sf.jasperreports.view.JRViewer;
 import net.sf.jasperreports.view.JasperViewer;
 
-
-
-
 public class Admin_installmentManagment extends javax.swing.JPanel {
-    
-    
-  
 
     int loanID = 1;
     double due_Loan_Amount = 0;
@@ -169,7 +163,7 @@ public class Admin_installmentManagment extends javax.swing.JPanel {
                     String nowday = new SimpleDateFormat("EEEEEEEE").format(currentdate);
 
                     if (nowday.equalsIgnoreCase("Saturday")) {
-                        
+
                         no_of_saturdays++;
                         if (loantype.equalsIgnoreCase("Daily-withOutSaturday")) {
                             period++;
@@ -177,9 +171,9 @@ public class Admin_installmentManagment extends javax.swing.JPanel {
                         }
                     }
                     no_of_days++;
-                    
+
                 }
-                
+
                 if (loantype.equalsIgnoreCase("Daily-withOutSaturday")) {
                     arriers = (no_of_days - no_of_saturdays) * installement;
                 } else if (loantype.equalsIgnoreCase("Daily-withSaturday")) {
@@ -209,7 +203,7 @@ public class Admin_installmentManagment extends javax.swing.JPanel {
 
             }
             arriers -= paid;
-            tf_arrius.setText(arriers +"");
+            tf_arrius.setText(arriers + "");
             this.ARRIUS = arriers;
 
         } catch (Exception e) {
@@ -249,7 +243,6 @@ public class Admin_installmentManagment extends javax.swing.JPanel {
         try {
             ResultSet rs = MC_DB.myConnection().createStatement().executeQuery("SELECT SUM(payment) AS sumPayment FROM installment WHERE idloans='" + loanID + "'");
             while (rs.next()) {
-
                 amount = rs.getInt("sumPayment");
             }
             tf_paidAmount.setText(amount + "0");
@@ -260,7 +253,6 @@ public class Admin_installmentManagment extends javax.swing.JPanel {
     }
 
     public void setCurrentDate() {
-
         Date date = new Date();
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         dc_installment.setDate(date);
@@ -318,7 +310,6 @@ public class Admin_installmentManagment extends javax.swing.JPanel {
 
     //view installment to the table
     public void viewInstalments(int LoanID) {
-
         new Thread(() -> {
             try {
                 try {
@@ -329,8 +320,8 @@ public class Admin_installmentManagment extends javax.swing.JPanel {
                         Vector v = new Vector();
                         v.add(rs.getRow());
                         v.add(rs.getString("payment_date"));
-                        v.add(rs.getDouble("payment"));
-                        v.add(rs.getDouble("discount"));
+                        v.add(rs.getDouble("payment") + "0");
+                        v.add(rs.getDouble("discount") + "0");
                         dtm.addRow(v);
                     }
                 } catch (Exception e) {
@@ -774,6 +765,7 @@ public class Admin_installmentManagment extends javax.swing.JPanel {
             }
         });
 
+        dc_installment.setDateFormatString("yyyy-MM-dd");
         dc_installment.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
 
         jLabel20.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
@@ -927,7 +919,7 @@ public class Admin_installmentManagment extends javax.swing.JPanel {
         String PAID_AMOUNT = tf_paidAmount.getText();
         String DUE_AMOUNT = tf_dueAmount.getText();
         String ARRIES = tf_arrius.getText();
-        
+
         System.out.println(CUS_NIC);
         System.out.println(CUS_NAME);
         System.out.println(CUS_ADDRESS);
@@ -940,7 +932,6 @@ public class Admin_installmentManagment extends javax.swing.JPanel {
         System.out.println(DUE_AMOUNT);
         System.out.println(PAID_AMOUNT);
         System.out.println(ARRIES);
-        
 
         md_InstallmentSingleView(path, CUS_NIC, CUS_NAME, CUS_CONTACT, CUS_ADDRESS, LOAN_NO, LOAN_AMOUNT, LOAN_PERIOD, LOAN_INSTALLMENT, LOAN_REG_DATE, PAID_AMOUNT, DUE_AMOUNT, ARRIES);
 
@@ -1053,7 +1044,7 @@ public class Admin_installmentManagment extends javax.swing.JPanel {
     private javax.swing.JLabel tf_regDate;
     // End of variables declaration//GEN-END:variables
 
-    private void md_InstallmentSingleView(String rp_parth, String CUS_NIC,String CUS_NAME,String CUS_CONTACT,String CUS_ADDRESS,String LOAN_NO,String LOAN_AMOUNT,String LOAN_PERIOD,String LOAN_INSTALLMENT,String LOAN_REG_DATE,String PAID_AMOUNT,String DUE_AMOUNT,String ARRIES) {
+    private void md_InstallmentSingleView(String rp_parth, String CUS_NIC, String CUS_NAME, String CUS_CONTACT, String CUS_ADDRESS, String LOAN_NO, String LOAN_AMOUNT, String LOAN_PERIOD, String LOAN_INSTALLMENT, String LOAN_REG_DATE, String PAID_AMOUNT, String DUE_AMOUNT, String ARRIES) {
 
         try {
             JasperReport jp = JasperCompileManager.compileReport(rp_parth);
@@ -1138,16 +1129,18 @@ public class Admin_installmentManagment extends javax.swing.JPanel {
                                                 ResultSet rs_check_due_amount = MC_DB.search_dataOne("loans", "due_loan_amount", loanID + "");
                                                 if (rs_check_due_amount.next()) {
                                                     double due_loan_amount = Double.parseDouble(rs_check_due_amount.getDouble("due_loan_amount") + "0");
-                                                    if (due_loan_amount == 0) {
-                                                        MC_DB.update_data("UPDATE loans SET loan_status='In-active' WHERE idloans='" + loanID + "'");
+                                                    if (due_loan_amount == 0.0) {
+                                                        MC_DB.update_data("UPDATE loans SET loan_status='deactive' WHERE idloans='" + loanID + "'");
+                                                        JOptionPane.showMessageDialog(null, "Loan settled");
                                                     }
                                                 }
 
-                                            } else if (LOAN_AMOUNT == PAID_AMOUNT) {
-                                                MC_DB.update_data("UPDATE loans SET loan_status='In-active' WHERE idloans='" + loanID + "'");
-                                                loadCutomerLoanData();
-                                                JOptionPane.showMessageDialog(null, "Loan already settled");
-                                            }
+                                            } 
+//                                            else if (LOAN_AMOUNT == PAID_AMOUNT) {
+//                                                MC_DB.update_data("UPDATE loans SET loan_status='deactive' WHERE idloans='" + loanID + "'");
+//                                                loadCutomerLoanData();
+//                                                JOptionPane.showMessageDialog(null, "Loan already settled");
+//                                            }
                                         }
 
                                     }
@@ -1156,7 +1149,6 @@ public class Admin_installmentManagment extends javax.swing.JPanel {
                             }
 
                         } catch (Exception e) {
-
                             e.printStackTrace();
                         }
                     } else {
@@ -1166,10 +1158,55 @@ public class Admin_installmentManagment extends javax.swing.JPanel {
                     JOptionPane.showMessageDialog(this, "Payment should be lower than or equal to Due Amount", "Warning", JOptionPane.WARNING_MESSAGE);
                 }
             } else {
-
                 JOptionPane.showMessageDialog(this, "Please enter valid amount", "Error", JOptionPane.ERROR_MESSAGE);
             }
         }
 
     }
+
+    //check due amount is zero or arrius or zero
+//    public void checkDueAmountZero() {
+//        try {
+//            double paidAmount = Double.parseDouble(tf_paidAmount.getText());
+//            double payableAmount = Double.parseDouble(tf_period.getText()) * Double.parseDouble(tf_installment.getText());
+//            double dueAmount = payableAmount - paidAmount;
+//            if (dueAmount == 0.0) {
+//
+//                ResultSet rs = MC_DB.search_dataOne("customer", "idcustomer", this.CUS_NIC);
+//                if (rs.next()) {
+//                    int idcustomer = rs.getInt("idcustomer");
+//                    if (idcustomer != 0) {
+//                        String loanStatus = "deactive";
+//                        String updateStatus = "UPDATE loans SET loan_status='" + loanStatus + "' WHERE idcustomer='"+idcustomer+"'";
+//                        MC_DB.myConnection().createStatement().executeUpdate(updateStatus);
+//                        JOptionPane.showMessageDialog(this, "Loan successfully Settled");
+//                        tf_arrius.setText("00.00");
+//                        tf_dueAmount.setText("00.00s");
+//                    }
+//                }
+//
+//            }
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//
+//    }
+
+    //check due amount is zero or arrius or zero
+    
+    
+    //check the loan status
+    
+    public boolean checkloanStatus(){
+        try {
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+    
+     //check the loan status
+    
+    
 }
