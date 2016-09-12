@@ -940,7 +940,13 @@ public class Admin_installmentManagment extends javax.swing.JPanel {
 
     private void bt_payInstallmentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_payInstallmentActionPerformed
 
-        new Thread(this::md_updateCustomer).start();
+        
+        if(checkloanStatus()){
+            new Thread(this::md_updateCustomer).start();
+        }else{
+            JOptionPane.showMessageDialog(this, "Loan already Settled");
+        }
+        
     }//GEN-LAST:event_bt_payInstallmentActionPerformed
 
     private void tf_nicKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tf_nicKeyReleased
@@ -1199,7 +1205,19 @@ public class Admin_installmentManagment extends javax.swing.JPanel {
     
     public boolean checkloanStatus(){
         try {
-            return true;
+            ResultSet rs = MC_DB.search_dataOne("loans", "loan_status", loanID+"");
+            if(rs.next()){
+                
+                String loanStatus = rs.getString("loan_status");
+                if(loanStatus.equals("active")){
+                    return true;
+                }else{
+                    return false;
+                }
+            }
+            else{
+                return false;
+            }
         } catch (Exception e) {
             e.printStackTrace();
             return false;
