@@ -129,6 +129,9 @@ public class Admin_customerManagment extends javax.swing.JPanel {
         tf_contact.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         tf_contact.setPreferredSize(new java.awt.Dimension(300, 40));
         tf_contact.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                tf_contactKeyPressed(evt);
+            }
             public void keyReleased(java.awt.event.KeyEvent evt) {
                 tf_contactKeyReleased(evt);
             }
@@ -824,12 +827,11 @@ public class Admin_customerManagment extends javax.swing.JPanel {
                     } catch (NumberFormatException e) {
                     }
 
-                /////////////////////////////////////////////////////
+                    /////////////////////////////////////////////////////
                     //DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
                     //get current date time with Date()
 //                    Date date = new Date();
 //                    dc_registrationDate.setDate(date);
-
                     ///////////////////////////////////////////////////////   
                     if (pmd.EmtyisTextFiled(tf_nic) && pmd.EmtyisTextFiled(tf_name) && pmd.EmtyisTextFiled(tf_address) && pmd.EmtyisTextFiled(tf_contact) && pmd.EmtyisTextFiled(tf_loanAmount) && pmd.EmtyisTextFiled(tf_period)) {
 //                        SimpleDateFormat sdfc = new SimpleDateFormat("yyyy-MM-dd");
@@ -1109,8 +1111,25 @@ public class Admin_customerManagment extends javax.swing.JPanel {
 
     }//GEN-LAST:event_bt_searchActionPerformed
 
+    String selectFund;
+    Double realVal, typeVal;
     private void tf_loanAmountKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tf_loanAmountKeyTyped
 
+//        if (!tf_loanAmount.getText().isEmpty()) {
+//            //System.out.println("Call Call...................................................");
+//                    
+//            selectFund = cb_selectFund.getSelectedItem().toString();
+//            String[] splitValue = selectFund.split("-");
+//            String maxAmount = splitValue[1];
+//            realVal = Double.parseDouble(maxAmount);
+//            typeVal = Double.parseDouble(tf_loanAmount.getText());
+//            if (realVal <= typeVal) {
+//                tf_loanAmount.setText("");
+//                JOptionPane.showMessageDialog(this, "Can't give this amount add this moment!");
+//                tf_loanAmount.setText("0.0");
+//                tf_loanAmount.grabFocus();
+//            }
+//        }
         char c = evt.getKeyChar();
         if (!(c >= '0' && c <= '9' || c == KeyEvent.VK_PERIOD)) {
             evt.consume();
@@ -1142,10 +1161,21 @@ public class Admin_customerManagment extends javax.swing.JPanel {
         if (!(c >= '0' && c <= '9' || c == KeyEvent.VK_PLUS)) {
             evt.consume();
         }
+        if (tf_contact.getText().length() >= 10) {
+
+            evt.consume();
+
+        }
 
     }//GEN-LAST:event_tf_contactKeyTyped
 
     private void tf_nicKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tf_nicKeyTyped
+
+        if (tf_nic.getText().length() >= 10) {
+
+            evt.consume();
+
+        }
 
         char c = evt.getKeyChar();
         if (!(c >= '0' && c <= '9' || c == KeyEvent.VK_V)) {
@@ -1233,6 +1263,11 @@ public class Admin_customerManagment extends javax.swing.JPanel {
     private void cb_choseStatusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cb_choseStatusActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_cb_choseStatusActionPerformed
+
+    private void tf_contactKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tf_contactKeyPressed
+
+
+    }//GEN-LAST:event_tf_contactKeyPressed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -1346,52 +1381,48 @@ public class Admin_customerManagment extends javax.swing.JPanel {
 
     private void md_genLoadId(String periodType) {
 
-        new Thread(new Runnable() {
-
-            @Override
-            public void run() {
-                int cus_id = 0;
-                int loan_id = 0;
+        new Thread(() -> {
+            int cus_id = 0;
+            int loan_id = 0;
+            try {
+                //String genidType = "LON-W-20160808-00001";
+                String perFix = "LO";
+                SimpleDateFormat sdff = new SimpleDateFormat("yyyy-MM-dd");
+                String registration_date;
                 try {
-                    //String genidType = "LON-W-20160808-00001";
-                    String perFix = "LO";
-                    SimpleDateFormat sdff = new SimpleDateFormat("yyyy-MM-dd");
-                    String registration_date;
-                    try {
-                        dc_registrationDate.setDate(new Date());
-                        Date date = dc_registrationDate.getDate();
-                        sdff = new SimpleDateFormat("yyyy-MM-dd");
-                        registration_date = sdff.format(date);
+                    dc_registrationDate.setDate(new Date());
+                    Date date = dc_registrationDate.getDate();
+                    sdff = new SimpleDateFormat("yyyy-MM-dd");
+                    registration_date = sdff.format(date);
 
-                        registration_date = sdff.format(date);
-                    } catch (Exception e) {
-                        registration_date = sdff.format(new Date());
-                    }
+                    registration_date = sdff.format(date);
+                } catch (Exception e) {
+                    registration_date = sdff.format(new Date());
+                }
 
 //            JOptionPane.showMessageDialog(this, "Innnnnnnnnnnnneeeeee" + registration_date + "-" + periodType);
-                    ResultSet rs = MC_DB.myConnection().createStatement().executeQuery("SELECT MAX(idcustomer) AS HighestID FROM customer;");
-                    while (rs.next()) {
-                        cus_id = rs.getInt("HighestID");
-                    }
-
-                    ResultSet rsloanid = MC_DB.myConnection().createStatement().executeQuery("SELECT MAX(idloans) AS HighestID FROM loans;");
-                    while (rsloanid.next()) {
-                        loan_id = rsloanid.getInt("HighestID");
-                    }
-
-                    cus_id = cus_id + 1;
-                    loan_id = loan_id + 1;
-
-                    String newDateRegistarion = registration_date.replaceAll("-", "");
-                    //JOptionPane.showMessageDialog(this, "ID is Max :" + cus_id + "----" + perFix + "-" + periodType + "-" + newDateRegistarion + cus_id);
-
-                    tf_loanNumber.setText(perFix + "-" + newDateRegistarion + "-" + cus_id + "" + periodType + "-" + loan_id);
-
-                } catch (SQLException ex) {
-                    cus_id = 0;
-                    loan_id = 0;
-                    //Logger.getLogger(jp_customer_add.class.getName()).log(Level.SEVERE, null, ex);
+                ResultSet rs = MC_DB.myConnection().createStatement().executeQuery("SELECT MAX(idcustomer) AS HighestID FROM customer;");
+                while (rs.next()) {
+                    cus_id = rs.getInt("HighestID");
                 }
+
+                ResultSet rsloanid = MC_DB.myConnection().createStatement().executeQuery("SELECT MAX(idloans) AS HighestID FROM loans;");
+                while (rsloanid.next()) {
+                    loan_id = rsloanid.getInt("HighestID");
+                }
+
+                cus_id = cus_id + 1;
+                loan_id = loan_id + 1;
+
+                String newDateRegistarion = registration_date.replaceAll("-", "");
+//JOptionPane.showMessageDialog(this, "ID is Max :" + cus_id + "----" + perFix + "-" + periodType + "-" + newDateRegistarion + cus_id);
+
+                tf_loanNumber.setText(perFix + "-" + newDateRegistarion + "-" + cus_id + "" + periodType + "-" + loan_id);
+
+            } catch (SQLException ex) {
+                cus_id = 0;
+                loan_id = 0;
+                //Logger.getLogger(jp_customer_add.class.getName()).log(Level.SEVERE, null, ex);
             }
         }).start();
     }
@@ -1417,47 +1448,51 @@ public class Admin_customerManagment extends javax.swing.JPanel {
     private void md_profitCalculation() {
 
         try {
-            Double loanAmount = Double.parseDouble(tf_loanAmount.getText().trim());
-            Double extraInterest = Double.parseDouble(tf_extraInterest.getText().trim());
-            Double period = Double.parseDouble(tf_period.getText().trim());
 
-            Double fullAmount = loanAmount + extraInterest;
-            Double profit = fullAmount - loanAmount;
-            Double installment = fullAmount / period;
+            if (!tf_loanAmount.getText().isEmpty() && !tf_extraInterest.getText().isEmpty() && !tf_period.getText().isEmpty()) {
 
-            Long roundloanAmount = Math.round(loanAmount);
-            Long roundfullAmount = Math.round(fullAmount);
-            Long roundInstallment = Math.round(installment);
-            Long roundProfit = Math.round(profit);
+                Double loanAmount = Double.parseDouble(tf_loanAmount.getText().trim());
+                Double extraInterest = Double.parseDouble(tf_extraInterest.getText().trim());
+                Double period = Double.parseDouble(tf_period.getText().trim());
 
-            int loanAmount_int = roundloanAmount.intValue();
-            int fullAmount_int = roundfullAmount.intValue();
-            int installment_int = roundInstallment.intValue();
-            int Profit_int = roundProfit.intValue();
-            int Period_int = period.intValue();
+                Double fullAmount = loanAmount + extraInterest;
+                Double profit = fullAmount - loanAmount;
+                Double installment = fullAmount / period;
 
-            String loanAmount_text = loanAmount_int + ".00";
-            String fullAmount_text = fullAmount_int + ".00";
-            String installment_text = installment_int + ".00";
-            String Profit_text = Profit_int + ".00";
-            String Period_text = Period_int + "";
+                Long roundloanAmount = Math.round(loanAmount);
+                Long roundfullAmount = Math.round(fullAmount);
+                Long roundInstallment = Math.round(installment);
+                Long roundProfit = Math.round(profit);
 
-            lb_v_period.setText("");
-            lb_v_period.setText(Period_text);
+                int loanAmount_int = roundloanAmount.intValue();
+                int fullAmount_int = roundfullAmount.intValue();
+                int installment_int = roundInstallment.intValue();
+                int Profit_int = roundProfit.intValue();
+                int Period_int = period.intValue();
 
-            lb_v_totalAmount.setText("");
-            lb_v_totalAmount.setText(fullAmount_text);
+                String loanAmount_text = loanAmount_int + ".00";
+                String fullAmount_text = fullAmount_int + ".00";
+                String installment_text = installment_int + ".00";
+                String Profit_text = Profit_int + ".00";
+                String Period_text = Period_int + "";
 
-            lb_v_installment.setText("");
-            lb_v_installment.setText(installment_text);
+                lb_v_period.setText("");
+                lb_v_period.setText(Period_text);
 
-            lb_v_loanAmount.setText("");
-            lb_v_loanAmount.setText(loanAmount_text);
+                lb_v_totalAmount.setText("");
+                lb_v_totalAmount.setText(fullAmount_text);
 
-            lb_v_profit.setText("");
-            lb_v_profit.setText(Profit_text);
+                lb_v_installment.setText("");
+                lb_v_installment.setText(installment_text);
 
-            Toolkit.getDefaultToolkit().beep();
+                lb_v_loanAmount.setText("");
+                lb_v_loanAmount.setText(loanAmount_text);
+
+                lb_v_profit.setText("");
+                lb_v_profit.setText(Profit_text);
+
+                Toolkit.getDefaultToolkit().beep();
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -1506,7 +1541,17 @@ public class Admin_customerManagment extends javax.swing.JPanel {
 
     private void dateCounter(int daysToSkip) {
         int dayCount = Integer.parseInt(tf_period.getText());
+
         Calendar cd = Calendar.getInstance();
+        Date regDate = dc_registrationDate.getDate();
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        String formatDate = sdf.format(regDate);
+
+        String[] splitdatepart = formatDate.split("-");
+        int st_year = Integer.parseInt(splitdatepart[0]);
+        int st_month = Integer.parseInt(splitdatepart[1]);
+        int st_date = Integer.parseInt(splitdatepart[2]);
+        cd.set(st_year, st_month, st_date);
         int day = cd.get(Calendar.DAY_OF_WEEK);
         int datediff = 0;
         if (daysToSkip == 2) {
@@ -1517,12 +1562,12 @@ public class Admin_customerManagment extends javax.swing.JPanel {
                 datediff += 7;
             }
         }
-        System.out.println(datediff);
+        //System.out.println(datediff);
         dayCount -= datediff;
 //        dayCount -= daysToSkip;
         cd.add(Calendar.DATE, datediff);
         cd.add(Calendar.DATE, daysToSkip);
-        System.out.println(cd.getTime());
+        //System.out.println(cd.getTime());
         while (dayCount >= 0) {
             if (daysToSkip == 2) {
                 if (cd.get(Calendar.DAY_OF_WEEK) != Calendar.SATURDAY) {
@@ -1530,11 +1575,11 @@ public class Admin_customerManagment extends javax.swing.JPanel {
                 }
             } else if (cd.get(Calendar.DAY_OF_WEEK) != Calendar.SUNDAY) {
                 dayCount--;
-                System.out.println(dayCount);
+                //      System.out.println(dayCount);
             }
 
             cd.add(Calendar.DATE, 1);
-            System.out.println(cd.getTime());
+            //System.out.println(cd.getTime());
         }
         String tt_v_finalDate = cd.getTime() + "";
         String text = tt_v_finalDate;
@@ -1556,7 +1601,7 @@ public class Admin_customerManagment extends javax.swing.JPanel {
         new Thread(() -> {
             try {
                 DefaultTableModel dtm;
-                
+
                 try {
 
                     ResultSet rs;
@@ -1640,7 +1685,7 @@ public class Admin_customerManagment extends javax.swing.JPanel {
         } else {
             tf_extraInterest.setText("");
             tf_period.setText("");
-            JOptionPane.showMessageDialog(this, "Waring:Loan Amount should be less than fund amount", "Warning", JOptionPane.WARNING_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Waring:Loan Amount should be less than fund amount \n Please change this amount!", "Warning", JOptionPane.WARNING_MESSAGE);
             return false;
         }
 
