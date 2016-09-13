@@ -336,7 +336,7 @@ public class Admin_customerManagment extends javax.swing.JPanel {
         jScrollPane1.setViewportView(tb_customerAddView);
         if (tb_customerAddView.getColumnModel().getColumnCount() > 0) {
             tb_customerAddView.getColumnModel().getColumn(0).setResizable(false);
-            tb_customerAddView.getColumnModel().getColumn(0).setPreferredWidth(4);
+            tb_customerAddView.getColumnModel().getColumn(0).setPreferredWidth(5);
         }
 
         pl_viewCustomer.add(jScrollPane1, "card2");
@@ -395,6 +395,7 @@ public class Admin_customerManagment extends javax.swing.JPanel {
 
         cb_selectFunder_customer.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         cb_selectFunder_customer.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "No Funder" }));
+        cb_selectFunder_customer.setFocusCycleRoot(true);
         cb_selectFunder_customer.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
                 cb_selectFunder_customerItemStateChanged(evt);
@@ -1015,7 +1016,9 @@ public class Admin_customerManagment extends javax.swing.JPanel {
         int key = evt.getKeyCode();
 
         if (key == KeyEvent.VK_ENTER) {
-            cb_selectFunder_customer.grabFocus();
+            //cb_selectFunder_customer.setFocusCycleRoot(true);
+            cb_selectFunder_customer.setRequestFocusEnabled(true);
+            cb_selectFunder_customer.requestFocus();
         }
 
 
@@ -1546,13 +1549,40 @@ public class Admin_customerManagment extends javax.swing.JPanel {
 //        
 //        
 //    }
+    Calendar cd;
+    String formatDate;
+
     private void calDate() {
         if (cb_periodType.getSelectedIndex() == 1) {
-            dateCounter(2);
+            //dateCounter(1);
+            //with sataday
+            int dayCount = Integer.parseInt(tf_period.getText());
+            cd = Calendar.getInstance();
+            cd.add(Calendar.DATE, dayCount);
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+            formatDate = sdf.format(cd.getTime());
+
         } else {
-            dateCounter(1);
+            //without satday
+            //dateCounter(0);
+            //datediff = Calendar.SATURDAY - day
+
+            int dayCount = Integer.parseInt(tf_period.getText());
+            cd = Calendar.getInstance();
+            cd.add(Calendar.DATE, dayCount);
+
+            int withouts = cd.DATE - cd.SATURDAY;
+
+            cd.add(Calendar.DATE, Math.abs(withouts));
+            System.out.println("plus pera:" + withouts);
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+            formatDate = sdf.format(cd.getTime());
+
         }
+        lb_v_finalDate.setText(formatDate);
     }
+//with-20
+    //out 21
 
     private void dateCounter(int daysToSkip) {
         int dayCount = Integer.parseInt(tf_period.getText());
@@ -1604,7 +1634,10 @@ public class Admin_customerManagment extends javax.swing.JPanel {
         String t3 = split[2];
         String t4 = split[5];
 
-        lb_v_finalDate.setText(t1 + "-" + t2 + "-" + t3 + "-" + t4);
+        SimpleDateFormat sdfd = new SimpleDateFormat("yyyy-MM-dd");
+        String formatDated = sdf.format(new Date(t2 + "-" + t3 + "-" + t4));
+        lb_v_finalDate.setText(formatDated);
+        //lb_v_finalDate.setText(t1 + "-" + t2 + "-" + t3 + "-" + t4);
         String notformat = t2 + "-" + t3 + "-" + t4;
         Date d = new Date(notformat);
         // JOptionPane.showMessageDialog(this, d);
@@ -1693,17 +1726,22 @@ public class Admin_customerManagment extends javax.swing.JPanel {
 
     }
 
+    boolean b;
     private boolean checkLoanLessThanDueFund() {
+        if (!tf_loanAmount.getText().isEmpty()) {
 
-        if (DueFundAmount >= Double.parseDouble(tf_loanAmount.getText())) {
-            return true;
-        } else {
-            tf_extraInterest.setText("");
-            tf_period.setText("");
-            JOptionPane.showMessageDialog(this, "Waring:Loan Amount should be less than fund amount \n Please change this amount!", "Warning", JOptionPane.WARNING_MESSAGE);
-            return false;
+            if (DueFundAmount >= Double.parseDouble(tf_loanAmount.getText())) {
+                b=true;
+                return b;
+            } else {
+                tf_extraInterest.setText("");
+                tf_period.setText("");
+                JOptionPane.showMessageDialog(this, "Waring:Loan Amount should be less than fund amount \n Please change this amount!", "Warning", JOptionPane.WARNING_MESSAGE);
+                b=false;
+                return b;
+            }
         }
-
+        return b;
     }
 
     private boolean checkloanAvailability(String cusNic) {
