@@ -940,13 +940,12 @@ public class Admin_installmentManagment extends javax.swing.JPanel {
 
     private void bt_payInstallmentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_payInstallmentActionPerformed
 
-        
-        if(checkloanStatus()){
+        if (checkloanStatus()) {
             new Thread(this::md_updateCustomer).start();
-        }else{
+        } else {
             JOptionPane.showMessageDialog(this, "Loan already Settled");
         }
-        
+
     }//GEN-LAST:event_bt_payInstallmentActionPerformed
 
     private void tf_nicKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tf_nicKeyReleased
@@ -1141,7 +1140,7 @@ public class Admin_installmentManagment extends javax.swing.JPanel {
                                                     }
                                                 }
 
-                                            } 
+                                            }
 //                                            else if (LOAN_AMOUNT == PAID_AMOUNT) {
 //                                                MC_DB.update_data("UPDATE loans SET loan_status='deactive' WHERE idloans='" + loanID + "'");
 //                                                loadCutomerLoanData();
@@ -1197,25 +1196,20 @@ public class Admin_installmentManagment extends javax.swing.JPanel {
 //        }
 //
 //    }
-
     //check due amount is zero or arrius or zero
-    
-    
     //check the loan status
-    
-    public boolean checkloanStatus(){
+    public boolean checkloanStatus() {
         try {
-            ResultSet rs = MC_DB.search_dataOne("loans", "loan_status", loanID+"");
-            if(rs.next()){
-                
+            ResultSet rs = MC_DB.search_dataOne("loans", "loan_status", loanID + "");
+            if (rs.next()) {
+
                 String loanStatus = rs.getString("loan_status");
-                if(loanStatus.equals("active")){
+                if (loanStatus.equals("active")) {
                     return true;
-                }else{
+                } else {
                     return false;
                 }
-            }
-            else{
+            } else {
                 return false;
             }
         } catch (Exception e) {
@@ -1223,8 +1217,6 @@ public class Admin_installmentManagment extends javax.swing.JPanel {
             return false;
         }
     }
-    
+
      //check the loan status
-    
-    
 }

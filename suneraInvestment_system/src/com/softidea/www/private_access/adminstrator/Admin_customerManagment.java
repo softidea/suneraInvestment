@@ -473,6 +473,11 @@ public class Admin_customerManagment extends javax.swing.JPanel {
         dc_registrationDate.setDateFormatString("yyyy-MM-dd");
         dc_registrationDate.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         dc_registrationDate.setMinSelectableDate(new java.util.Date(-62135785690000L));
+        dc_registrationDate.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
+            public void propertyChange(java.beans.PropertyChangeEvent evt) {
+                dc_registrationDatePropertyChange(evt);
+            }
+        });
 
         jLabel22.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel22.setForeground(new java.awt.Color(255, 255, 255));
@@ -1269,6 +1274,12 @@ public class Admin_customerManagment extends javax.swing.JPanel {
 
     }//GEN-LAST:event_tf_contactKeyPressed
 
+    private void dc_registrationDatePropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_dc_registrationDatePropertyChange
+      
+        calDate();
+        
+    }//GEN-LAST:event_dc_registrationDatePropertyChange
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton bt_addLoan;
@@ -1689,6 +1700,16 @@ public class Admin_customerManagment extends javax.swing.JPanel {
             return false;
         }
 
+    }
+    private void checkloanAvailability(){
+    
+//        try {
+//            
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//            return false;
+//        }
+    
     }
 
 }
