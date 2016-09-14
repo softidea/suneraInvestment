@@ -96,7 +96,7 @@ public class Admin_installmentManagment extends javax.swing.JPanel {
                 int cus_id = rs.getInt("idcustomer");
 //                    JOptionPane.showMessageDialog(this, cus_id);
 
-                ResultSet rs_loadLoan = MC_DB.myConnection().createStatement().executeQuery("SElECT * FROM loans WHERE idcustomer='" + cus_id + "' AND loan_status='Active'");
+                ResultSet rs_loadLoan = MC_DB.myConnection().createStatement().executeQuery("SElECT * FROM loans WHERE idcustomer='" + cus_id + "' AND loan_status='active'");
                 if (rs_loadLoan.next()) {
                     loanID = rs_loadLoan.getInt("idloans");
                     LOAN_NO = rs_loadLoan.getString("loan_no");
@@ -112,11 +112,16 @@ public class Admin_installmentManagment extends javax.swing.JPanel {
 
                     tf_regDate.setText(rs_loadLoan.getString("loan_date"));
                     this.LOAN_REG_DATE = rs_loadLoan.getString("loan_date");
+                    
+                    lblloantype.setText(rs_loadLoan.getString("loan_mainperiodtype"));
+                    
 
                     viewInstalments(loanID);
                     setPaidAmount();
                     setDueAmount();
                     setInterestValues();
+                }else{
+                    JOptionPane.showMessageDialog(this, "No Loan Found");
                 }
             }
         } catch (Exception e) {
@@ -188,12 +193,15 @@ public class Admin_installmentManagment extends javax.swing.JPanel {
                 Date td = new Date();
                 int datdif = 0;
                 int no_of_months = 0;
+                String year = loanDate.split("-")[0];
+                int l_month = Integer.parseInt(loanDate.split("-")[1]);
                 for (int i = 1; (i <= period) && (datdif <= 0); i++) {
-                    String tempd = i + "";
-                    if (i < 10) {
-                        tempd = "0" + i;
+                    String tempd = l_month + i + "";
+                    if ((l_month + i) < 10) {
+                        tempd = "0" + (l_month + i);
                     }
-                    Date curr = new SimpleDateFormat("yyyy-MM-dd").parse("2016-" + tempd + "-31");
+
+                    Date curr = new SimpleDateFormat("yyyy-MM-dd").parse(year + "-" + tempd + "-31");
                     datdif = curr.compareTo(td);
                     no_of_months++;
 
@@ -203,7 +211,7 @@ public class Admin_installmentManagment extends javax.swing.JPanel {
 
             }
             arriers -= paid;
-            tf_arrius.setText(arriers + "");
+            tf_arrius.setText(arriers + "0");
             this.ARRIUS = arriers;
 
         } catch (Exception e) {
@@ -243,6 +251,7 @@ public class Admin_installmentManagment extends javax.swing.JPanel {
         try {
             ResultSet rs = MC_DB.myConnection().createStatement().executeQuery("SELECT SUM(payment) AS sumPayment FROM installment WHERE idloans='" + loanID + "'");
             while (rs.next()) {
+
                 amount = rs.getInt("sumPayment");
             }
             tf_paidAmount.setText(amount + "0");
@@ -253,6 +262,7 @@ public class Admin_installmentManagment extends javax.swing.JPanel {
     }
 
     public void setCurrentDate() {
+
         Date date = new Date();
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         dc_installment.setDate(date);
@@ -310,6 +320,7 @@ public class Admin_installmentManagment extends javax.swing.JPanel {
 
     //view installment to the table
     public void viewInstalments(int LoanID) {
+
         new Thread(() -> {
             try {
                 try {
@@ -320,8 +331,8 @@ public class Admin_installmentManagment extends javax.swing.JPanel {
                         Vector v = new Vector();
                         v.add(rs.getRow());
                         v.add(rs.getString("payment_date"));
-                        v.add(rs.getDouble("payment") + "0");
-                        v.add(rs.getDouble("discount") + "0");
+                        v.add(rs.getDouble("payment")+"0");
+                        v.add(rs.getDouble("discount")+"0");
                         dtm.addRow(v);
                     }
                 } catch (Exception e) {
@@ -376,6 +387,10 @@ public class Admin_installmentManagment extends javax.swing.JPanel {
         tf_period = new javax.swing.JLabel();
         tf_installment = new javax.swing.JLabel();
         tf_regDate = new javax.swing.JLabel();
+        jLabel23 = new javax.swing.JLabel();
+        lblloantype = new javax.swing.JLabel();
+        jLabel24 = new javax.swing.JLabel();
+        lb_v_finalDate = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
         jLabel12 = new javax.swing.JLabel();
         jLabel13 = new javax.swing.JLabel();
@@ -539,7 +554,7 @@ public class Admin_installmentManagment extends javax.swing.JPanel {
         tf_period.setBackground(new java.awt.Color(255, 255, 0));
         tf_period.setFont(new java.awt.Font("Tahoma", 0, 20)); // NOI18N
         tf_period.setForeground(new java.awt.Color(0, 204, 255));
-        tf_period.setText("00.00");
+        tf_period.setText("00");
 
         tf_installment.setBackground(new java.awt.Color(255, 255, 0));
         tf_installment.setFont(new java.awt.Font("Tahoma", 0, 20)); // NOI18N
@@ -551,6 +566,23 @@ public class Admin_installmentManagment extends javax.swing.JPanel {
         tf_regDate.setForeground(new java.awt.Color(0, 204, 255));
         tf_regDate.setText("0000-00-00");
 
+        jLabel23.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel23.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel23.setText("Loan Type :");
+
+        lblloantype.setBackground(new java.awt.Color(255, 255, 0));
+        lblloantype.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        lblloantype.setForeground(new java.awt.Color(0, 204, 255));
+
+        jLabel24.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel24.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel24.setText("Closing Date :");
+
+        lb_v_finalDate.setBackground(new java.awt.Color(255, 255, 0));
+        lb_v_finalDate.setFont(new java.awt.Font("Tahoma", 0, 20)); // NOI18N
+        lb_v_finalDate.setForeground(new java.awt.Color(0, 204, 255));
+        lb_v_finalDate.setText("0000-00-00");
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -560,21 +592,29 @@ public class Admin_installmentManagment extends javax.swing.JPanel {
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(tf_loanAmount, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel11)
-                                    .addComponent(jLabel8))
-                                .addGap(0, 181, Short.MAX_VALUE)))
-                        .addContainerGap())
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(tf_period, javax.swing.GroupLayout.PREFERRED_SIZE, 283, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel8)
                             .addComponent(jLabel9)
                             .addComponent(jLabel10)
                             .addComponent(tf_installment, javax.swing.GroupLayout.PREFERRED_SIZE, 283, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(tf_regDate, javax.swing.GroupLayout.PREFERRED_SIZE, 283, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(0, 0, Short.MAX_VALUE))))
+                            .addComponent(tf_period, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(tf_regDate, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(0, 22, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel2Layout.createSequentialGroup()
+                                .addComponent(jLabel11)
+                                .addGap(31, 31, 31)
+                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel24)
+                                    .addComponent(lb_v_finalDate, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(0, 0, Short.MAX_VALUE))
+                            .addComponent(tf_loanAmount, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addGap(0, 0, Short.MAX_VALUE)
+                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel23, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(lblloantype, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addContainerGap())))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -584,17 +624,27 @@ public class Admin_installmentManagment extends javax.swing.JPanel {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(tf_loanAmount, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(jLabel8)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel8)
+                    .addComponent(jLabel23))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(tf_period, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(tf_period, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblloantype, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addComponent(jLabel10)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(tf_installment, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(jLabel11)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(tf_regDate, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(jLabel11)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(tf_regDate, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(jLabel24)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(lb_v_finalDate, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -647,7 +697,7 @@ public class Admin_installmentManagment extends javax.swing.JPanel {
 
         jLabel22.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel22.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel22.setText("Arius :");
+        jLabel22.setText("Arrears :");
 
         tf_arrius.setBackground(new java.awt.Color(255, 255, 0));
         tf_arrius.setFont(new java.awt.Font("Tahoma", 0, 20)); // NOI18N
@@ -940,12 +990,7 @@ public class Admin_installmentManagment extends javax.swing.JPanel {
 
     private void bt_payInstallmentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_payInstallmentActionPerformed
 
-        if (checkloanStatus()) {
-            new Thread(this::md_updateCustomer).start();
-        } else {
-            JOptionPane.showMessageDialog(this, "Loan already Settled");
-        }
-
+        new Thread(this::md_updateCustomer).start();
     }//GEN-LAST:event_bt_payInstallmentActionPerformed
 
     private void tf_nicKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tf_nicKeyReleased
@@ -984,6 +1029,7 @@ public class Admin_installmentManagment extends javax.swing.JPanel {
 
             loadCutomerLoanData();
             calArrius();
+            calDate();
         }
 
     }//GEN-LAST:event_jButton2ActionPerformed
@@ -1021,6 +1067,8 @@ public class Admin_installmentManagment extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel20;
     private javax.swing.JLabel jLabel21;
     private javax.swing.JLabel jLabel22;
+    private javax.swing.JLabel jLabel23;
+    private javax.swing.JLabel jLabel24;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
@@ -1030,6 +1078,8 @@ public class Admin_installmentManagment extends javax.swing.JPanel {
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JLabel lb_v_finalDate;
+    private javax.swing.JLabel lblloantype;
     private javax.swing.JTable tb_loanInstallment;
     public static javax.swing.JTextField tf_address;
     private javax.swing.JLabel tf_arrius;
@@ -1134,18 +1184,16 @@ public class Admin_installmentManagment extends javax.swing.JPanel {
                                                 ResultSet rs_check_due_amount = MC_DB.search_dataOne("loans", "due_loan_amount", loanID + "");
                                                 if (rs_check_due_amount.next()) {
                                                     double due_loan_amount = Double.parseDouble(rs_check_due_amount.getDouble("due_loan_amount") + "0");
-                                                    if (due_loan_amount == 0.0) {
-                                                        MC_DB.update_data("UPDATE loans SET loan_status='deactive' WHERE idloans='" + loanID + "'");
-                                                        JOptionPane.showMessageDialog(null, "Loan settled");
+                                                    if (due_loan_amount == 0) {
+                                                        MC_DB.update_data("UPDATE loans SET loan_status='In-active' WHERE idloans='" + loanID + "'");
                                                     }
                                                 }
 
+                                            } else if (LOAN_AMOUNT == PAID_AMOUNT) {
+                                                MC_DB.update_data("UPDATE loans SET loan_status='In-active' WHERE idloans='" + loanID + "'");
+                                                loadCutomerLoanData();
+                                                JOptionPane.showMessageDialog(null, "Loan already settled");
                                             }
-//                                            else if (LOAN_AMOUNT == PAID_AMOUNT) {
-//                                                MC_DB.update_data("UPDATE loans SET loan_status='deactive' WHERE idloans='" + loanID + "'");
-//                                                loadCutomerLoanData();
-//                                                JOptionPane.showMessageDialog(null, "Loan already settled");
-//                                            }
                                         }
 
                                     }
@@ -1154,6 +1202,7 @@ public class Admin_installmentManagment extends javax.swing.JPanel {
                             }
 
                         } catch (Exception e) {
+
                             e.printStackTrace();
                         }
                     } else {
@@ -1163,60 +1212,81 @@ public class Admin_installmentManagment extends javax.swing.JPanel {
                     JOptionPane.showMessageDialog(this, "Payment should be lower than or equal to Due Amount", "Warning", JOptionPane.WARNING_MESSAGE);
                 }
             } else {
+
                 JOptionPane.showMessageDialog(this, "Please enter valid amount", "Error", JOptionPane.ERROR_MESSAGE);
             }
         }
 
     }
 
-    //check due amount is zero or arrius or zero
-//    public void checkDueAmountZero() {
-//        try {
-//            double paidAmount = Double.parseDouble(tf_paidAmount.getText());
-//            double payableAmount = Double.parseDouble(tf_period.getText()) * Double.parseDouble(tf_installment.getText());
-//            double dueAmount = payableAmount - paidAmount;
-//            if (dueAmount == 0.0) {
-//
-//                ResultSet rs = MC_DB.search_dataOne("customer", "idcustomer", this.CUS_NIC);
-//                if (rs.next()) {
-//                    int idcustomer = rs.getInt("idcustomer");
-//                    if (idcustomer != 0) {
-//                        String loanStatus = "deactive";
-//                        String updateStatus = "UPDATE loans SET loan_status='" + loanStatus + "' WHERE idcustomer='"+idcustomer+"'";
-//                        MC_DB.myConnection().createStatement().executeUpdate(updateStatus);
-//                        JOptionPane.showMessageDialog(this, "Loan successfully Settled");
-//                        tf_arrius.setText("00.00");
-//                        tf_dueAmount.setText("00.00s");
-//                    }
-//                }
-//
-//            }
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
-//
-//    }
-    //check due amount is zero or arrius or zero
-    //check the loan status
-    public boolean checkloanStatus() {
-        try {
-            ResultSet rs = MC_DB.search_dataOne("loans", "loan_status", loanID + "");
-            if (rs.next()) {
+    private void calDate() {
+        dateCounter();
+    }
 
-                String loanStatus = rs.getString("loan_status");
-                if (loanStatus.equals("active")) {
-                    return true;
-                } else {
-                    return false;
+    private void dateCounter() {
+        try {
+            int period = Integer.parseInt(tf_period.getText());
+            String loanDate =tf_regDate.getText();
+
+            String loantype = lblloantype.getText();
+
+            String today = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
+
+            if (loantype.toLowerCase().contains("daily") || (loantype.toLowerCase().contains("weekly"))) {
+
+                String tempdate = loanDate;
+                int no_of_days = 0;
+                int no_of_saturdays = 0;
+
+                Date d = new SimpleDateFormat("yyyy-MM-dd").parse(loanDate);
+                String year = loanDate.split("-")[0];
+                int day = Integer.parseInt(new SimpleDateFormat("yyyy-DDD").format(d).split("-")[1]);
+
+                for (int i = 1; (i <= period); i++) {
+
+                    Date currentdate = new SimpleDateFormat("yyyy-DDD").parse(year + "-" + (day + i));
+
+                    tempdate = new SimpleDateFormat("yyyy-MM-dd").format(currentdate);
+
+                    String nowday = new SimpleDateFormat("EEEEEEEE").format(currentdate);
+
+                    if (nowday.equalsIgnoreCase("Saturday")) {
+
+                        no_of_saturdays++;
+                        if (loantype.equalsIgnoreCase("Daily-With Out Saturday(Week days)")) {
+                            period++;
+
+                        }
+                    }
+                    no_of_days++;
+
                 }
+                lb_v_finalDate.setText(tempdate);
+
             } else {
-                return false;
+
+                int no_of_months = 0;
+                String year = loanDate.split("-")[0];
+                int l_month = Integer.parseInt(loanDate.split("-")[1]);
+                String tempdate = "";
+                for (int i = 1; (i <= period); i++) {
+                    String tempd = l_month + i + "";
+                    if ((l_month + i) < 10) {
+                        tempd = "0" + (l_month + i);
+                    }
+
+                    Date curr = new SimpleDateFormat("yyyy-MM-dd").parse(year + "-" + tempd + "-31");
+                    tempdate = new SimpleDateFormat("yyyy-MM-dd").format(curr);
+                    no_of_months++;
+
+                }
+                lb_v_finalDate.setText(tempdate);
+
+//                arriers = no_of_months * installement;
             }
         } catch (Exception e) {
             e.printStackTrace();
-            return false;
         }
-    }
 
-     //check the loan status
+    }
 }

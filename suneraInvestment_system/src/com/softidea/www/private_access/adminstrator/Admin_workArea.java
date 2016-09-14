@@ -943,10 +943,9 @@ Border borderC = BorderFactory.createLineBorder(new Color(255, 255, 255), 1);
     }//GEN-LAST:event_bt_fungmangActionPerformed
 
     private void bt_installmentmangActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_installmentmangActionPerformed
-        new Thread(() -> {
+       
             lb_wk_option1.setVisible(true);
-            load_Addditonal_Loans();
-        }).start();
+            load_Closed_Loans();
 
 
     }//GEN-LAST:event_bt_installmentmangActionPerformed
@@ -1248,7 +1247,7 @@ Border borderC = BorderFactory.createLineBorder(new Color(255, 255, 255), 1);
 
     }
 
-    private void load_Addditonal_Loans() {
+    private void load_Closed_Loans() {
 
         new Thread(() -> {
             try {
