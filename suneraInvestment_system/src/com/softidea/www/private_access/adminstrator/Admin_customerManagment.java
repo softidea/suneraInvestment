@@ -1523,7 +1523,6 @@ public class Admin_customerManagment extends javax.swing.JPanel {
     private void calDate() {
         dateCounter();
     }
-
     private void dateCounter() {
         if (!(tf_period.getText().isEmpty()) && dc_registrationDate.getDate() != null) {
             try {
@@ -1557,7 +1556,6 @@ public class Admin_customerManagment extends javax.swing.JPanel {
                             no_of_saturdays++;
                             if (loantype.equalsIgnoreCase("Daily-With Out Saturday(Week days)")) {
                                 period++;
-
                             }
                         }
                         no_of_days++;
@@ -1580,7 +1578,6 @@ public class Admin_customerManagment extends javax.swing.JPanel {
                         Date curr = new SimpleDateFormat("yyyy-MM-dd").parse(year + "-" + tempd + "-31");
                         tempdate = new SimpleDateFormat("yyyy-MM-dd").format(curr);
                         no_of_months++;
-
                     }
                     lb_v_finalDate.setText(tempdate);
 
@@ -1590,7 +1587,6 @@ public class Admin_customerManagment extends javax.swing.JPanel {
                 e.printStackTrace();
             }
         }
-
     }
 
     private void md_tb_loadCustomer(String status) {
