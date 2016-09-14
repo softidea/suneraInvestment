@@ -37,7 +37,7 @@ public class Admin_customerExitsManagement extends javax.swing.JPanel {
 
         setBackground(new java.awt.Color(102, 102, 102));
 
-        tb_customerAddView.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        tb_customerAddView.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         tb_customerAddView.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
@@ -130,10 +130,10 @@ public class Admin_customerExitsManagement extends javax.swing.JPanel {
                 String loan_date = rs.getString("l.loan_date");
                 String loan_no = rs.getString("l.loan_no");
                 String cus_nic = rs.getString("c.cus_nic");
-                String loan_amount = rs.getString("l.loan_amount");
+                String loan_amount = rs.getString("l.loan_amount")+".00";
                 String loan_period = rs.getString("l.loan_period");
-                String loan_installment = rs.getString("l.loan_installment");
-                String due_loan_amount = rs.getString("l.due_loan_amount");
+                String loan_installment = rs.getString("l.loan_installment")+".00";
+                String due_loan_amount = rs.getString("l.due_loan_amount")+".00";
                 String loan_mainperiodtype = rs.getString("l.loan_mainperiodtype");
                 String cus_fullname = rs.getString("c.cus_fullname");
                 String cus_address = rs.getString("c.cus_address");
