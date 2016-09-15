@@ -335,12 +335,12 @@ public class Admin_installmentManagment extends javax.swing.JPanel {
 
     //view installment to the table
     public void viewInstalments(int LoanID) {
-
+        DefaultTableModel dtm = (DefaultTableModel) tb_loanInstallment.getModel();
+        dtm.setRowCount(0);
         new Thread(() -> {
             try {
                 try {
-                    DefaultTableModel dtm = (DefaultTableModel) tb_loanInstallment.getModel();
-                    dtm.setRowCount(0);
+
                     ResultSet rs = MC_DB.search_dataOne("installment", "idloans", loanID + "");
                     while (rs.next()) {
                         Vector v = new Vector();
