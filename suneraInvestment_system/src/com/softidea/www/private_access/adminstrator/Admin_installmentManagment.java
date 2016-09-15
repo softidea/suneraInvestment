@@ -1014,8 +1014,13 @@ public class Admin_installmentManagment extends javax.swing.JPanel {
             if (!tf_nic.getText().isEmpty()) {
                 if (checkNicAvailability(tf_nic.getText())) {
                     loadCutomerLoanData();
-                    calArrius();
-                    calDate();
+                    if (this.DUE_AMOUNT == 0) {
+                        tf_arrius.setText("00.00");
+                    } else {
+                        calArrius();
+                        calDate();
+                    }
+
                 } else {
                     JOptionPane.showMessageDialog(this, "Invalid Nic Number Found,Please check the nic", "Invalid Data Found", JOptionPane.ERROR_MESSAGE);
                 }
