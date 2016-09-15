@@ -94,14 +94,14 @@ public class Admin_workArea extends javax.swing.JFrame {
         initComponents();
         try {
 
-            if(userMail.equals("User")){
+            if (userMail.equals("User")) {
                 bt_loanmang.setVisible(false);
                 bt_cashmang.setVisible(false);
                 bt_usermang.setVisible(false);
                 bt_administratormang.setVisible(false);
                 bt_reports.setVisible(false);
             }
-            
+
         } catch (Exception e) {
         }
     }
@@ -943,9 +943,11 @@ Border borderC = BorderFactory.createLineBorder(new Color(255, 255, 255), 1);
     }//GEN-LAST:event_bt_fungmangActionPerformed
 
     private void bt_installmentmangActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_installmentmangActionPerformed
-       
+
+        new Thread(() -> {
             lb_wk_option1.setVisible(true);
             load_Closed_Loans();
+        }).start();
 
 
     }//GEN-LAST:event_bt_installmentmangActionPerformed

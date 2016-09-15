@@ -850,7 +850,6 @@ public class Admin_customerManagment extends javax.swing.JPanel {
                             } else {
                                 subType = "withSaturday";
                             }
-
                             boolean isture = md_cus.saveCustomer(
                                     tf_nic.getText().toLowerCase(),
                                     tf_name.getText().toLowerCase(),
@@ -868,9 +867,9 @@ public class Admin_customerManagment extends javax.swing.JPanel {
                                     "0.00",
                                     "active",
                                     fundID + "",
-                                    md_funderID()
+                                    md_funderID(),
+                                    cb_mainInstallmentPeriodType.getSelectedItem().toString()
                             );
-
                             String sql_tocash = "INSERT INTO `cash_account` (`date`,`amount`,`cash_ac_type`,`cash_ac_discription`,`cash_ac_status`) VALUES ('" + register_date + "','" + md_Calc.stringTodoubleString(tf_loanAmount.getText().trim()) + "','Loan','" + "NIC:" + tf_nic.getText().toString() + "-Loan Number:" + tf_loanNumber.getText() + "','Active');";
                             MC_DB.update_data(sql_tocash);
                             md_tb_loadCustomer("active");

@@ -31,7 +31,7 @@ public class Admin_loanManagment extends javax.swing.JPanel {
 
     //count daily loans
     public void viewLoanCounts() {
-
+        System.out.println("view loan counts");
         String[] loan_type = {"Daily", "Weekly", "Monthly"};
 
         lb_v_totdailyLoans.setText(countLoanTypes(loan_type[0]) + "");

@@ -999,7 +999,6 @@ public class Admin_installmentManagment extends javax.swing.JPanel {
 
         md_InstallmentSingleView(path, CUS_NIC, CUS_NAME, CUS_CONTACT, CUS_ADDRESS, LOAN_NO, LOAN_AMOUNT, LOAN_PERIOD, LOAN_INSTALLMENT, LOAN_REG_DATE, PAID_AMOUNT, DUE_AMOUNT, ARRIES);
 
-
     }//GEN-LAST:event_bt_updateCustomerActionPerformed
 
     private void bt_payInstallmentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_payInstallmentActionPerformed
@@ -1011,8 +1010,15 @@ public class Admin_installmentManagment extends javax.swing.JPanel {
 
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
 
-            loadCutomerLoanData();
-            calArrius();
+            if (!tf_nic.getText().isEmpty()) {
+                if (checkNicAvailability(tf_nic.getText())) {
+                    loadCutomerLoanData();
+                    calArrius();
+                    calDate();
+                } else {
+                    JOptionPane.showMessageDialog(this, "Invalid Nic Number Found,Please check the nic", "Invalid Data Found", JOptionPane.ERROR_MESSAGE);
+                }
+            }
 
         }
 
@@ -1045,6 +1051,8 @@ public class Admin_installmentManagment extends javax.swing.JPanel {
                     loadCutomerLoanData();
                     calArrius();
                     calDate();
+                } else {
+                    JOptionPane.showMessageDialog(this, "Invalid Nic Number Found,Please check the nic", "Invalid Data Found", JOptionPane.ERROR_MESSAGE);
                 }
             }
 

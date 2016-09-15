@@ -195,7 +195,7 @@ public class user_login extends javax.swing.JFrame {
         lb_locklogin.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
         lb_locklogin.setForeground(new java.awt.Color(255, 255, 255));
         lb_locklogin.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lb_locklogin.setText("LOGIN SYSTEM");
+        lb_locklogin.setText("SYSTEM LOGIN ");
         lb_locklogin.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         lb_locklogin.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         jPanel3.add(lb_locklogin, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 180, 300, 40));

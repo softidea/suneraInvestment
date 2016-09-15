@@ -71,7 +71,7 @@ public class first_loadingWindow extends javax.swing.JFrame {
         softidea.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         softidea.setForeground(new java.awt.Color(255, 255, 255));
         softidea.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        softidea.setText("Softidea Creation (Pvt) Ltd.");
+        softidea.setText("Softidea Creation");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);

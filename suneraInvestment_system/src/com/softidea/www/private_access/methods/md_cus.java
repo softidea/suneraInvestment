@@ -11,7 +11,7 @@ import java.util.logging.Logger;
 
 public class md_cus {
 
-    public static boolean saveCustomer(String nic, String fullname, String address, String phoneNumber, String gender_o, String loan_no, String loan_date, String loan_amount, String loan_mainperiodtype, String loan_period, String loan_installment, String additional_interest, String payable_amount,String due_amount, String status, String interest, int idfunder) {
+    public static boolean saveCustomer(String nic, String fullname, String address, String phoneNumber, String gender_o, String loan_no, String loan_date, String loan_amount, String loan_mainperiodtype, String loan_period, String loan_installment, String additional_interest, String payable_amount,String due_amount, String status, String interest, int idfunder,String loanType) {
         boolean b = false;
         try {
             ResultSet rs1;
@@ -31,7 +31,7 @@ public class md_cus {
             //System.out.println("DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD::::D" + insertId);
             due_amount = "0.00";
 
-            String qry_add_loan = "INSERT INTO loans (loan_no,loan_date,loan_amount,loan_mainperiodtype,loan_period,loan_installment,additional_interest,payable_amount,due_loan_amount,loan_status,idcustomer,idfunder) VALUES('" + loan_no + "','" + loan_date + "','" + loan_amount + "','" + loan_mainperiodtype + "','" + loan_period + "','" + loan_installment + "','" + additional_interest + "','" + payable_amount + "','" +due_amount+ "','" + status + "','" + insertId + "','" + idfunder + "');";
+            String qry_add_loan = "INSERT INTO loans (loan_no,loan_date,loan_amount,loan_mainperiodtype,loan_period,loan_installment,additional_interest,payable_amount,due_loan_amount,loan_status,idcustomer,idfunder,loan_type) VALUES('" + loan_no + "','" + loan_date + "','" + loan_amount + "','" + loan_mainperiodtype + "','" + loan_period + "','" + loan_installment + "','" + additional_interest + "','" + payable_amount + "','" +due_amount+ "','" + status + "','" + insertId + "','" + idfunder + "','"+loanType+"');";
 
             MC_DB.update_data(qry_add_loan);
             System.out.println("OK Customer And Loan Successfully Added!");
