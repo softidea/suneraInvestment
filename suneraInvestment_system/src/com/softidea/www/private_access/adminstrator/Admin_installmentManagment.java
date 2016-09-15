@@ -332,10 +332,12 @@ public class Admin_installmentManagment extends javax.swing.JPanel {
         }
     }
     //get Installment Count total
-DefaultTableModel dtm;
+    DefaultTableModel dtm;
+
     //view installment to the table
+
     public void viewInstalments(int LoanID) {
-        dtm= (DefaultTableModel) tb_loanInstallment.getModel();
+        dtm = (DefaultTableModel) tb_loanInstallment.getModel();
         dtm.setRowCount(0);
         new Thread(() -> {
             try {
@@ -493,6 +495,11 @@ DefaultTableModel dtm;
         jButton2.setBorderPainted(false);
         jButton2.setContentAreaFilled(false);
         jButton2.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jButton2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jButton2MouseClicked(evt);
+            }
+        });
         jButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton2ActionPerformed(evt);
@@ -1088,6 +1095,11 @@ DefaultTableModel dtm;
 
 
     }//GEN-LAST:event_tf_discountKeyTyped
+
+    private void jButton2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton2MouseClicked
+
+
+    }//GEN-LAST:event_jButton2MouseClicked
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
