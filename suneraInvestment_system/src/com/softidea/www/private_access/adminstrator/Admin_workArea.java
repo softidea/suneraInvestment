@@ -67,13 +67,15 @@ public class Admin_workArea extends javax.swing.JFrame {
 
         } catch (ClassNotFoundException | IllegalAccessException | InstantiationException | UnsupportedLookAndFeelException ex) {
         }
+        showDate();
+        showTime();
         md_HomeMenuVisibleLabel(false);
         try {
             AWTUtilities.setWindowOpaque(this, false);
         } catch (Exception e) {
         }
         pro_lookandfeel.Set();
-
+        loadCusFundCount();
         if (i == 10) {
             bt_administratormang.setEnabled(true);
             bt_cashmang.setEnabled(false);

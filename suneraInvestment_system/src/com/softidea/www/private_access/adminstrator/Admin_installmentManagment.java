@@ -46,7 +46,8 @@ public class Admin_installmentManagment extends javax.swing.JPanel {
 
     public Admin_installmentManagment() {
         initComponents();
-
+        tf_payment.setTransferHandler(null);
+        tf_discount.setTransferHandler(null);
         new Thread(() -> {
             try {
 

@@ -12,19 +12,20 @@ public class Admin_loanManagment extends javax.swing.JPanel {
 
     public Admin_loanManagment() {
         initComponents();
-
+        setCurrentDate();
+        new Thread(() -> {
+            viewLoans();
+            viewLoanCounts();
+        }).start();
         new Thread(() -> {
             try {
-
                 pro_lookandfeel.Set();
-                setCurrentDate();
-                viewLoans();
-                viewLoanCounts();
-                viewTotalLoanAmount();
-
             } catch (Exception e) {
                 e.printStackTrace();
             }
+        }).start();
+        new Thread(() -> {
+            viewTotalLoanAmount();
         }).start();
 
     }
@@ -33,6 +34,9 @@ public class Admin_loanManagment extends javax.swing.JPanel {
     public void viewLoanCounts() {
         System.out.println("view loan counts");
         String[] loan_type = {"Daily", "Weekly", "Monthly"};
+        System.out.println(loan_type[0]);
+        System.out.println(loan_type[1]);
+        System.out.println(loan_type[2]);
 
         lb_v_totdailyLoans.setText(countLoanTypes(loan_type[0]) + "");
         lb_v_totweeklyLoans.setText(countLoanTypes(loan_type[1]) + "");
@@ -45,7 +49,7 @@ public class Admin_loanManagment extends javax.swing.JPanel {
 
     public int countLoanTypes(String loan_type) {
         try {
-            ResultSet rs = MC_DB.myConnection().createStatement().executeQuery("SELECT COUNT(DISTINCT idloans) AS dailyCount FROM loans WHERE loan_mainperiodtype='" + loan_type + "'");
+            ResultSet rs = MC_DB.myConnection().createStatement().executeQuery("SELECT COUNT(idloans) AS dailyCount FROM loans WHERE loan_type='" + loan_type + "';");
 
             if (rs.next()) {
                 return rs.getInt("dailyCount");
@@ -73,17 +77,21 @@ public class Admin_loanManagment extends javax.swing.JPanel {
     //count total loan amounts
 
     //view loans
+    ResultSet rs = null;
+
     public void viewLoans() {
 
-        new Thread(() -> {
+        DefaultTableModel dtm = (DefaultTableModel) tb_loans.getModel();
+        dtm.setRowCount(0);
+            String startDate = new SimpleDateFormat("YYYY-MM-dd").format(dc_startDate.getDate());
+            String endDate = new SimpleDateFormat("YYYY-MM-dd").format(dc_endDate.getDate());
+            String loanType = cb_cashType.getSelectedItem().toString();
+            System.out.println(startDate);
+            System.out.println(endDate);
+
             try {
                 System.out.println("inner view loans");
-                String startDate = new SimpleDateFormat("YYYY-MM-dd").format(dc_startDate.getDate());
-                String endDate = new SimpleDateFormat("YYYY-MM-dd").format(dc_endDate.getDate());
-                String loanType = cb_cashType.getSelectedItem().toString();
-                ResultSet rs = null;
-                DefaultTableModel dtm = (DefaultTableModel) tb_loans.getModel();
-                dtm.setRowCount(0);
+
                 try {
                     if (!(startDate == null && endDate == null && loanType.isEmpty())) {
                         System.out.println("inner validation");
@@ -97,6 +105,7 @@ public class Admin_loanManagment extends javax.swing.JPanel {
                                 v.add(rs.getDouble("loan_amount"));
                                 v.add(rs.getString("loan_mainperiodtype"));
                                 v.add(rs.getString("loan_period"));
+                                v.add(rs.getString("loan_status"));
                                 dtm.addRow(v);
                             }
                         } else {
@@ -119,7 +128,6 @@ public class Admin_loanManagment extends javax.swing.JPanel {
             } catch (Exception e) {
                 e.printStackTrace();
             }
-        }).start();
 
     }
     //view loans
@@ -159,8 +167,10 @@ public class Admin_loanManagment extends javax.swing.JPanel {
         jLabel4.setForeground(new java.awt.Color(255, 255, 255));
         jLabel4.setText("Start Date :");
 
+        dc_startDate.setDateFormatString("yyyy-MM-dd");
         dc_startDate.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
 
+        dc_endDate.setDateFormatString("yyyy-MM-dd");
         dc_endDate.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
 
         jLabel5.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
@@ -186,6 +196,11 @@ public class Admin_loanManagment extends javax.swing.JPanel {
         cb_cashType.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
                 cb_cashTypeItemStateChanged(evt);
+            }
+        });
+        cb_cashType.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cb_cashTypeActionPerformed(evt);
             }
         });
 
@@ -262,11 +277,11 @@ public class Admin_loanManagment extends javax.swing.JPanel {
 
             },
             new String [] {
-                "ID", "Loan Number", "Loan Date", "Amount", "Period Type", "Period"
+                "ID", "Loan Number", "Loan Date", "Amount", "Period Type", "Period", "Status"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false
+                false, false, false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -406,14 +421,16 @@ public class Admin_loanManagment extends javax.swing.JPanel {
 
     private void cb_cashTypeItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cb_cashTypeItemStateChanged
 
-        viewLoans();
-
     }//GEN-LAST:event_cb_cashTypeItemStateChanged
 
     private void bt_addFundMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_bt_addFundMouseClicked
 
 
     }//GEN-LAST:event_bt_addFundMouseClicked
+
+    private void cb_cashTypeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cb_cashTypeActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cb_cashTypeActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
