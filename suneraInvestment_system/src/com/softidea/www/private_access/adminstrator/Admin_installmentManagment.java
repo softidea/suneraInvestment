@@ -332,10 +332,10 @@ public class Admin_installmentManagment extends javax.swing.JPanel {
         }
     }
     //get Installment Count total
-
+DefaultTableModel dtm;
     //view installment to the table
     public void viewInstalments(int LoanID) {
-        DefaultTableModel dtm = (DefaultTableModel) tb_loanInstallment.getModel();
+        dtm= (DefaultTableModel) tb_loanInstallment.getModel();
         dtm.setRowCount(0);
         new Thread(() -> {
             try {
@@ -437,6 +437,8 @@ public class Admin_installmentManagment extends javax.swing.JPanel {
         jPanel1.setBackground(new java.awt.Color(66, 66, 66));
 
         tf_address.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        tf_address.setEnabled(false);
+        tf_address.setFocusable(false);
         tf_address.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
                 tf_addressKeyReleased(evt);
@@ -466,6 +468,8 @@ public class Admin_installmentManagment extends javax.swing.JPanel {
         jLabel18.setText("Customer Name :");
 
         tf_name.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        tf_name.setEnabled(false);
+        tf_name.setFocusable(false);
         tf_name.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
                 tf_nameKeyReleased(evt);
@@ -473,6 +477,8 @@ public class Admin_installmentManagment extends javax.swing.JPanel {
         });
 
         tf_contact.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        tf_contact.setEnabled(false);
+        tf_contact.setFocusable(false);
         tf_contact.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
                 tf_contactKeyReleased(evt);
@@ -831,6 +837,8 @@ public class Admin_installmentManagment extends javax.swing.JPanel {
         });
 
         dc_installment.setDateFormatString("yyyy-MM-dd");
+        dc_installment.setEnabled(false);
+        dc_installment.setFocusable(false);
         dc_installment.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
 
         jLabel20.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
@@ -1004,6 +1012,7 @@ public class Admin_installmentManagment extends javax.swing.JPanel {
 
     private void bt_payInstallmentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_payInstallmentActionPerformed
 
+        dtm.setRowCount(0);
         new Thread(this::md_updateCustomer).start();
     }//GEN-LAST:event_bt_payInstallmentActionPerformed
 
