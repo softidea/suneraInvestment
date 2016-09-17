@@ -43,6 +43,7 @@ public class Admin_installmentManagment extends javax.swing.JPanel {
     double PAID_INTEREST = 0;
     double PAYABLE_INTEREST = 0;
     double ARRIUS = 0;
+    Date REG_DATE=null;
 
     public Admin_installmentManagment() {
         initComponents();
@@ -97,7 +98,7 @@ public class Admin_installmentManagment extends javax.swing.JPanel {
 
                 loanID = rs.getInt("l.idloans");
                 LOAN_NO = rs.getString("l.loan_no");
-//                        JOptionPane.showMessageDialog(this, "loan id" + loanID);
+//              JOptionPane.showMessageDialog(this, "loan id" + loanID);
                 tf_loanAmount.setText(rs.getDouble("l.loan_amount") + "0");
                 this.LOAN_AMOUNT = rs.getDouble("l.loan_amount");
 
@@ -107,10 +108,20 @@ public class Admin_installmentManagment extends javax.swing.JPanel {
                 tf_installment.setText(rs.getDouble("loan_installment") + "0");
                 this.LOAN_INSTALLMENT = rs.getDouble("loan_installment");
 
-                tf_regDate.setText(rs.getString("loan_date"));
+//                tf_regDate.setText(rs.getString("loan_date"));
                 this.LOAN_REG_DATE = rs.getString("loan_date");
 
+                String res_date = rs.getString("loan_date");
+                SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+                Date d = format.parse(res_date);
+                System.out.println("DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD:"+d);
+                reg_date_choser.setDate(d);
+                
+                
+                
+
                 lblloantype.setText(rs.getString("loan_mainperiodtype"));
+                main_type.setText(rs.getString("loan_type"));
 
                 viewInstalments(loanID);
                 setPaidAmount();
@@ -152,7 +163,8 @@ public class Admin_installmentManagment extends javax.swing.JPanel {
             if (rs.next()) {
                 paid = rs.getDouble(1);
             }
-            String loanDate = tf_regDate.getText();
+            String loanDate = this.LOAN_REG_DATE;
+            System.out.println(loanDate+"LLLLLLLLLLLLLLLL");
             int period = Integer.parseInt(tf_period.getText());
             double installement = Double.parseDouble(tf_installment.getText());
 
@@ -335,7 +347,6 @@ public class Admin_installmentManagment extends javax.swing.JPanel {
     DefaultTableModel dtm;
 
     //view installment to the table
-
     public void viewInstalments(int LoanID) {
         dtm = (DefaultTableModel) tb_loanInstallment.getModel();
         dtm.setRowCount(0);
@@ -403,11 +414,12 @@ public class Admin_installmentManagment extends javax.swing.JPanel {
         tf_loanAmount = new javax.swing.JLabel();
         tf_period = new javax.swing.JLabel();
         tf_installment = new javax.swing.JLabel();
-        tf_regDate = new javax.swing.JLabel();
         jLabel23 = new javax.swing.JLabel();
         lblloantype = new javax.swing.JLabel();
         jLabel24 = new javax.swing.JLabel();
         lb_v_finalDate = new javax.swing.JLabel();
+        main_type = new javax.swing.JLabel();
+        reg_date_choser = new com.toedter.calendar.JDateChooser();
         jPanel3 = new javax.swing.JPanel();
         jLabel12 = new javax.swing.JLabel();
         jLabel13 = new javax.swing.JLabel();
@@ -589,11 +601,6 @@ public class Admin_installmentManagment extends javax.swing.JPanel {
         tf_installment.setForeground(new java.awt.Color(0, 204, 255));
         tf_installment.setText("00.00");
 
-        tf_regDate.setBackground(new java.awt.Color(255, 255, 0));
-        tf_regDate.setFont(new java.awt.Font("Tahoma", 0, 20)); // NOI18N
-        tf_regDate.setForeground(new java.awt.Color(0, 204, 255));
-        tf_regDate.setText("0000-00-00");
-
         jLabel23.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel23.setForeground(new java.awt.Color(255, 255, 255));
         jLabel23.setText("Loan Type :");
@@ -611,6 +618,13 @@ public class Admin_installmentManagment extends javax.swing.JPanel {
         lb_v_finalDate.setForeground(new java.awt.Color(0, 204, 255));
         lb_v_finalDate.setText("0000-00-00");
 
+        main_type.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        main_type.setForeground(new java.awt.Color(255, 255, 255));
+        main_type.setText("Main Type");
+
+        reg_date_choser.setDateFormatString("yyyy-MM-dd");
+        reg_date_choser.setEnabled(false);
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -619,29 +633,33 @@ public class Admin_installmentManagment extends javax.swing.JPanel {
                 .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel8)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(jLabel9)
                             .addComponent(jLabel10)
-                            .addComponent(tf_installment, javax.swing.GroupLayout.PREFERRED_SIZE, 283, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(tf_period, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(tf_regDate, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addComponent(reg_date_choser, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(28, 28, 28)
+                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel24)
+                                    .addComponent(lb_v_finalDate, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(tf_installment, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addGap(0, 22, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel2Layout.createSequentialGroup()
                                 .addComponent(jLabel11)
-                                .addGap(31, 31, 31)
-                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel24)
-                                    .addComponent(lb_v_finalDate, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addGap(0, 0, Short.MAX_VALUE))
                             .addComponent(tf_loanAmount, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addGap(0, 0, Short.MAX_VALUE)
+                                .addComponent(jLabel8)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel23, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(lblloantype, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                    .addGroup(jPanel2Layout.createSequentialGroup()
+                                        .addComponent(jLabel23, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addComponent(main_type))
+                                    .addComponent(lblloantype, javax.swing.GroupLayout.PREFERRED_SIZE, 188, javax.swing.GroupLayout.PREFERRED_SIZE))))
                         .addContainerGap())))
         );
         jPanel2Layout.setVerticalGroup(
@@ -654,8 +672,9 @@ public class Admin_installmentManagment extends javax.swing.JPanel {
                 .addGap(18, 18, 18)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel8)
-                    .addComponent(jLabel23))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                    .addComponent(jLabel23)
+                    .addComponent(main_type))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(tf_period, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lblloantype, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -666,14 +685,16 @@ public class Admin_installmentManagment extends javax.swing.JPanel {
                 .addGap(18, 18, 18)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(jLabel11)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel11)
+                            .addComponent(jLabel24))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(tf_regDate, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(reg_date_choser, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(jLabel24)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(lb_v_finalDate, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(28, 28, 28)
+                        .addComponent(lb_v_finalDate, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addContainerGap())
         );
 
         jPanel3.setBackground(new java.awt.Color(66, 66, 66));
@@ -995,7 +1016,7 @@ public class Admin_installmentManagment extends javax.swing.JPanel {
         String LOAN_AMOUNT = tf_loanAmount.getText();
         String LOAN_PERIOD = tf_period.getText();
         String LOAN_INSTALLMENT = tf_installment.getText();
-        String LOAN_REG_DATE = tf_regDate.getText();
+        String LOAN_REG_DATE = new SimpleDateFormat("yyyy-MM-dd").format(this.REG_DATE.getDate());
         String PAID_AMOUNT = tf_paidAmount.getText();
         String DUE_AMOUNT = tf_dueAmount.getText();
         String ARRIES = tf_arrius.getText();
@@ -1133,6 +1154,8 @@ public class Admin_installmentManagment extends javax.swing.JPanel {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lb_v_finalDate;
     private javax.swing.JLabel lblloantype;
+    private javax.swing.JLabel main_type;
+    private com.toedter.calendar.JDateChooser reg_date_choser;
     private javax.swing.JTable tb_loanInstallment;
     public static javax.swing.JTextField tf_address;
     private javax.swing.JLabel tf_arrius;
@@ -1149,7 +1172,6 @@ public class Admin_installmentManagment extends javax.swing.JPanel {
     private javax.swing.JLabel tf_payableInterest;
     public static javax.swing.JTextField tf_payment;
     private javax.swing.JLabel tf_period;
-    private javax.swing.JLabel tf_regDate;
     // End of variables declaration//GEN-END:variables
 
     private void md_InstallmentSingleView(String rp_parth, String CUS_NIC, String CUS_NAME, String CUS_CONTACT, String CUS_ADDRESS, String LOAN_NO, String LOAN_AMOUNT, String LOAN_PERIOD, String LOAN_INSTALLMENT, String LOAN_REG_DATE, String PAID_AMOUNT, String DUE_AMOUNT, String ARRIES) {
@@ -1276,69 +1298,68 @@ public class Admin_installmentManagment extends javax.swing.JPanel {
     }
 
     private void dateCounter() {
-        try {
-            int period = Integer.parseInt(tf_period.getText());
-            String loanDate = tf_regDate.getText();
+           
+            try {
+                int period = Integer.parseInt(tf_period.getText());
+                String loanDate = new SimpleDateFormat("yyyy-MM-dd").format(reg_date_choser.getDate());
 
-            String loantype = lblloantype.getText();
+                String loantype = main_type.getText() + "-" + lblloantype.getText();
 
-            String today = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
+                String today = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
 
-            if (loantype.toLowerCase().contains("daily") || (loantype.toLowerCase().contains("weekly"))) {
+                if (loantype.toLowerCase().contains("daily") || (loantype.toLowerCase().contains("weekly"))) {
 
-                String tempdate = loanDate;
-                int no_of_days = 0;
-                int no_of_saturdays = 0;
+                    String tempdate = loanDate;
+                    int no_of_days = 0;
+                    int no_of_saturdays = 0;
 
-                Date d = new SimpleDateFormat("yyyy-MM-dd").parse(loanDate);
-                String year = loanDate.split("-")[0];
-                int day = Integer.parseInt(new SimpleDateFormat("yyyy-DDD").format(d).split("-")[1]);
+                    Date d = new SimpleDateFormat("yyyy-MM-dd").parse(loanDate);
+                    String year = loanDate.split("-")[0];
+                    int day = Integer.parseInt(new SimpleDateFormat("yyyy-DDD").format(d).split("-")[1]);
 
-                for (int i = 1; (i <= period); i++) {
+                    for (int i = 1; (i <= period); i++) {
 
-                    Date currentdate = new SimpleDateFormat("yyyy-DDD").parse(year + "-" + (day + i));
+                        Date currentdate = new SimpleDateFormat("yyyy-DDD").parse(year + "-" + (day + i));
 
-                    tempdate = new SimpleDateFormat("yyyy-MM-dd").format(currentdate);
+                        tempdate = new SimpleDateFormat("yyyy-MM-dd").format(currentdate);
 
-                    String nowday = new SimpleDateFormat("EEEEEEEE").format(currentdate);
+                        String nowday = new SimpleDateFormat("EEEEEEEE").format(currentdate);
 
-                    if (nowday.equalsIgnoreCase("Saturday")) {
+                        if (nowday.equalsIgnoreCase("Saturday")) {
 
-                        no_of_saturdays++;
-                        if (loantype.equalsIgnoreCase("Daily-With Out Saturday(Week days)")) {
-                            period++;
-
+                            no_of_saturdays++;
+                            if (loantype.equalsIgnoreCase("Daily-With Out Saturday(Week days)")) {
+                                period++;
+                            }
                         }
+                        no_of_days++;
+
                     }
-                    no_of_days++;
+                    lb_v_finalDate.setText(tempdate);
 
-                }
-                lb_v_finalDate.setText(tempdate);
+                } else {
 
-            } else {
+                    int no_of_months = 0;
+                    String year = loanDate.split("-")[0];
+                    int l_month = Integer.parseInt(loanDate.split("-")[1]);
+                    String tempdate = "";
+                    for (int i = 1; (i <= period); i++) {
+                        String tempd = l_month + i + "";
+                        if ((l_month + i) < 10) {
+                            tempd = "0" + (l_month + i);
+                        }
 
-                int no_of_months = 0;
-                String year = loanDate.split("-")[0];
-                int l_month = Integer.parseInt(loanDate.split("-")[1]);
-                String tempdate = "";
-                for (int i = 1; (i <= period); i++) {
-                    String tempd = l_month + i + "";
-                    if ((l_month + i) < 10) {
-                        tempd = "0" + (l_month + i);
+                        Date curr = new SimpleDateFormat("yyyy-MM-dd").parse(year + "-" + tempd + "-31");
+                        tempdate = new SimpleDateFormat("yyyy-MM-dd").format(curr);
+                        no_of_months++;
                     }
-
-                    Date curr = new SimpleDateFormat("yyyy-MM-dd").parse(year + "-" + tempd + "-31");
-                    tempdate = new SimpleDateFormat("yyyy-MM-dd").format(curr);
-                    no_of_months++;
-
-                }
-                lb_v_finalDate.setText(tempdate);
+                    lb_v_finalDate.setText(tempdate);
 
 //                arriers = no_of_months * installement;
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
             }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
+        
     }
 }

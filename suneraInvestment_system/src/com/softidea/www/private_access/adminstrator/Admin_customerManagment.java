@@ -1530,6 +1530,8 @@ public class Admin_customerManagment extends javax.swing.JPanel {
         if (!(tf_period.getText().isEmpty()) && dc_registrationDate.getDate() != null) {
             try {
                 int period = Integer.parseInt(tf_period.getText());
+                System.out.println(dc_registrationDate.getDate());
+                
                 String loanDate = new SimpleDateFormat("yyyy-MM-dd").format(dc_registrationDate.getDate());
 
                 String loantype = cb_mainInstallmentPeriodType.getSelectedItem() + "-" + cb_periodType.getSelectedItem();
