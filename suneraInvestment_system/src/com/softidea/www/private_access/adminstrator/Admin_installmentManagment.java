@@ -164,22 +164,22 @@ public class Admin_installmentManagment extends javax.swing.JPanel {
                 paid = rs.getDouble(1);
             }
             String loanDate = this.LOAN_REG_DATE;
-            System.out.println(loanDate+"LLLLLLLLLLLLLLLL");
+           
             int period = Integer.parseInt(tf_period.getText());
             double installement = Double.parseDouble(tf_installment.getText());
 
-            String loantype = "";
+            
             String loan_main_type="";
-            rs = MC_DB.myConnection().createStatement().executeQuery("SELECT loan_mainperiodtype,loan_type FROM loans WHERE idloans='" + loanID + "'");
+            rs = MC_DB.myConnection().createStatement().executeQuery("SELECT loan_mainperiodtype FROM loans WHERE idloans='" + loanID + "'");
             if (rs.next()) {
-                loantype = rs.getString(1);
-                loan_main_type=rs.getString(2);
+                loan_main_type = rs.getString(1);
+                
             }
-
+            
             String today = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
 
-            if (loan_main_type.toLowerCase().contains("daily") || (loan_main_type.toLowerCase().contains("weekly"))) {
-
+            if (loan_main_type.toLowerCase().contains("saturday")) {
+                System.out.println(loan_main_type);
                 String tempdate = loanDate;
                 int no_of_days = 0;
                 int no_of_saturdays = 0;
@@ -199,18 +199,18 @@ public class Admin_installmentManagment extends javax.swing.JPanel {
                     if (nowday.equalsIgnoreCase("Saturday")) {
 
                         no_of_saturdays++;
-                        if (loantype.equalsIgnoreCase("With Out Saturday(Week days)")) {
+                        if (loan_main_type.equalsIgnoreCase("With Out Saturday(Week days)")) {
                             period++;
-                            System.out.println(period);
+                            System.out.println("Ela without");
                         }
                     }
                     no_of_days++;
 
                 }
 
-                if (loantype.equalsIgnoreCase("With Out Saturday(Week days)")) {
+                if (loan_main_type.equalsIgnoreCase("With Out Saturday(Week days)")) {
                     arriers = (no_of_days - no_of_saturdays) * installement;
-                } else if (loantype.equalsIgnoreCase("With Saturday")) {
+                } else if (loan_main_type.equalsIgnoreCase("With Saturday")) {
                     arriers = no_of_days * installement;
 
                 } else {
@@ -1306,10 +1306,10 @@ public class Admin_installmentManagment extends javax.swing.JPanel {
                 String loanDate = new SimpleDateFormat("yyyy-MM-dd").format(reg_date_choser.getDate());
 
                 String loantype = main_type.getText() + "-" + lblloantype.getText();
-
+                System.out.println(loantype+"--------------");
                 String today = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
 
-                if (loantype.toLowerCase().contains("daily") || (loantype.toLowerCase().contains("weekly"))) {
+                if (loantype.toLowerCase().contains("daily")) {
 
                     String tempdate = loanDate;
                     int no_of_days = 0;
