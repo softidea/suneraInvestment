@@ -40,8 +40,8 @@ public class Admin_workArea extends javax.swing.JFrame {
                     UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
                 } catch (ClassNotFoundException | IllegalAccessException | InstantiationException | UnsupportedLookAndFeelException ex) {
                 }
-                showDate();
-                showTime();
+//                showDate();
+//                showTime();
                 md_HomeMenuVisibleLabel(false);
 
                 try {
@@ -50,8 +50,7 @@ public class Admin_workArea extends javax.swing.JFrame {
                 }
                 pro_lookandfeel.Set();
 
-                loadCusFundCount();
-
+//                loadCusFundCount();
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -67,15 +66,15 @@ public class Admin_workArea extends javax.swing.JFrame {
 
         } catch (ClassNotFoundException | IllegalAccessException | InstantiationException | UnsupportedLookAndFeelException ex) {
         }
-        showDate();
-        showTime();
+//        showDate();
+//        showTime();
         md_HomeMenuVisibleLabel(false);
         try {
             AWTUtilities.setWindowOpaque(this, false);
         } catch (Exception e) {
         }
         pro_lookandfeel.Set();
-        loadCusFundCount();
+//        loadCusFundCount();
         if (i == 10) {
             bt_administratormang.setEnabled(true);
             bt_cashmang.setEnabled(false);
@@ -87,7 +86,7 @@ public class Admin_workArea extends javax.swing.JFrame {
             bt_reports.setEnabled(false);
             bt_usermang.setEnabled(true);
         }
-        loadCusFundCount();
+//        loadCusFundCount();
 
     }
 
@@ -128,11 +127,8 @@ public class Admin_workArea extends javax.swing.JFrame {
         bt_Oreports = new javax.swing.JButton();
         bt_customerexesits = new javax.swing.JButton();
         jPanel5 = new javax.swing.JPanel();
-        lb_customerCount3 = new javax.swing.JLabel();
-        jLabel13 = new javax.swing.JLabel();
-        lb_v_date = new javax.swing.JLabel();
-        lb_funderCount3 = new javax.swing.JLabel();
-        lb_v_time = new javax.swing.JLabel();
+        lbviewcustomer = new javax.swing.JLabel();
+        lbviewcustomer1 = new javax.swing.JLabel();
         jLabel15 = new javax.swing.JLabel();
         jLabel16 = new javax.swing.JLabel();
         pl_systemExit = new javax.swing.JPanel();
@@ -158,13 +154,8 @@ public class Admin_workArea extends javax.swing.JFrame {
         bt_administratormang = new javax.swing.JButton();
         bt_reports = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
-        lb_customerCount = new javax.swing.JLabel();
-        lb_time = new javax.swing.JLabel();
-        lb_date = new javax.swing.JLabel();
-        lb_funderCount = new javax.swing.JLabel();
-        jLabel17 = new javax.swing.JLabel();
-        jLabel18 = new javax.swing.JLabel();
-        jLabel19 = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
+        jLabel7 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
         bt_installmentmang1 = new javax.swing.JButton();
@@ -323,32 +314,23 @@ public class Admin_workArea extends javax.swing.JFrame {
                 jPanel5MouseMoved(evt);
             }
         });
+        jPanel5.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jPanel5MouseClicked(evt);
+            }
+        });
 
-        lb_customerCount3.setBackground(new java.awt.Color(255, 255, 255));
-        lb_customerCount3.setFont(new java.awt.Font("Tahoma", 0, 36)); // NOI18N
-        lb_customerCount3.setForeground(new java.awt.Color(255, 255, 255));
-        lb_customerCount3.setText("CCT");
+        lbviewcustomer.setBackground(new java.awt.Color(255, 255, 255));
+        lbviewcustomer.setFont(new java.awt.Font("Tahoma", 0, 30)); // NOI18N
+        lbviewcustomer.setForeground(new java.awt.Color(255, 255, 255));
+        lbviewcustomer.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        lbviewcustomer.setText("Daily Customer");
 
-        jLabel13.setBackground(new java.awt.Color(255, 255, 255));
-        jLabel13.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jLabel13.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel13.setText("Time");
-
-        lb_v_date.setBackground(new java.awt.Color(255, 255, 255));
-        lb_v_date.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        lb_v_date.setForeground(new java.awt.Color(255, 255, 255));
-        lb_v_date.setText("Date");
-
-        lb_funderCount3.setBackground(new java.awt.Color(255, 255, 255));
-        lb_funderCount3.setFont(new java.awt.Font("Tahoma", 0, 36)); // NOI18N
-        lb_funderCount3.setForeground(new java.awt.Color(255, 255, 255));
-        lb_funderCount3.setText("FCT");
-
-        lb_v_time.setBackground(new java.awt.Color(255, 255, 255));
-        lb_v_time.setFont(new java.awt.Font("Tahoma", 0, 36)); // NOI18N
-        lb_v_time.setForeground(new java.awt.Color(255, 255, 255));
-        lb_v_time.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        lb_v_time.setText("CCT");
+        lbviewcustomer1.setBackground(new java.awt.Color(255, 255, 255));
+        lbviewcustomer1.setFont(new java.awt.Font("Tahoma", 0, 30)); // NOI18N
+        lbviewcustomer1.setForeground(new java.awt.Color(255, 255, 255));
+        lbviewcustomer1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lbviewcustomer1.setText("View");
 
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
@@ -357,29 +339,21 @@ public class Admin_workArea extends javax.swing.JFrame {
             .addGroup(jPanel5Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(lb_v_date, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jLabel13, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(lbviewcustomer, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(jPanel5Layout.createSequentialGroup()
-                        .addComponent(lb_customerCount3, javax.swing.GroupLayout.DEFAULT_SIZE, 107, Short.MAX_VALUE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(lb_funderCount3, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(lb_v_time, javax.swing.GroupLayout.DEFAULT_SIZE, 200, Short.MAX_VALUE))
+                        .addGap(25, 25, 25)
+                        .addComponent(lbviewcustomer1, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel5Layout.createSequentialGroup()
-                .addGap(39, 39, 39)
-                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lb_customerCount3)
-                    .addComponent(lb_funderCount3))
+                .addGap(65, 65, 65)
+                .addComponent(lbviewcustomer)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel13)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(lb_v_time)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(lb_v_date, javax.swing.GroupLayout.DEFAULT_SIZE, 27, Short.MAX_VALUE)
-                .addContainerGap())
+                .addComponent(lbviewcustomer1)
+                .addContainerGap(55, Short.MAX_VALUE))
         );
 
         jp_OmainMenu.add(jPanel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(976, 333, -1, 200));
@@ -422,14 +396,14 @@ public class Admin_workArea extends javax.swing.JFrame {
         jLabel4.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(255, 255, 255));
         jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        jLabel4.setText("Softidea Solution (Pvt) Ltd.");
+        jLabel4.setText("Softidea Solution");
         jLabel4.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jLabel4.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jLabel4MouseClicked(evt);
             }
         });
-        getContentPane().add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(1054, 680, 200, -1));
+        getContentPane().add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(1154, 680, 100, -1));
 
         lb_wk_option1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         lb_wk_option1.setForeground(new java.awt.Color(255, 255, 255));
@@ -672,89 +646,40 @@ public class Admin_workArea extends javax.swing.JFrame {
         jPanel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255), 2));
         jPanel1.setMaximumSize(new java.awt.Dimension(200, 200));
         jPanel1.setMinimumSize(new java.awt.Dimension(200, 200));
+        jPanel1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jPanel1MouseClicked(evt);
+            }
+        });
 
-        lb_customerCount.setBackground(new java.awt.Color(255, 255, 255));
-        lb_customerCount.setFont(new java.awt.Font("Tahoma", 0, 36)); // NOI18N
-        lb_customerCount.setForeground(new java.awt.Color(255, 255, 255));
-        lb_customerCount.setText("CCT");
+        jLabel6.setFont(new java.awt.Font("Tahoma", 0, 30)); // NOI18N
+        jLabel6.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel6.setText("Daily Customer ");
 
-        lb_time.setBackground(new java.awt.Color(255, 255, 255));
-        lb_time.setFont(new java.awt.Font("Tahoma", 0, 32)); // NOI18N
-        lb_time.setForeground(new java.awt.Color(255, 255, 255));
-        lb_time.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        lb_time.setText("00:00:00");
-
-        lb_date.setBackground(new java.awt.Color(255, 255, 255));
-        lb_date.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
-        lb_date.setForeground(new java.awt.Color(255, 255, 255));
-        lb_date.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        lb_date.setText("2016-08-14");
-
-        lb_funderCount.setBackground(new java.awt.Color(255, 255, 255));
-        lb_funderCount.setFont(new java.awt.Font("Tahoma", 0, 36)); // NOI18N
-        lb_funderCount.setForeground(new java.awt.Color(255, 255, 255));
-        lb_funderCount.setText("FCT");
-
-        jLabel17.setBackground(new java.awt.Color(255, 255, 255));
-        jLabel17.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        jLabel17.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel17.setText("Customer Count");
-
-        jLabel18.setBackground(new java.awt.Color(255, 255, 255));
-        jLabel18.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        jLabel18.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel18.setText("Funder Count");
-
-        jLabel19.setBackground(new java.awt.Color(255, 255, 255));
-        jLabel19.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jLabel19.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel19.setText("Time");
+        jLabel7.setFont(new java.awt.Font("Tahoma", 0, 30)); // NOI18N
+        jLabel7.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel7.setText("View");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(5, 5, 5)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel17)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(10, 10, 10)
-                                .addComponent(lb_customerCount, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(18, 18, 18)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(lb_funderCount, javax.swing.GroupLayout.DEFAULT_SIZE, 83, Short.MAX_VALUE)
-                            .addComponent(jLabel18, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addGap(0, 11, Short.MAX_VALUE))
-                    .addComponent(jLabel19, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addComponent(lb_time, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addContainerGap())))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(lb_date, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
+                .addComponent(jLabel6)
+                .addGap(0, 0, Short.MAX_VALUE))
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(66, 66, 66)
+                .addComponent(jLabel7)
+                .addContainerGap(77, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel17)
-                    .addComponent(jLabel18, javax.swing.GroupLayout.PREFERRED_SIZE, 17, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(12, 12, 12)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lb_customerCount)
-                    .addComponent(lb_funderCount))
-                .addGap(4, 4, 4)
-                .addComponent(jLabel19)
+                .addGap(52, 52, 52)
+                .addComponent(jLabel6)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(lb_time)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(lb_date, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                .addComponent(jLabel7)
+                .addContainerGap(64, Short.MAX_VALUE))
         );
 
         jp_adminMainPanel.add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(976, 333, 210, 200));
@@ -868,8 +793,8 @@ Border borderC = BorderFactory.createLineBorder(new Color(255, 255, 255), 1);
             UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
         } catch (Exception ex) {
         }
-        showDate();
-        showTime();
+//        showDate();
+//        showTime();
         md_HomeMenuVisibleLabel(false);
         try {
             AWTUtilities.setWindowOpaque(this, false);
@@ -877,8 +802,7 @@ Border borderC = BorderFactory.createLineBorder(new Color(255, 255, 255), 1);
         }
         pro_lookandfeel.Set();
 
-        loadCusFundCount();
-
+//        loadCusFundCount();
         lb_wk_option1.setVisible(false);
         lb_wk_option2.setVisible(false);
 
@@ -1101,11 +1025,28 @@ Border borderC = BorderFactory.createLineBorder(new Color(255, 255, 255), 1);
 
     private void jPanel5MouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel5MouseMoved
 
-        showDate();
-        showTime();
-
+//        showDate();
+//        showTime();
 
     }//GEN-LAST:event_jPanel5MouseMoved
+
+    private void jPanel1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel1MouseClicked
+
+        new Thread(() -> {
+            lb_wk_option1.setVisible(true);
+            load_daily_customer_view();
+        }).start();
+
+    }//GEN-LAST:event_jPanel1MouseClicked
+
+    private void jPanel5MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel5MouseClicked
+
+        new Thread(() -> {
+            lb_wk_option1.setVisible(true);
+            load_daily_customer_view();
+        }).start();
+
+    }//GEN-LAST:event_jPanel5MouseClicked
 
     /**
      * @param args the command line arguments
@@ -1163,29 +1104,19 @@ Border borderC = BorderFactory.createLineBorder(new Color(255, 255, 255), 1);
     private javax.swing.JButton bt_usermang;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
-    private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel16;
-    private javax.swing.JLabel jLabel17;
-    private javax.swing.JLabel jLabel18;
-    private javax.swing.JLabel jLabel19;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JLabel jl_systemExit;
     public javax.swing.JPanel jp_OmainMenu;
     public static javax.swing.JPanel jp_adminMainPanel;
-    private javax.swing.JLabel lb_customerCount;
-    private javax.swing.JLabel lb_customerCount3;
-    private javax.swing.JLabel lb_date;
-    private javax.swing.JLabel lb_funderCount;
-    private javax.swing.JLabel lb_funderCount3;
-    private javax.swing.JLabel lb_time;
-    private javax.swing.JLabel lb_v_date;
-    private javax.swing.JLabel lb_v_time;
     public static javax.swing.JLabel lb_wk_option1;
     public static javax.swing.JLabel lb_wk_option2;
     public static javax.swing.JLabel lb_wk_option3;
@@ -1194,6 +1125,8 @@ Border borderC = BorderFactory.createLineBorder(new Color(255, 255, 255), 1);
     public static javax.swing.JLabel lb_wk_option6;
     public static javax.swing.JLabel lb_wk_option7;
     public static javax.swing.JLabel lb_wk_option8;
+    private javax.swing.JLabel lbviewcustomer;
+    private javax.swing.JLabel lbviewcustomer1;
     private javax.swing.JPanel pl_systemExit;
     // End of variables declaration//GEN-END:variables
 
@@ -1269,31 +1202,30 @@ Border borderC = BorderFactory.createLineBorder(new Color(255, 255, 255), 1);
 
     }
 
-    private void loadCusFundCount() {
-        new Thread(() -> {
-            try {
-                ResultSet rs = MC_DB.myConnection().createStatement().executeQuery("SELECT COUNT(DISTINCT idcustomer) AS NumberOfCustomers FROM customer;");
-                //ResultSet r2=MC_DB.myConnection().createStatement().executeQuery("SELECT COUNT(DISTINCT idfunder) AS NumberOfFunders FROM funder;");
-                if (rs.next()) {
-                    String cusCount = rs.getString("NumberOfCustomers");
-                    lb_customerCount.setText(cusCount);
-
-                }
-
-                ResultSet r2 = MC_DB.myConnection().createStatement().executeQuery("SELECT COUNT(DISTINCT idfunder) AS NumberOfFunders FROM funder;");
-
-                if (r2.next()) {
-                    String funderCount = r2.getString("NumberOfFunders");
-                    lb_funderCount.setText(funderCount);
-                }
-
-            } catch (SQLException ex) {
-                ex.printStackTrace();
-            }
-        }).start();
-
-    }
-
+//    private void loadCusFundCount() {
+//        new Thread(() -> {
+//            try {
+//                ResultSet rs = MC_DB.myConnection().createStatement().executeQuery("SELECT COUNT(DISTINCT idcustomer) AS NumberOfCustomers FROM customer;");
+//                //ResultSet r2=MC_DB.myConnection().createStatement().executeQuery("SELECT COUNT(DISTINCT idfunder) AS NumberOfFunders FROM funder;");
+//                if (rs.next()) {
+//                    String cusCount = rs.getString("NumberOfCustomers");
+//                    lb_customerCount.setText(cusCount);
+//
+//                }
+//
+//                ResultSet r2 = MC_DB.myConnection().createStatement().executeQuery("SELECT COUNT(DISTINCT idfunder) AS NumberOfFunders FROM funder;");
+//
+//                if (r2.next()) {
+//                    String funderCount = r2.getString("NumberOfFunders");
+//                    lb_funderCount.setText(funderCount);
+//                }
+//
+//            } catch (SQLException ex) {
+//                ex.printStackTrace();
+//            }
+//        }).start();
+//
+//    }
     private void load_admin_managment() {
         new Thread(() -> {
             try {
@@ -1309,6 +1241,21 @@ Border borderC = BorderFactory.createLineBorder(new Color(255, 255, 255), 1);
             }
         }).start();
 
+    }
+
+    private void load_daily_customer_view() {
+        new Thread(() -> {
+            try {
+                jp_adminMainPanel.removeAll();
+                jp_adminMainPanel.setLayout(new FlowLayout());
+                Admin_view_daily_customer avdc = new Admin_view_daily_customer();
+                avdc.setVisible(true);
+                jp_adminMainPanel.add(avdc);
+                jp_adminMainPanel.updateUI();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }).start();
     }
 
     private void load_customer_managment() {
@@ -1395,22 +1342,21 @@ Border borderC = BorderFactory.createLineBorder(new Color(255, 255, 255), 1);
 
     }
 
-    ///////////// load date and time
-    final void showTime() {
-        new Timer(0, new ActionListener() {
-
-            @Override
-            public void actionPerformed(ActionEvent ae) {
-
-                Date d = new Date();
-                SimpleDateFormat stim = new SimpleDateFormat("hh:mm:ss a");
-                String st = stim.format(d);
-                lb_time.setText(st);
-
-            }
-        }).start();
-    }
-
+//    ///////////// load date and time
+//    final void showTime() {
+//        new Timer(0, new ActionListener() {
+//
+//            @Override
+//            public void actionPerformed(ActionEvent ae) {
+//
+//                Date d = new Date();
+//                SimpleDateFormat stim = new SimpleDateFormat("hh:mm:ss a");
+//                String st = stim.format(d);
+//                lb_time.setText(st);
+//
+//            }
+//        }).start();
+//    }
     final void showTime2() {
         new Timer(0, new ActionListener() {
 
@@ -1420,30 +1366,28 @@ Border borderC = BorderFactory.createLineBorder(new Color(255, 255, 255), 1);
                 Date d = new Date();
                 SimpleDateFormat stim = new SimpleDateFormat("hh:mm:ss a");
                 String st = stim.format(d);
-                lb_v_time.setText(st);
+                lbviewcustomer.setText(st);
 
             }
         }).start();
     }
 
-    final void showDate() {
-        Date d = new Date();
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-        String s = sdf.format(d);
-        lb_date.setText(s);
-        System.out.println(s);
-
-    }
-
-    final void showDate2() {
-        Date d = new Date();
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-        String s = sdf.format(d);
-        lb_v_date.setText(s);
-        System.out.println(s);
-
-    }
-
+//    final void showDate() {
+//        Date d = new Date();
+//        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+//        String s = sdf.format(d);
+//        lb_date.setText(s);
+//        System.out.println(s);
+//
+//    }
+//    final void showDate2() {
+//        Date d = new Date();
+//        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+//        String s = sdf.format(d);
+//        lb_v_date.setText(s);
+//        System.out.println(s);
+//
+//    }
     public static ImageIcon CreateImagesss(String path) {
         //setIconImage(CreateImagesss("/FormatFactoryicon100.png").getImage());
         return new ImageIcon(java.awt.Toolkit.getDefaultToolkit().getClass().getResource(path));

@@ -169,14 +169,16 @@ public class Admin_installmentManagment extends javax.swing.JPanel {
             double installement = Double.parseDouble(tf_installment.getText());
 
             String loantype = "";
-            rs = MC_DB.myConnection().createStatement().executeQuery("SELECT loan_mainperiodtype FROM loans WHERE idloans='" + loanID + "'");
+            String loan_main_type="";
+            rs = MC_DB.myConnection().createStatement().executeQuery("SELECT loan_mainperiodtype,loan_type FROM loans WHERE idloans='" + loanID + "'");
             if (rs.next()) {
                 loantype = rs.getString(1);
+                loan_main_type=rs.getString(2);
             }
 
             String today = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
 
-            if (loantype.toLowerCase().contains("daily") || (loantype.toLowerCase().contains("weekly"))) {
+            if (loan_main_type.toLowerCase().contains("daily") || (loan_main_type.toLowerCase().contains("weekly"))) {
 
                 String tempdate = loanDate;
                 int no_of_days = 0;
@@ -197,7 +199,7 @@ public class Admin_installmentManagment extends javax.swing.JPanel {
                     if (nowday.equalsIgnoreCase("Saturday")) {
 
                         no_of_saturdays++;
-                        if (loantype.equalsIgnoreCase("Daily-withOutSaturday")) {
+                        if (loantype.equalsIgnoreCase("With Out Saturday(Week days)")) {
                             period++;
                             System.out.println(period);
                         }
@@ -206,9 +208,9 @@ public class Admin_installmentManagment extends javax.swing.JPanel {
 
                 }
 
-                if (loantype.equalsIgnoreCase("Daily-withOutSaturday")) {
+                if (loantype.equalsIgnoreCase("With Out Saturday(Week days)")) {
                     arriers = (no_of_days - no_of_saturdays) * installement;
-                } else if (loantype.equalsIgnoreCase("Daily-withSaturday")) {
+                } else if (loantype.equalsIgnoreCase("With Saturday")) {
                     arriers = no_of_days * installement;
 
                 } else {
@@ -278,7 +280,6 @@ public class Admin_installmentManagment extends javax.swing.JPanel {
         try {
             ResultSet rs = MC_DB.myConnection().createStatement().executeQuery("SELECT SUM(payment) AS sumPayment FROM installment WHERE idloans='" + loanID + "'");
             while (rs.next()) {
-
                 amount = rs.getInt("sumPayment");
             }
             tf_paidAmount.setText(amount + "0");
@@ -624,6 +625,7 @@ public class Admin_installmentManagment extends javax.swing.JPanel {
 
         reg_date_choser.setDateFormatString("yyyy-MM-dd");
         reg_date_choser.setEnabled(false);
+        reg_date_choser.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
